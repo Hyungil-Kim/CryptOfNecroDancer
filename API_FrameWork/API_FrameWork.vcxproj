@@ -159,7 +159,9 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="mapTool.h" />
+    <ClInclude Include="necroDancerMain.h" />
     <ClInclude Include="OBBCollision.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sceneManager.h" />
@@ -186,7 +188,9 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="mapTool.cpp" />
+    <ClCompile Include="necroDancerMain.cpp" />
     <ClCompile Include="OBBCollision.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="timeManager.cpp" />

@@ -58,6 +58,15 @@
     <Filter Include="manager\카메라">
       <UniqueIdentifier>{d9f6413c-bdb3-4ef6-9878-9cbf87983a63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CryptOfNecroDancer">
+      <UniqueIdentifier>{751256d5-1128-4a5a-9ec8-4bfffff6b55c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CryptOfNecroDancer\플레이어">
+      <UniqueIdentifier>{44296c5b-e655-4863-8b3c-1522edb94f89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CryptOfNecroDancer\necroDancerMain">
+      <UniqueIdentifier>{327c36bb-fb73-4573-ab81-25d7bf9c54ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -141,6 +150,12 @@
     <ClInclude Include="camera.h">
       <Filter>manager\카메라</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>CryptOfNecroDancer\플레이어</Filter>
+    </ClInclude>
+    <ClInclude Include="necroDancerMain.h">
+      <Filter>CryptOfNecroDancer\necroDancerMain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -205,6 +220,12 @@
     </ClCompile>
     <ClCompile Include="camera.cpp">
       <Filter>manager\카메라</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>CryptOfNecroDancer\플레이어</Filter>
+    </ClCompile>
+    <ClCompile Include="necroDancerMain.cpp">
+      <Filter>CryptOfNecroDancer\necroDancerMain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

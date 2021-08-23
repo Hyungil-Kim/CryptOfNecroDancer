@@ -1,12 +1,12 @@
 #pragma once
 #include "gameNode.h"
-
+#include "necroDancerMain.h"
 class mainGame : public gameNode
 {
 private:
 	
-
-
+	necroDancerMain* _necroMain;
+	image* _finalBuffer;
 
 
 	bool _isDebug;

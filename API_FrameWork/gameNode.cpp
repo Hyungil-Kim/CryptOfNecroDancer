@@ -79,6 +79,9 @@ void gameNode::release()
 		ZORDER->releaseSingleton();
 		BUTTON->releaseSingleton();
 		
+		//플레이어 데이터 해제
+		PLAYER->release();
+		PLAYER->releaseSingleton();
 	}
 	ReleaseDC(m_hWnd, _hdc);
 

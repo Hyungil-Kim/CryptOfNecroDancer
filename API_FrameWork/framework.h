@@ -43,7 +43,7 @@ using namespace std;
 #include"Zorder.h"
 #include"button.h"
 #include"camera.h"
-
+#include"Player.h"
 
 //=======================//
 //		Manager			//
@@ -62,8 +62,8 @@ using namespace std;
 #define ZORDER			Zorder::getSingleton()
 #define BUTTON			Cbutton::getSingleton()
 #define CAMERA			camera::getSingleton()
-
-
+#define PLAYER			Player::getSingleton()
+	
 //===================//
 //	매크로 설정부분	//
 //=================//
@@ -73,22 +73,24 @@ using namespace std;
 #define WINSTARTY		50
 #define WINSIZEX		1024
 #define WINSIZEY		768
+//#define WINSIZEX		1365		//DOL ver
+//#define WINSIZEY		768
 //#define GAMESIZEX		960			//DOL title
 //#define GAMESIZEY		540
 //#define WINSIZEX		GAMESIZEX	
 //#define WINSIZEY		GAMESIZEY
 
 
-#define GAMESIZEX		960	
-#define GAMESIZEY		540
+#define GAMESIZEX		WINSIZEX
+#define GAMESIZEY		WINSIZEY
 //#define WINSIZEY		640
 #define WINSTYLE		WS_CAPTION | WS_SYSMENU
 
-#define GAMEDCRATIO 1.5
-#define CAMERASIZEX WINSIZEX/GAMEDCRATIO
-#define CAMERASIZEY WINSIZEY/GAMEDCRATIO
-#define CAMMOUSEX		(m_ptMouse.x / GAMEDCRATIO) + CAMERA->getRect().left
-#define CAMMOUSEY		(m_ptMouse.y / GAMEDCRATIO) + CAMERA->getRect().top
+//#define GAMEDCRATIO 1.5
+//#define CAMERASIZEX WINSIZEX/GAMEDCRATIO
+//#define CAMERASIZEY WINSIZEY/GAMEDCRATIO
+//#define CAMMOUSEX		(m_ptMouse.x / GAMEDCRATIO) + CAMERA->getRect().left
+//#define CAMMOUSEY		(m_ptMouse.y / GAMEDCRATIO) + CAMERA->getRect().top
 
 //===========================//
 //	메인게임 릴리즈에서 사용	//
