@@ -240,7 +240,7 @@
     <Image Include="API_FrameWork.ico">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="..\..\stairs_locked_miniboss.ico">
+    <Image Include="images\UI\stairs_locked_miniboss.ico">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

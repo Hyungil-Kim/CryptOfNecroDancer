@@ -203,8 +203,8 @@
     <ResourceCompile Include="API_FrameWork.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\stairs_locked_miniboss.ico" />
     <Image Include="API_FrameWork.ico" />
+    <Image Include="images\UI\stairs_locked_miniboss.ico" />
     <Image Include="small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

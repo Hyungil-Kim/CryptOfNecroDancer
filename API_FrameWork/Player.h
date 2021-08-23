@@ -25,19 +25,35 @@
 //	bool hitIceTile;
 //};
 
-enum {
-	GoLeft,
-	GoRight,
-	GoUp,
-	GoDown,
-	Stop,
-	Attack,
-	Digging,
-	Hit
+enum class STATE {
+	MOVE,
+	STOP,
+	ATTACK,
+	DIGGING,
+	HIT
+};
+
+enum DIRECTION {
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN
+};
+
+struct InputDirection {
+	bool isLeft;
+	bool isRight;
+	bool isUp;
+	bool isDown;
 };
 
 class Player :public Singleton<Player>
 {
+private:
+	STATE _state;
+	DIRECTION _direction;
+	InputDirection _inputdirection;
+
 private:
 	image* player_headL;
 	image* player_bodyL;
@@ -52,6 +68,11 @@ private:
 	RECT player_head_rc;
 	RECT player_body_rc;
 	RECT player_rc;
+
+
+
+private:
+	int x, y;
 	int hp;
 	int atk;
 	int def;
@@ -60,12 +81,15 @@ private:
 	bool hitFireTile;
 	bool hitIceTile;
 	bool _isDebug;
-
+	bool isCurrentRight;
 public:
 	 HRESULT init();
 	 void release();
 	 void update(); //계산하는곳
 	 void render(/*HDC hdc*/);
+	 void inputCheck();
+	 void moveCharater();
+	 void inputDirectionCheck();
+	 void stateCheck();
 	 void setIsDebug(bool isDebug) { _isDebug = isDebug; }
 };
-
