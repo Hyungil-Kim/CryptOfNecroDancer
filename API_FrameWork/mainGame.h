@@ -6,6 +6,7 @@ class mainGame : public gameNode
 private:
 	
 	necroDancerMain* _necroMain;
+
 	image* _finalBuffer;
 
 
@@ -28,7 +29,7 @@ public:
 	void setIsDebug() {
 		if (InputManager->isOnceKeyDown(VK_F1)) {
 			_isDebug = !_isDebug;
-
+			_necroMain->setIsDebug(_isDebug);
 		}
 	}
 };  

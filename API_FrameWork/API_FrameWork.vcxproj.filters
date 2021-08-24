@@ -67,6 +67,15 @@
     <Filter Include="CryptOfNecroDancer\necroDancerMain">
       <UniqueIdentifier>{327c36bb-fb73-4573-ab81-25d7bf9c54ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CryptOfNecroDancer\몬스터">
+      <UniqueIdentifier>{3d1a8403-f0b9-47bf-bc10-b83fdb661508}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CryptOfNecroDancer\gameManager">
+      <UniqueIdentifier>{2daa4a95-c643-4fba-b33c-50f3df0125cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CryptOfNecroDancer\map">
+      <UniqueIdentifier>{32d11268-273e-40af-bda2-49dc34592fd7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -89,9 +98,6 @@
     </ClInclude>
     <ClInclude Include="gameNode.h">
       <Filter>gameNode</Filter>
-    </ClInclude>
-    <ClInclude Include="mainGame.h">
-      <Filter>mainGame</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>manager</Filter>
@@ -156,6 +162,24 @@
     <ClInclude Include="necroDancerMain.h">
       <Filter>CryptOfNecroDancer\necroDancerMain</Filter>
     </ClInclude>
+    <ClInclude Include="monster.h">
+      <Filter>CryptOfNecroDancer\몬스터</Filter>
+    </ClInclude>
+    <ClInclude Include="monsterManager.h">
+      <Filter>CryptOfNecroDancer\gameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="makeMonster.h">
+      <Filter>CryptOfNecroDancer\몬스터</Filter>
+    </ClInclude>
+    <ClInclude Include="mainGame.h">
+      <Filter>mainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="dummyMap.h">
+      <Filter>CryptOfNecroDancer\map</Filter>
+    </ClInclude>
+    <ClInclude Include="globaldummy.h">
+      <Filter>CryptOfNecroDancer\map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -163,9 +187,6 @@
     </ClCompile>
     <ClCompile Include="gameNode.cpp">
       <Filter>gameNode</Filter>
-    </ClCompile>
-    <ClCompile Include="mainGame.cpp">
-      <Filter>mainGame</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>manager</Filter>
@@ -226,6 +247,21 @@
     </ClCompile>
     <ClCompile Include="necroDancerMain.cpp">
       <Filter>CryptOfNecroDancer\necroDancerMain</Filter>
+    </ClCompile>
+    <ClCompile Include="monster.cpp">
+      <Filter>CryptOfNecroDancer\몬스터</Filter>
+    </ClCompile>
+    <ClCompile Include="monsterManager.cpp">
+      <Filter>CryptOfNecroDancer\gameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="makeMonster.cpp">
+      <Filter>CryptOfNecroDancer\몬스터</Filter>
+    </ClCompile>
+    <ClCompile Include="mainGame.cpp">
+      <Filter>mainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="dummyMap.cpp">
+      <Filter>CryptOfNecroDancer\map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

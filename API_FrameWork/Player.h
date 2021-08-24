@@ -33,10 +33,19 @@ enum class STATE {
 	HIT
 };
 
-enum DIRECTION {
+enum class WEAPONTYPE{
+	EMPTY,
+	DAGGER,
+	BSWORD,
+	LSWORD,
+	WIPE
+
+};
+
+enum MOVESTATE {
 	LEFT,
-	RIGHT,
 	UP,
+	RIGHT,
 	DOWN
 };
 
@@ -47,13 +56,33 @@ struct InputDirection {
 	bool isDown;
 };
 
+struct tagPlayer
+{
+	RECT player_rc;
+	WEAPONTYPE weapon;
+	float x, y;
+	bool hitFireTile = false;
+	bool hitIceTile =false ;
+	bool isCurrentRight;
+	bool ishit = false;
+	int hp;
+	int atk;
+	int def;
+	int sight;
+	int sholve;
+	float _speed;
+	float jumpPower = 500.f;
+	float moveTime = 0.1f;
+};
+class dummyMap;
 class Player :public Singleton<Player>
 {
 private:
 	STATE _state;
-	DIRECTION _direction;
+	MOVESTATE _movestate;
 	InputDirection _inputdirection;
-
+	tagPlayer _player;
+	dummyMap* _dummyMap;
 private:
 	image* player_headL;
 	image* player_bodyL;
@@ -67,29 +96,26 @@ private:
 
 	RECT player_head_rc;
 	RECT player_body_rc;
-	RECT player_rc;
-
-
-
 private:
-	int x, y;
-	int hp;
-	int atk;
-	int def;
-	int sight;
-	int sholve;
-	bool hitFireTile;
-	bool hitIceTile;
+	image* daggerEffect;
+	animation* AdaggerEffect;
+	RECT attackrange;
+	int tileX, tileY;
+	
+private:
 	bool _isDebug;
-	bool isCurrentRight;
 public:
 	 HRESULT init();
 	 void release();
 	 void update(); //계산하는곳
-	 void render(/*HDC hdc*/);
+	 void render(HDC hdc);
 	 void inputCheck();
 	 void moveCharater();
 	 void inputDirectionCheck();
 	 void stateCheck();
+	 void changeAttackRange();
+	 void playMove();
+
+	 void setdummyMapMemoryLink(dummyMap* dummyMap) { _dummyMap = dummyMap; }
 	 void setIsDebug(bool isDebug) { _isDebug = isDebug; }
 };
