@@ -44,7 +44,7 @@ using namespace std;
 #include"button.h"
 #include"camera.h"
 #include"Player.h"
-
+#include"tileSize.h"
 
 
 //=======================//

@@ -174,6 +174,18 @@
     <ClInclude Include="mainGame.h">
       <Filter>mainGame</Filter>
     </ClInclude>
+    <ClInclude Include="CMap.h">
+      <Filter>CryptOfNecroDancer\map</Filter>
+    </ClInclude>
+    <ClInclude Include="CObject.h">
+      <Filter>CryptOfNecroDancer\map</Filter>
+    </ClInclude>
+    <ClInclude Include="CTile.h">
+      <Filter>CryptOfNecroDancer\map</Filter>
+    </ClInclude>
+    <ClInclude Include="tileSize.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -253,6 +265,15 @@
     </ClCompile>
     <ClCompile Include="mainGame.cpp">
       <Filter>mainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="CMap.cpp">
+      <Filter>CryptOfNecroDancer\map</Filter>
+    </ClCompile>
+    <ClCompile Include="CObject.cpp">
+      <Filter>CryptOfNecroDancer\map</Filter>
+    </ClCompile>
+    <ClCompile Include="CTile.cpp">
+      <Filter>CryptOfNecroDancer\map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

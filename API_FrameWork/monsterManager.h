@@ -40,6 +40,7 @@ public:
 	void setIsDebug(bool isDebug) {
 		_isDebug = isDebug;
 		_green_slime->setIsDebug(_isDebug);
+		_blue_slime->setIsDebug(_isDebug);
 	}
 };
 

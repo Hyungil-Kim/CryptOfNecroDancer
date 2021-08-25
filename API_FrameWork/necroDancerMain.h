@@ -1,11 +1,12 @@
 #pragma once
 #include "gameNode.h"
 #include"monsterManager.h"
-
+#include "CMap.h"
 class necroDancerMain : public gameNode
 {
 private:
 	monsterManager* _mm;
+	CMap* map;
 
 
 private:

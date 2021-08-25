@@ -21,6 +21,7 @@ public:
 
 
 	image* getBackBuffer()const { return _backBuffer; }
+	image* getDolBUffer()const { return _DOLBuffer; }
 	HDC getHDC()const { return _hdc; }
 	HDC getMemDC()const { return _backBuffer->getMemDC(); }
 	HDC getDolDC()const { return _DOLBuffer->getMemDC(); }		//ÆÀÇÁ¿ë DC

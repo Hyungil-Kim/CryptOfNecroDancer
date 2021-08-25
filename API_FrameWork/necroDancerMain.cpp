@@ -2,6 +2,7 @@
 #include "necroDancerMain.h"
 
 necroDancerMain::necroDancerMain()
+	:map(new CMap({ 35, 35 }, { TILE_SIZE_X, TILE_SIZE_Y }))
 {
 }
 
@@ -12,6 +13,7 @@ necroDancerMain::~necroDancerMain()
 HRESULT necroDancerMain::init()
 {
 	gameinit();
+
 	return S_OK;
 }
 
@@ -28,14 +30,14 @@ void necroDancerMain::release()
 void necroDancerMain::update()
 {
 	_mm->update();
-	
+	map->update();
 	PLAYER->update();
 }
 
 void necroDancerMain::render()
 {
 	_mm->render();
-	
+	map->render();
 	PLAYER->render(getMemDC());
 	ZORDER->ZorderTotalRender(getMemDC());
 }

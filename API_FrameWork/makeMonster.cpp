@@ -28,7 +28,7 @@ monstername					imagename
 //////////////////////////////////////////////////////////////
 green_slime::green_slime()
 {
-	IMAGE->addFrameImage("그린슬라임", "images/monster/slime_green.bmp", 104, 52, 4, 2, true);
+	IMAGE->addFrameImage("그린슬라임", "images/monster/slime_green.bmp", 48*4, 48*2, 4, 2, true);
 	
 }
 
@@ -106,7 +106,7 @@ void green_slime::moveMonster()
 //////////////////////////////////////////////////////////////
 blue_slime::blue_slime()
 {
-	IMAGE->addFrameImage("블루슬라임", "images/monster/slime_blue.bmp", 208, 50, 8, 2, true);
+	IMAGE->addFrameImage("블루슬라임", "images/monster/slime_blue.bmp", 48*8, 48*2, 8, 2, true);
 }
 
 blue_slime::~blue_slime()

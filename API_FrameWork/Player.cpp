@@ -9,17 +9,17 @@ HRESULT Player::init()
 	_player.sight = 2;
 	_player.sholve = 0;
 	_player.ishit = false;
-	_player.x = 50;
-	_player.y = 50;
+	_player.x = 59;
+	_player.y = 59;
 	_player._speed = 1800;
 	_player.hitFireTile = false;
 	_player.hitIceTile = false;
 	_movestate = MOVESTATE::RIGHT;
 	_player.isCurrentRight = true;
-	player_headL=IMAGE->addFrameImage("플레이어왼쪽머리", "images/player/player_headL.bmp", 384, 48 , 16, 2, true, RGB(255, 0, 255));
-	player_bodyL=IMAGE->addFrameImage("플레이어왼쪽몸", "images/player/player_bodyL.bmp", 384 , 336 , 16, 14, true, RGB(255, 0, 255));
-	player_headR=IMAGE->addFrameImage("플레이어오른쪽머리", "images/player/player_headR.bmp", 384 , 48 , 16, 2, true, RGB(255, 0, 255));
-	player_bodyR=IMAGE->addFrameImage("플레이어오른쪽몸", "images/player/player_bodyR.bmp", 384 , 336 , 16, 14, true, RGB(255, 0, 255));
+	player_headL=IMAGE->addFrameImage("플레이어왼쪽머리", "images/player/player_headL.bmp", 384*2, 48 * 2, 16, 2, true, RGB(255, 0, 255));
+	player_bodyL=IMAGE->addFrameImage("플레이어왼쪽몸", "images/player/player_bodyL.bmp", 384 * 2, 336 * 2, 16, 14, true, RGB(255, 0, 255));
+	player_headR=IMAGE->addFrameImage("플레이어오른쪽머리", "images/player/player_headR.bmp", 384 * 2, 48 * 2, 16, 2, true, RGB(255, 0, 255));
+	player_bodyR=IMAGE->addFrameImage("플레이어오른쪽몸", "images/player/player_bodyR.bmp", 384 * 2, 336 * 2, 16, 14, true, RGB(255, 0, 255));
 	
 	Aplayer_headL=ANIMATION->addNoneKeyAnimation("플레이어왼쪽머리", 15, 13, 10, false, true);
 	Aplayer_bodyL=ANIMATION->addNoneKeyAnimation("플레이어왼쪽몸", 15,13,10, false, true);
@@ -98,7 +98,7 @@ void Player::moveCharater()
 	case STATE::DIGGING:
 		break;
 	case STATE::MOVE:
-	
+		
 	case STATE::HIT:
 		break;
 	default:
