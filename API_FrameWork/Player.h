@@ -114,7 +114,7 @@ public:
 	 void inputDirectionCheck();
 	 void stateCheck();
 	 void changeAttackRange();
-	 void playMove();
+	 void playerMove();
 
 	
 	 void setIsDebug(bool isDebug) { _isDebug = isDebug; }

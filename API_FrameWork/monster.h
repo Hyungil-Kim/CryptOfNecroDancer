@@ -23,12 +23,16 @@ struct tagMonster
 {
 	image* img;
 	animation* ani;
+	animation* leftani;
 	animation* shadowani;
+	animation* leftshadowani;
 	RECT rc;
 	float x, y;
 
 	int hp;
 	int atk;
+	int speed;
+	int limit;
 	//int def; 확인후 삭제
 	
 	bool canBreakWall = false;
@@ -38,6 +42,7 @@ struct tagMonster
 	bool isCurrentRight;
 	bool isMove = false;
 	bool isOnceMove = false;
+	bool AniLeft = false;
 	MONSTERSTATE monsterState;
 	MONSTERMOVESTATE monsterMoveState;
 };

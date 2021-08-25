@@ -3,7 +3,7 @@
 class CTile : public CObject
 {
 private:
-
+	bool _isDebug;
 public:
 	CTile();
 	CTile(POINT _pos, POINT _size, image* _img = nullptr, animation* _ani = nullptr);
@@ -13,6 +13,6 @@ public:
 	void release();
 	void update();
 	void render();
-
+	void setIsDebug(bool isDebug) { _isDebug = isDebug; }
 };
 

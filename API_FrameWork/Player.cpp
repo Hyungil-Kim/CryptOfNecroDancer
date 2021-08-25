@@ -98,7 +98,7 @@ void Player::moveCharater()
 	case STATE::DIGGING:
 		break;
 	case STATE::MOVE:
-		
+		playerMove();
 	case STATE::HIT:
 		break;
 	default:
@@ -162,6 +162,29 @@ void Player::inputDirectionCheck()
 void Player::changeAttackRange()
 {
 	
+}
+
+void Player::playerMove()
+{
+	switch (_movestate)
+	{
+	case LEFT:
+		_player.x -= TILE_SIZE_X;
+		break;
+	case UP:
+		_player.y -= TILE_SIZE_Y;
+		break;
+	case RIGHT:
+		_player.x += TILE_SIZE_X;
+		break;
+	case DOWN:
+		_player.y += TILE_SIZE_Y;
+		break;
+	default:
+		break;
+	}
+
+
 }
 
 

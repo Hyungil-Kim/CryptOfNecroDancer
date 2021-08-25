@@ -8,6 +8,7 @@ protected:
 
 	image* img;
 	animation* ani;
+	bool _isDebug;
 public:
 	CObject();
 	CObject(POINT _pos,POINT _size, image* _img, animation* _ani);
@@ -21,5 +22,6 @@ public:
 	POINT getPos() { return pos; }
 	POINT getSize() { return size; }
 	image* getImg() { return img; }
+	void setIsDebug(bool isDebug) { _isDebug = isDebug; }
 };
 

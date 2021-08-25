@@ -8,7 +8,7 @@ private:
 private:
 	green_slime* _green_slime;
 	blue_slime* _blue_slime;
-
+	orange_slime* _orange_slime;
 
 
 
@@ -27,6 +27,8 @@ public:
 
 	//몬스터 인스턴스 getter
 	green_slime* getGreenSlime() { return _green_slime; }
+	blue_slime* getBlueSlime() { return _blue_slime; }
+	orange_slime* getOrangeSlime() { return _orange_slime; }
 
 
 
@@ -41,6 +43,7 @@ public:
 		_isDebug = isDebug;
 		_green_slime->setIsDebug(_isDebug);
 		_blue_slime->setIsDebug(_isDebug);
+		_orange_slime->setIsDebug(_isDebug);
 	}
 };
 

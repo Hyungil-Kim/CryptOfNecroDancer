@@ -38,7 +38,8 @@ void necroDancerMain::render()
 {
 	_mm->render();
 	map->render();
-	PLAYER->render(getMemDC());
+	this->getMapBuffer()->render(getMemDC(), 0, 0);
+	PLAYER->render(getDolDC());
 	ZORDER->ZorderTotalRender(getMemDC());
 }
 

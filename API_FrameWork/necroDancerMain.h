@@ -26,6 +26,7 @@ public:
 		_isDebug = isDebug; 
 		PLAYER->setIsDebug(_isDebug);
 		_mm->setIsDebug(_isDebug);
+		map->setIsDebug(_isDebug);
 	}
 };
 

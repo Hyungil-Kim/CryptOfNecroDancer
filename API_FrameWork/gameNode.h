@@ -2,7 +2,9 @@
 #include "image.h"
 
 static image* _backBuffer = IMAGE->addImage("backBuffer", WINSIZEX, WINSIZEY);
-static image* _DOLBuffer = IMAGE->addImage("DOLBuffer", WINSIZEX*3, WINSIZEY*3);	//ÆÀÇÁ¿ë DC
+static image* _mapBuffer = IMAGE->addImage("mapBuffer", WINSIZEX, WINSIZEY);
+static image* _tileBuffer = IMAGE->addImage("tileBuffer", MAP_SIZE_X, MAP_SIZE_Y);
+static image* _DOLBuffer = IMAGE->addImage("DOLBuffer", MAP_SIZE_X, MAP_SIZE_Y);	//ÆÀÇÁ¿ë DC
 class gameNode
 {
 private:
@@ -21,9 +23,13 @@ public:
 
 
 	image* getBackBuffer()const { return _backBuffer; }
+	image* getMapBuffer()const { return _mapBuffer; }
+	image* getTileBuffer()const { return _tileBuffer; }
 	image* getDolBUffer()const { return _DOLBuffer; }
 	HDC getHDC()const { return _hdc; }
 	HDC getMemDC()const { return _backBuffer->getMemDC(); }
+	HDC getMapDC()const { return _mapBuffer->getMemDC(); }
+	HDC getTileDC()const { return _tileBuffer->getMemDC(); }
 	HDC getDolDC()const { return _DOLBuffer->getMemDC(); }		//ÆÀÇÁ¿ë DC
 
 	LRESULT MainProc(HWND hWnd, UINT imessage, WPARAM wParam, LPARAM lParam);
