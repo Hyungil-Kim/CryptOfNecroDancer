@@ -1,24 +1,16 @@
 #include "framework.h"
 #include "monster.h"
 
-monster::monster()
-{
-}
-
-monster::~monster()
-{
-}
-
 HRESULT monster::init()
 {
-	return S_OK;
+	return E_NOTIMPL;
 }
 
 void monster::release()
 {
 }
 
-void monster::update(Player* cp)
+void monster::update()
 {
 }
 
@@ -26,18 +18,6 @@ void monster::render()
 {
 }
 
-void monster::addMonster(float x, float y)
-{
-}
-
-void monster::move()
-{
-}
-
-void monster::stateCheck()
-{
-}
-
-void monster::moveMonster()
+void monster::gameinit()
 {
 }

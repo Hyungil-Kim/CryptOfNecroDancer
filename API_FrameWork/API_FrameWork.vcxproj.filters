@@ -162,15 +162,6 @@
     <ClInclude Include="necroDancerMain.h">
       <Filter>CryptOfNecroDancer\necroDancerMain</Filter>
     </ClInclude>
-    <ClInclude Include="monster.h">
-      <Filter>CryptOfNecroDancer\몬스터</Filter>
-    </ClInclude>
-    <ClInclude Include="monsterManager.h">
-      <Filter>CryptOfNecroDancer\gameManager</Filter>
-    </ClInclude>
-    <ClInclude Include="makeMonster.h">
-      <Filter>CryptOfNecroDancer\몬스터</Filter>
-    </ClInclude>
     <ClInclude Include="mainGame.h">
       <Filter>mainGame</Filter>
     </ClInclude>
@@ -179,6 +170,12 @@
     </ClInclude>
     <ClInclude Include="globaldummy.h">
       <Filter>CryptOfNecroDancer\map</Filter>
+    </ClInclude>
+    <ClInclude Include="monster.h">
+      <Filter>CryptOfNecroDancer\몬스터</Filter>
+    </ClInclude>
+    <ClInclude Include="breed.h">
+      <Filter>CryptOfNecroDancer\몬스터</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -248,20 +245,17 @@
     <ClCompile Include="necroDancerMain.cpp">
       <Filter>CryptOfNecroDancer\necroDancerMain</Filter>
     </ClCompile>
-    <ClCompile Include="monster.cpp">
-      <Filter>CryptOfNecroDancer\몬스터</Filter>
-    </ClCompile>
-    <ClCompile Include="monsterManager.cpp">
-      <Filter>CryptOfNecroDancer\gameManager</Filter>
-    </ClCompile>
-    <ClCompile Include="makeMonster.cpp">
-      <Filter>CryptOfNecroDancer\몬스터</Filter>
-    </ClCompile>
     <ClCompile Include="mainGame.cpp">
       <Filter>mainGame</Filter>
     </ClCompile>
     <ClCompile Include="dummyMap.cpp">
       <Filter>CryptOfNecroDancer\map</Filter>
+    </ClCompile>
+    <ClCompile Include="monster.cpp">
+      <Filter>CryptOfNecroDancer\몬스터</Filter>
+    </ClCompile>
+    <ClCompile Include="breed.cpp">
+      <Filter>CryptOfNecroDancer\몬스터</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

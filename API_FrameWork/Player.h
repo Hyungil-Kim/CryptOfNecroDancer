@@ -101,7 +101,7 @@ private:
 	animation* AdaggerEffect;
 	RECT attackrange;
 	int tileX, tileY;
-	
+	int curTileX, curTileY;
 private:
 	bool _isDebug;
 public:

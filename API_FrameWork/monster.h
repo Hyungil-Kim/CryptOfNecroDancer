@@ -1,69 +1,33 @@
 #pragma once
-#include "gameNode.h"
-
-class Player;
-enum class MONSTERSTATE {
-	MOVE,
-	STOP,
-	ATTACK,
-	DIGGING,
-	HIT,
-	DEAD
-};
-
-enum class MONSTERMOVESTATE {
-	NONE,
-	LEFT,
-	RIGHT,
-	UP,
-	DOWN
-};
-
-struct tagMonster
+#include "breed.h"
+class monster
 {
-	image* img;
-	animation* ani;
-	animation* shadowani;
-	RECT rc;
-	float x, y;
+	friend class breed;
+private:
+	monster(breed& breed)
+		:_health(breed.getHealth()),
+		_atk(breed.getAtk()),
+		_gold(breed.getGold()),
+		_image(breed.getImage()),
+		_ani(breed.getAni()),
+		_islight(breed.getIslight()),
+		_breed(breed) {}
 
-	int hp;
-	int atk;
-	//int def; 확인후 삭제
-	
-	bool canBreakWall = false;
-	bool isDetecting = false;
-	bool isHit = false;
-	bool isDead = false;
-	bool isCurrentRight;
-	MONSTERSTATE monsterState;
-	MONSTERMOVESTATE monsterMoveState;
-};
+	int _health;
+	int _atk;
+	int _gold;
+	image _image;
+	animation _ani;
+	bool _islight;
 
-class monster : public gameNode
-{
-protected:
-	vector<tagMonster> _vMonster;
-	vector<tagMonster>::iterator _viMonster;
-
-	bool _isDebug;
+	breed& _breed;
 public:
-	monster();
-	~monster();
 
 	HRESULT init();
 	void release();
-	void update(Player* cp);//플레이어 위치 참고하기위해 
-	void render();
-	
-	virtual void addMonster(float x, float y);
-	virtual void move();
-	virtual void stateCheck();
-	virtual void moveMonster();
-
-
-	vector<tagMonster>& getVMonster() { return _vMonster; }
-	void setIsDebug(bool isDebug) { _isDebug = isDebug; }
-
+	void update();
+	void render(/*HDC hdc*/);
+	void gameinit();
+	void setIsDebug(bool isDebug) {}
 };
 

@@ -147,9 +147,9 @@
     <ClInclude Include="animation.h" />
     <ClInclude Include="animationManager.h" />
     <ClInclude Include="API_FrameWork.h" />
+    <ClInclude Include="breed.h" />
     <ClInclude Include="dummyMap.h" />
     <ClInclude Include="globaldummy.h" />
-    <ClInclude Include="makeMonster.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="commonMacroFunction.h" />
@@ -163,7 +163,6 @@
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="mapTool.h" />
     <ClInclude Include="monster.h" />
-    <ClInclude Include="monsterManager.h" />
     <ClInclude Include="necroDancerMain.h" />
     <ClInclude Include="OBBCollision.h" />
     <ClInclude Include="Player.h" />
@@ -183,8 +182,8 @@
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="animationManager.cpp" />
     <ClCompile Include="API_FrameWork.cpp" />
+    <ClCompile Include="breed.cpp" />
     <ClCompile Include="dummyMap.cpp" />
-    <ClCompile Include="makeMonster.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="effect.cpp" />
@@ -196,7 +195,6 @@
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="mapTool.cpp" />
     <ClCompile Include="monster.cpp" />
-    <ClCompile Include="monsterManager.cpp" />
     <ClCompile Include="necroDancerMain.cpp" />
     <ClCompile Include="OBBCollision.cpp" />
     <ClCompile Include="Player.cpp" />
