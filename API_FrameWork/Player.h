@@ -74,7 +74,7 @@ struct tagPlayer
 	float jumpPower = 500.f;
 	float moveTime = 0.1f;
 };
-class dummyMap;
+
 class Player :public Singleton<Player>
 {
 private:
@@ -82,7 +82,7 @@ private:
 	MOVESTATE _movestate;
 	InputDirection _inputdirection;
 	tagPlayer _player;
-	dummyMap* _dummyMap;
+	
 private:
 	image* player_headL;
 	image* player_bodyL;
@@ -101,7 +101,7 @@ private:
 	animation* AdaggerEffect;
 	RECT attackrange;
 	int tileX, tileY;
-	
+	int curTile;
 private:
 	bool _isDebug;
 public:
@@ -116,6 +116,6 @@ public:
 	 void changeAttackRange();
 	 void playMove();
 
-	 void setdummyMapMemoryLink(dummyMap* dummyMap) { _dummyMap = dummyMap; }
+	
 	 void setIsDebug(bool isDebug) { _isDebug = isDebug; }
 };

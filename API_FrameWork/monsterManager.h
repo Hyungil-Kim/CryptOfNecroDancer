@@ -7,7 +7,7 @@ private:
 	Player* _py;
 private:
 	green_slime* _green_slime;
-
+	blue_slime* _blue_slime;
 
 
 

@@ -174,12 +174,6 @@
     <ClInclude Include="mainGame.h">
       <Filter>mainGame</Filter>
     </ClInclude>
-    <ClInclude Include="dummyMap.h">
-      <Filter>CryptOfNecroDancer\map</Filter>
-    </ClInclude>
-    <ClInclude Include="globaldummy.h">
-      <Filter>CryptOfNecroDancer\map</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -259,9 +253,6 @@
     </ClCompile>
     <ClCompile Include="mainGame.cpp">
       <Filter>mainGame</Filter>
-    </ClCompile>
-    <ClCompile Include="dummyMap.cpp">
-      <Filter>CryptOfNecroDancer\map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

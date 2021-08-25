@@ -36,6 +36,8 @@ struct tagMonster
 	bool isHit = false;
 	bool isDead = false;
 	bool isCurrentRight;
+	bool isMove = false;
+	bool isOnceMove = false;
 	MONSTERSTATE monsterState;
 	MONSTERMOVESTATE monsterMoveState;
 };

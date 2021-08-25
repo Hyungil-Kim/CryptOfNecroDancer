@@ -147,8 +147,6 @@
     <ClInclude Include="animation.h" />
     <ClInclude Include="animationManager.h" />
     <ClInclude Include="API_FrameWork.h" />
-    <ClInclude Include="dummyMap.h" />
-    <ClInclude Include="globaldummy.h" />
     <ClInclude Include="makeMonster.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
@@ -183,7 +181,6 @@
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="animationManager.cpp" />
     <ClCompile Include="API_FrameWork.cpp" />
-    <ClCompile Include="dummyMap.cpp" />
     <ClCompile Include="makeMonster.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />

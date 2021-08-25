@@ -43,6 +43,7 @@ public:
 	void resume();
 
 	inline bool isPlay()const { return _play; }
+	inline int findNowPlayIndex()const { return _nowPlayIndex; }
 	inline POINT getFramePos()const { return _frameList[_playList[_nowPlayIndex]]; }
 	inline int getFrameWidth()const { return _frameWidth; }
 	inline int getFrameHeight()const { return _frameHeight; }

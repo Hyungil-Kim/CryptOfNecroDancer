@@ -1,6 +1,6 @@
 #include "framework.h"
 #include "Player.h"
-#include"dummyMap.h"
+
 HRESULT Player::init()
 {
 	_player.hp = 12;
@@ -46,10 +46,7 @@ void Player::update()
 
 void Player::render(HDC hdc)
 {
-	char strBlock[128];
-	sprintf_s(strBlock, "현재위치  X: %d번 타일, Y: %d번 타일", tileX, tileY);
-	SetTextColor(hdc, RGB(0, 0, 0));
-	TextOut(hdc, 300, 10, strBlock, strlen(strBlock));
+
 	if (_state == STATE::STOP)
 	{
 		if ((_player.isCurrentRight == false && _movestate == MOVESTATE::UP) || (_player.isCurrentRight == false && _movestate == MOVESTATE::DOWN) || (_player.isCurrentRight == false && _movestate ==MOVESTATE::LEFT))
@@ -101,7 +98,7 @@ void Player::moveCharater()
 	case STATE::DIGGING:
 		break;
 	case STATE::MOVE:
-		playMove();
+	
 	case STATE::HIT:
 		break;
 	default:
@@ -167,101 +164,5 @@ void Player::changeAttackRange()
 	
 }
 
-void Player::playMove()
-{
-	RECT rcCollision;
-	int tileIndex[2] = { 0, };//검사용 타일
-	rcCollision = _player.player_rc;
-
-	float elpasedTime = TIME->getElapsedTime();
-
-	float moveSpeed = elpasedTime * _player._speed;
-
-	tileX = rcCollision.left / TILESIZE;
-	tileY = rcCollision.top / TILESIZE;
-
-	switch (_movestate)
-	{
-	case MOVESTATE::LEFT:
-		
-		_player.x -= moveSpeed;
-		rcCollision = RectMakeCenter(_player.x, _player.y, player_bodyL->getFrameWidth(), player_bodyL->getFrameHeight());
-		break;
-	case MOVESTATE::RIGHT:
-		
-		_player.x += moveSpeed;
-		rcCollision = RectMakeCenter(_player.x, _player.y, player_bodyL->getFrameWidth(), player_bodyL->getFrameHeight());
-		break;
-	case MOVESTATE::UP:
-		
-		_player.y -= moveSpeed;
-		rcCollision = RectMakeCenter(_player.x, _player.y, player_bodyL->getFrameWidth(), player_bodyL->getFrameHeight());
-		break;
-	case MOVESTATE::DOWN:
-		
-		_player.y += moveSpeed;
-		rcCollision = RectMakeCenter(_player.x, _player.y, player_bodyL->getFrameWidth(), player_bodyL->getFrameHeight());
-		break;
-	}
-
-	switch (_movestate)
-	{
-	case MOVESTATE::LEFT:
-		tileIndex[0] = tileX + tileY * TILEX;//땅크가 밟고 있는 녀석
-		tileIndex[1] = tileX + (tileY + 1) * TILEX;//땅크가 밟고 있는 왼쪽
-		break;
-	case MOVESTATE::RIGHT:
-		tileIndex[0] = (tileX + tileY * TILEX) + 1;
-		tileIndex[1] = (tileX + (tileY + 1) * TILEX) + 1;//땅크가 밟고 있는 오른쪽
-		break;
-	case MOVESTATE::UP:
-		tileIndex[0] = tileX + tileY * TILEX;
-		tileIndex[1] = tileX + 1 + tileY * TILEX;
-		break;
-	case MOVESTATE::DOWN:
-		tileIndex[0] = (tileX + tileY * TILEX) + TILEX;
-		tileIndex[1] = (tileX + 1 + tileY * TILEX) + TILEX;
-		break;
-	}
-	for (size_t i = 0; i < 2; i++)
-	{
-		RECT rc;
-
-		//해당 타일의 속성이 움직이지 못하는 곳이면
-		if (((_dummyMap->getAttribute()[tileIndex[i]] & ATTR_UNMOVABLE) == ATTR_UNMOVABLE) &&
-			IntersectRect(&rc, &_dummyMap->getMap()[tileIndex[i]].rcTile, &rcCollision))
-		{
-			switch (_movestate)
-
-			{
-			case MOVESTATE::LEFT:
-
-				_player.player_rc.left = _dummyMap->getMap()[tileIndex[i]].rcTile.right;//왼쪽 타일의 라이트의 위치를 탱크의 레프트의 위치로 고정
-				_player.player_rc.right = _player.player_rc.left + player_bodyL->getFrameWidth();			//탱크의 크기만큼
-				_player.x = _player.player_rc.left + (_player.player_rc.right - _player.player_rc.left) / 2;				//탱크 X의 위치를 계산한 탱크 렉트의 위치값으로 설정(중앙으로)
-				break;
-			case MOVESTATE::RIGHT:
-				_player.player_rc.right = _dummyMap->getMap()[tileIndex[i]].rcTile.left;
-				_player.player_rc.left = _player.player_rc.right - player_bodyL->getFrameWidth();
-				_player.x = _player.player_rc.left + (_player.player_rc.right - _player.player_rc.left) / 2;
-				break;
-			case MOVESTATE::UP:
-				_player.player_rc.top = _dummyMap->getMap()[tileIndex[i]].rcTile.bottom;
-				_player.player_rc.bottom = _player.player_rc.top + player_bodyL->getFrameHeight();
-				_player.y = _player.player_rc.top + (_player.player_rc.bottom - _player.player_rc.top) / 2;
-				break;
-			case MOVESTATE::DOWN:
-				_player.player_rc.bottom = _dummyMap->getMap()[tileIndex[i]].rcTile.top;
-				_player.player_rc.top = _player.player_rc.bottom - player_bodyL->getFrameHeight();
-				_player.y = _player.player_rc.top + (_player.player_rc.bottom - _player.player_rc.top) / 2;
-				break;
-			}
-			return;
-		}
-
-	}//end of for
-	rcCollision = RectMake(_player.x, _player.y, player_bodyL->getFrameWidth(), player_bodyL->getFrameHeight());
-	_player.player_rc = rcCollision;
-}
 
 
