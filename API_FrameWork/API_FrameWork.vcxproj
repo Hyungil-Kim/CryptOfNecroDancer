@@ -149,6 +149,7 @@
     <ClInclude Include="API_FrameWork.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CObject.h" />
+    <ClInclude Include="CRandomMapGenerator.h" />
     <ClInclude Include="CTile.h" />
     <ClInclude Include="makeMonster.h" />
     <ClInclude Include="button.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="API_FrameWork.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CObject.cpp" />
+    <ClCompile Include="CRandomMapGenerator.cpp" />
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="makeMonster.cpp" />
     <ClCompile Include="button.cpp" />

@@ -186,6 +186,9 @@
     <ClInclude Include="tileSize.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CRandomMapGenerator.h">
+      <Filter>CryptOfNecroDancer\map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -273,6 +276,9 @@
       <Filter>CryptOfNecroDancer\map</Filter>
     </ClCompile>
     <ClCompile Include="CTile.cpp">
+      <Filter>CryptOfNecroDancer\map</Filter>
+    </ClCompile>
+    <ClCompile Include="CRandomMapGenerator.cpp">
       <Filter>CryptOfNecroDancer\map</Filter>
     </ClCompile>
   </ItemGroup>

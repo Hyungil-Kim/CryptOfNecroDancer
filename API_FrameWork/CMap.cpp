@@ -20,8 +20,7 @@ CMap::CMap(POINT startPos, POINT size)
 		for (int vertical = 0; vertical < TILE_NUM_X; vertical++)
 		{
 			tile[horizontal * TILE_NUM_X + vertical] = new CTile(startPos, size, IMAGE->findImage("1ÃþÅ¸ÀÏ"));
-			startPos.x += size.x;
-			
+				startPos.x += size.x;
 		}
 		startPos = { tempPos.x,startPos.y + size.y };
 	}

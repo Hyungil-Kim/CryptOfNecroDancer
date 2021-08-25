@@ -48,8 +48,6 @@ void necroDancerMain::gameinit()
 	_mm = new monsterManager;
 
 	
-	
-	
 	PLAYER->init();
 	_mm->init();
 
