@@ -1,9 +1,12 @@
 #include "framework.h"
+
 #include "CMap.h"
+
 
 CMap::CMap()
 {
 	IMAGE->addFrameImage("1類顫橾", "images/tile/floor_dirt1.bmp", 48*3, 48*2, 3, 2, true);
+
 	for (int horizontal = 0; horizontal < TILE_NUM_Y; horizontal++)
 	{
 		for (int vertical = 0; vertical < TILE_NUM_X; vertical++)
@@ -14,16 +17,22 @@ CMap::CMap()
 CMap::CMap(POINT startPos, POINT size)
 {
 	IMAGE->addFrameImage("1類顫橾", "images/tile/floor_dirt1.bmp", 48*3, 48*2, 3, 2, true);
+	
 	POINT tempPos = startPos;
 	for (int horizontal = 0; horizontal < TILE_NUM_Y; horizontal++)
 	{
-		for (int vertical = 0; vertical < TILE_NUM_X; vertical++)
-		{
-			tile[horizontal * TILE_NUM_X + vertical] = new CTile(startPos, size, IMAGE->findImage("1類顫橾"));
+		
+			for (int vertical = 0; vertical < TILE_NUM_X; vertical++)
+			{
+				tile[horizontal * TILE_NUM_X + vertical] = new CTile(startPos, size, IMAGE->findImage("1類顫橾"));
 				startPos.x += size.x;
-		}
-		startPos = { tempPos.x,startPos.y + size.y };
+
+			}
+			startPos = { tempPos.x,startPos.y + size.y };
+		
 	}
+
+
 }
 
 CMap::~CMap()
@@ -64,4 +73,18 @@ void CMap::render()
 			TextOut(getMapDC(), tile[idx]->getPos().x, tile[idx]->getPos().y, str, strlen(str));
 		}
 	}
+
 }
+
+void CMap::makeWall()
+{
+	//for (int i = 0; i < TILE_NUM_X * TILE_NUM_Y; i++)
+	//{
+	//	CWall* tempwall = new CWall(tile[i].pt,
+	//		RectMakeCenter(room.tile[i].pt, TILEWIDTH, TILEHEIGHT),
+	//		room.tile[i].obj);
+
+	//	vObstacle.push_back(tempObstacle);
+	//}
+}
+

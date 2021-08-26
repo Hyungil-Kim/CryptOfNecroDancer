@@ -1,11 +1,13 @@
 #pragma once
 #include "gameNode.h"
 #include"monsterManager.h"
+#include"wallManager.h"
 #include "CMap.h"
 class necroDancerMain : public gameNode
 {
 private:
 	monsterManager* _mm;
+	wallManager* _wm;
 	CMap* map;
 
 
@@ -26,6 +28,7 @@ public:
 		_isDebug = isDebug; 
 		PLAYER->setIsDebug(_isDebug);
 		_mm->setIsDebug(_isDebug);
+		_wm->setIsDebug(_isDebug);
 		map->setIsDebug(_isDebug);
 	}
 };

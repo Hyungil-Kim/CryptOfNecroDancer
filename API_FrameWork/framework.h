@@ -13,6 +13,8 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
+#include <time.h>
+
 
 using namespace std;
 
@@ -45,6 +47,7 @@ using namespace std;
 #include"camera.h"
 #include"Player.h"
 #include"tileSize.h"
+#include "enum.h"
 
 
 //=======================//
@@ -88,11 +91,11 @@ using namespace std;
 //#define WINSIZEY		640
 #define WINSTYLE		WS_CAPTION | WS_SYSMENU
 
-//#define GAMEDCRATIO 1.5
-//#define CAMERASIZEX WINSIZEX/GAMEDCRATIO
-//#define CAMERASIZEY WINSIZEY/GAMEDCRATIO
-//#define CAMMOUSEX		(m_ptMouse.x / GAMEDCRATIO) + CAMERA->getRect().left
-//#define CAMMOUSEY		(m_ptMouse.y / GAMEDCRATIO) + CAMERA->getRect().top
+#define GAMEDCRATIO 1
+#define CAMERASIZEX WINSIZEX/GAMEDCRATIO
+#define CAMERASIZEY WINSIZEY/GAMEDCRATIO
+#define CAMMOUSEX		(m_ptMouse.x / GAMEDCRATIO) + CAMERA->getRect().left
+#define CAMMOUSEY		(m_ptMouse.y / GAMEDCRATIO) + CAMERA->getRect().top
 
 //===========================//
 //	메인게임 릴리즈에서 사용	//

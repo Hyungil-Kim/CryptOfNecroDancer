@@ -82,7 +82,7 @@ private:
 	MOVESTATE _movestate;
 	InputDirection _inputdirection;
 	tagPlayer _player;
-	
+
 private:
 	image* player_headL;
 	image* player_bodyL;
@@ -115,7 +115,7 @@ public:
 	 void stateCheck();
 	 void changeAttackRange();
 	 void playerMove();
-
+	tagPlayer& getPlayerAddress() { return _player; }
 	
 	 void setIsDebug(bool isDebug) { _isDebug = isDebug; }
 };

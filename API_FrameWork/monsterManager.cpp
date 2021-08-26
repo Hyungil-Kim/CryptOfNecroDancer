@@ -16,9 +16,9 @@ HRESULT monsterManager::init()
 	_blue_slime = new blue_slime;
 	_orange_slime = new orange_slime;
 
-	_green_slime->addMonster(49*10+1, 49*10+1);
-	_blue_slime->addMonster(49*11,49*10+1);
-	_orange_slime->addMonster(49*13-2,49*10+1);
+	_green_slime->addMonster(48*10, 48*10);
+	_blue_slime->addMonster(48*11,48*10);
+	_orange_slime->addMonster(48*13,48*10);
 	return S_OK;
 }
 

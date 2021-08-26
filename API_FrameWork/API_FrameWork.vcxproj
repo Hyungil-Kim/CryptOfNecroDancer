@@ -144,13 +144,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="addImage.h" />
     <ClInclude Include="animation.h" />
     <ClInclude Include="animationManager.h" />
     <ClInclude Include="API_FrameWork.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CObject.h" />
-    <ClInclude Include="CRandomMapGenerator.h" />
     <ClInclude Include="CTile.h" />
+    <ClInclude Include="CWall.h" />
+    <ClInclude Include="enum.h" />
     <ClInclude Include="makeMonster.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
@@ -163,6 +165,7 @@
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="mainGame.h" />
+    <ClInclude Include="makeWall.h" />
     <ClInclude Include="mapTool.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="monsterManager.h" />
@@ -180,16 +183,18 @@
     <ClInclude Include="timer.h" />
     <ClInclude Include="txtData.h" />
     <ClInclude Include="utils.h" />
+    <ClInclude Include="wallManager.h" />
     <ClInclude Include="Zorder.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="addImage.cpp" />
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="animationManager.cpp" />
     <ClCompile Include="API_FrameWork.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CObject.cpp" />
-    <ClCompile Include="CRandomMapGenerator.cpp" />
     <ClCompile Include="CTile.cpp" />
+    <ClCompile Include="CWall.cpp" />
     <ClCompile Include="makeMonster.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
@@ -200,6 +205,7 @@
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="mainGame.cpp" />
+    <ClCompile Include="makeWall.cpp" />
     <ClCompile Include="mapTool.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="monsterManager.cpp" />
@@ -212,6 +218,7 @@
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="utils.cpp" />
+    <ClCompile Include="wallManager.cpp" />
     <ClCompile Include="Zorder.cpp" />
   </ItemGroup>
   <ItemGroup>

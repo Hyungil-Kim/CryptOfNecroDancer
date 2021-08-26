@@ -186,8 +186,20 @@
     <ClInclude Include="tileSize.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CRandomMapGenerator.h">
+    <ClInclude Include="enum.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="addImage.h">
+      <Filter>gameNode</Filter>
+    </ClInclude>
+    <ClInclude Include="makeWall.h">
       <Filter>CryptOfNecroDancer\map</Filter>
+    </ClInclude>
+    <ClInclude Include="CWall.h">
+      <Filter>CryptOfNecroDancer\map</Filter>
+    </ClInclude>
+    <ClInclude Include="wallManager.h">
+      <Filter>CryptOfNecroDancer\gameManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -278,8 +290,17 @@
     <ClCompile Include="CTile.cpp">
       <Filter>CryptOfNecroDancer\map</Filter>
     </ClCompile>
-    <ClCompile Include="CRandomMapGenerator.cpp">
+    <ClCompile Include="addImage.cpp">
+      <Filter>gameNode</Filter>
+    </ClCompile>
+    <ClCompile Include="makeWall.cpp">
       <Filter>CryptOfNecroDancer\map</Filter>
+    </ClCompile>
+    <ClCompile Include="CWall.cpp">
+      <Filter>CryptOfNecroDancer\map</Filter>
+    </ClCompile>
+    <ClCompile Include="wallManager.cpp">
+      <Filter>CryptOfNecroDancer\gameManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,10 @@
 #pragma once
 #include "image.h"
+#include "addImage.h"
 
 static image* _backBuffer = IMAGE->addImage("backBuffer", WINSIZEX, WINSIZEY);
-static image* _mapBuffer = IMAGE->addImage("mapBuffer", WINSIZEX, WINSIZEY);
 static image* _tileBuffer = IMAGE->addImage("tileBuffer", MAP_SIZE_X, MAP_SIZE_Y);
+static image* _mapBuffer = IMAGE->addImage("mapBuffer", WINSIZEX*3, WINSIZEY*3);
 static image* _DOLBuffer = IMAGE->addImage("DOLBuffer", MAP_SIZE_X, MAP_SIZE_Y);	//ÆÀÇÁ¿ë DC
 class gameNode
 {

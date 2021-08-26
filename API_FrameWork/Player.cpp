@@ -9,8 +9,8 @@ HRESULT Player::init()
 	_player.sight = 2;
 	_player.sholve = 0;
 	_player.ishit = false;
-	_player.x = 59;
-	_player.y = 59;
+	_player.x = 48;
+	_player.y = 48;
 	_player._speed = 1800;
 	_player.hitFireTile = false;
 	_player.hitIceTile = false;

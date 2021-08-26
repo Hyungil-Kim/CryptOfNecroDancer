@@ -9,6 +9,12 @@ CObject::CObject():
 {
 }
 
+
+CObject::CObject(POINT _pos, RECT _rc):
+	pos(_pos),rc(_rc)
+{
+}
+
 CObject::CObject(POINT _pos, POINT _size, image* _img, animation* _ani):
 	pos(_pos),size(_size),img(_img),ani(_ani)
 {
