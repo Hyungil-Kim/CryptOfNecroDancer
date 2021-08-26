@@ -11,15 +11,20 @@ HRESULT Player::init()
 	_player.ishit = false;
 	_player.x = 48;
 	_player.y = 48;
-	_player._speed = 1800;
+	_player.speed = 4;
+	_player.limit = TILE_SIZE_X;
 	_player.hitFireTile = false;
 	_player.hitIceTile = false;
+	_player.goleft = true;
+	_player.goright = true;
+	_player.gotop = true;
+	_player.gobottom = true;
 	_movestate = MOVESTATE::RIGHT;
 	_player.isCurrentRight = true;
-	player_headL=IMAGE->addFrameImage("플레이어왼쪽머리", "images/player/player_headL.bmp", 384*2, 48 * 2, 16, 2, true, RGB(255, 0, 255));
-	player_bodyL=IMAGE->addFrameImage("플레이어왼쪽몸", "images/player/player_bodyL.bmp", 384 * 2, 336 * 2, 16, 14, true, RGB(255, 0, 255));
-	player_headR=IMAGE->addFrameImage("플레이어오른쪽머리", "images/player/player_headR.bmp", 384 * 2, 48 * 2, 16, 2, true, RGB(255, 0, 255));
-	player_bodyR=IMAGE->addFrameImage("플레이어오른쪽몸", "images/player/player_bodyR.bmp", 384 * 2, 336 * 2, 16, 14, true, RGB(255, 0, 255));
+	player_headL=IMAGE->addFrameImage("플레이어왼쪽머리", "images/player/player_headL.bmp", 48*16, 48 * 2, 16, 2, true, RGB(255, 0, 255));
+	player_bodyL=IMAGE->addFrameImage("플레이어왼쪽몸", "images/player/player_bodyL.bmp", 48*16, 48 *14, 16, 14, true, RGB(255, 0, 255));
+	player_headR=IMAGE->addFrameImage("플레이어오른쪽머리", "images/player/player_headR.bmp", 48 * 16, 48 * 2, 16, 2, true, RGB(255, 0, 255));
+	player_bodyR=IMAGE->addFrameImage("플레이어오른쪽몸", "images/player/player_bodyR.bmp", 48 *16, 48 * 14, 16, 14, true, RGB(255, 0, 255));
 	
 	Aplayer_headL=ANIMATION->addNoneKeyAnimation("플레이어왼쪽머리", 15, 13, 10, false, true);
 	Aplayer_bodyL=ANIMATION->addNoneKeyAnimation("플레이어왼쪽몸", 15,13,10, false, true);
@@ -164,21 +169,43 @@ void Player::changeAttackRange()
 	
 }
 
+
 void Player::playerMove()
 {
 	switch (_movestate)
 	{
 	case LEFT:
-		_player.x -= TILE_SIZE_X;
+		for (int i = 0; i < 16; i++)
+		{
+			if (_player.goleft)
+			{
+				_player.x -= _player.speed;
+				_player.limit -= _player.speed;
+				if (_player.limit - _player.speed <= -2)
+				{
+					_player.limit = TILE_SIZE_X;
+					break;
+				}
+			}
+		}
 		break;
 	case UP:
-		_player.y -= TILE_SIZE_Y;
+		if (_player.gotop)
+		{
+			_player.y -= TILE_SIZE_Y;
+		}
 		break;
 	case RIGHT:
-		_player.x += TILE_SIZE_X;
+		if (_player.goright)
+		{
+			_player.x += TILE_SIZE_X;
+		}
 		break;
 	case DOWN:
-		_player.y += TILE_SIZE_Y;
+		if (_player.gobottom)
+		{
+			_player.y += TILE_SIZE_Y;
+		}
 		break;
 	default:
 		break;

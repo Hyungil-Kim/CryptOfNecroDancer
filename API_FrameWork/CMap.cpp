@@ -28,11 +28,8 @@ CMap::CMap(POINT startPos, POINT size)
 				startPos.x += size.x;
 
 			}
-			startPos = { tempPos.x,startPos.y + size.y };
-		
+			startPos = { tempPos.x,startPos.y + size.y };		
 	}
-
-
 }
 
 CMap::~CMap()
@@ -74,17 +71,5 @@ void CMap::render()
 		}
 	}
 
-}
-
-void CMap::makeWall()
-{
-	//for (int i = 0; i < TILE_NUM_X * TILE_NUM_Y; i++)
-	//{
-	//	CWall* tempwall = new CWall(tile[i].pt,
-	//		RectMakeCenter(room.tile[i].pt, TILEWIDTH, TILEHEIGHT),
-	//		room.tile[i].obj);
-
-	//	vObstacle.push_back(tempObstacle);
-	//}
 }
 

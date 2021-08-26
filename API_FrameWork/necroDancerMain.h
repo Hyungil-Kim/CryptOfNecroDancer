@@ -2,11 +2,13 @@
 #include "gameNode.h"
 #include"monsterManager.h"
 #include"wallManager.h"
+#include"collisionManager.h"
 #include "CMap.h"
 class necroDancerMain : public gameNode
 {
 private:
 	monsterManager* _mm;
+	collisionManager* _cm;
 	wallManager* _wm;
 	CMap* map;
 

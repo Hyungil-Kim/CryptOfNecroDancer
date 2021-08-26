@@ -5,8 +5,9 @@ struct tagWall
 	image* img;
 	animation* ani;
 	RECT rc;
+	WALL_TYPE _wallType;
 	float x, y;
-	int hp;
+	int hard;
 	bool canBreakWall = false;
 	bool isDetecting = false;
 	bool isHit = false;

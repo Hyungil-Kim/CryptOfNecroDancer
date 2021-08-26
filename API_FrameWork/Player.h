@@ -70,6 +70,13 @@ struct tagPlayer
 	int def;
 	int sight;
 	int sholve;
+	int limit;
+	int speed;
+	
+	bool goleft = true;
+	bool goright = true;
+	bool gotop = true;
+	bool gobottom = true;
 	float _speed;
 	float jumpPower = 500.f;
 	float moveTime = 0.1f;
@@ -115,6 +122,7 @@ public:
 	 void stateCheck();
 	 void changeAttackRange();
 	 void playerMove();
+	 void detective();
 	tagPlayer& getPlayerAddress() { return _player; }
 	
 	 void setIsDebug(bool isDebug) { _isDebug = isDebug; }

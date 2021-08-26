@@ -43,6 +43,7 @@ struct tagMonster
 	bool isMove = false;
 	bool isOnceMove = false;
 	bool AniLeft = false;
+	bool AttackOn = false;
 	MONSTERSTATE monsterState;
 	MONSTERMOVESTATE monsterMoveState;
 };

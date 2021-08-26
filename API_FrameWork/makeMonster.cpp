@@ -175,6 +175,7 @@ void blue_slime::addMonster(float x, float y)
 	newMonster.isHit = false;
 	newMonster.isCurrentRight = false;
 	newMonster.isMove = false;
+	newMonster.AttackOn = false;
 	newMonster.speed = 4;
 	newMonster.limit = TILE_SIZE_Y;
 	newMonster.isOnceMove = false;
@@ -195,11 +196,13 @@ void blue_slime::moveMonster()
 		{
 			
 			_viMonster->y -= 4;
+			_viMonster->AttackOn = true;
 			_viMonster->limit -= _viMonster->speed;
 			if (_viMonster->limit - _viMonster->speed <= -2)
 			{
 				_viMonster->limit = TILE_SIZE_Y;
 				_viMonster->isMove = true;
+				_viMonster->AttackOn = false;
 				_viMonster->isOnceMove = true;
 				updateRect(_viMonster);
 				break;
@@ -208,11 +211,13 @@ void blue_slime::moveMonster()
 		if (_viMonster->ani->findNowPlayIndex() == 7 && _viMonster->isOnceMove == false && _viMonster->isMove == true)
 		{
 			_viMonster->y += _viMonster->speed;
+			_viMonster->AttackOn = true;
 			_viMonster->limit -= _viMonster->speed;
 			if (_viMonster->limit - _viMonster->speed <= -2)
 			{	
 				_viMonster->limit = TILE_SIZE_Y;
 				_viMonster->isMove = false;
+				_viMonster->AttackOn = false;
 				_viMonster->isOnceMove = true;
 				updateRect(_viMonster);
 			}
@@ -300,6 +305,7 @@ void orange_slime::addMonster(float x, float y)
 	newMonster.isHit = false;
 	newMonster.isCurrentRight = false;
 	newMonster.isMove = false;
+	newMonster.AttackOn = false;
 	newMonster.AniLeft = true;
 	newMonster.limit = TILE_SIZE_Y;
 	newMonster.speed = 4;
@@ -320,9 +326,11 @@ void orange_slime::moveMonster()
 		if (_viMonster->ani->findNowPlayIndex() == 3 && _viMonster->isOnceMove == false && _viMonster->isMove == false && _viMonster->AniLeft == true)
 		{
 			_viMonster->y -= _viMonster->speed;
+			_viMonster->AttackOn = true;
 			_viMonster->limit -= _viMonster->speed;
 			if (_viMonster->limit - _viMonster->speed <= -2)
 			{
+				_viMonster->AttackOn = false;
 				_viMonster->limit = TILE_SIZE_Y;
 				_viMonster->isMove = true;
 				_viMonster->isOnceMove = true;
@@ -331,12 +339,14 @@ void orange_slime::moveMonster()
 		}
 		if (_viMonster->ani->findNowPlayIndex() == 3 && _viMonster->isOnceMove == false && _viMonster->isMove == true && _viMonster->AniLeft == true)
 		{
+			_viMonster->AttackOn = true;
 			_viMonster->x -= _viMonster->speed;
 			_viMonster->limit -= _viMonster->speed;
 			if (_viMonster->limit - _viMonster->speed <= -2)
 			{
 				_viMonster->limit = TILE_SIZE_Y;
 				_viMonster->isMove = false;
+				_viMonster->AttackOn = false;
 				_viMonster->isOnceMove = true;
 				_viMonster->AniLeft = false;
 				updateRect(_viMonster);
@@ -345,10 +355,12 @@ void orange_slime::moveMonster()
 		if (_viMonster->ani->findNowPlayIndex() == 3 && _viMonster->isOnceMove == false && _viMonster->isMove == false && _viMonster->AniLeft == false)
 		{
 			_viMonster->y += _viMonster->speed;
+			_viMonster->AttackOn = true;
 			_viMonster->limit -= _viMonster->speed;
 			if (_viMonster->limit - _viMonster->speed <= -2)
 			{
 				_viMonster->limit = TILE_SIZE_Y;
+				_viMonster->AttackOn = false;
 				_viMonster->isMove = true;
 				_viMonster->isOnceMove = true;
 				updateRect(_viMonster);
@@ -357,11 +369,13 @@ void orange_slime::moveMonster()
 		if (_viMonster->ani->findNowPlayIndex() == 3 && _viMonster->isOnceMove == false && _viMonster->isMove == true && _viMonster->AniLeft == false)
 		{
 			_viMonster->x += _viMonster->speed;
+			_viMonster->AttackOn = true;
 			_viMonster->limit -= _viMonster->speed;
 			if (_viMonster->limit - _viMonster->speed <= -2)
 			{
 				_viMonster->limit = TILE_SIZE_Y;
 				_viMonster->isMove = false;
+				_viMonster->AttackOn = false;
 				_viMonster->isOnceMove = true;
 				_viMonster->AniLeft = true;
 				updateRect(_viMonster);

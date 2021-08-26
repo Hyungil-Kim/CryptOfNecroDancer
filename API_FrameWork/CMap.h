@@ -1,14 +1,14 @@
 #pragma once
 #include "gameNode.h"
 #include "CTile.h"
-
+#include "monster.h"
+#include "CWall.h"
 
 
 class CMap :public gameNode
 {
 	CTile* tile[TILE_NUM_X * TILE_NUM_Y];
-
-
+	
 	
 	bool _isDebug;
 public:
@@ -25,6 +25,7 @@ public:
 
 
 	CTile** getTile() { return tile; }
+
 	void setIsDebug(bool isDebug) { _isDebug = isDebug; }
 };
 

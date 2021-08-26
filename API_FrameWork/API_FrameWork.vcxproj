@@ -150,6 +150,7 @@
     <ClInclude Include="API_FrameWork.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CObject.h" />
+    <ClInclude Include="collisionManager.h" />
     <ClInclude Include="CTile.h" />
     <ClInclude Include="CWall.h" />
     <ClInclude Include="enum.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="tileSize.h" />
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="TreeNode.h" />
     <ClInclude Include="txtData.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="wallManager.h" />
@@ -193,6 +195,7 @@
     <ClCompile Include="API_FrameWork.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CObject.cpp" />
+    <ClCompile Include="collisionManager.cpp" />
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="CWall.cpp" />
     <ClCompile Include="makeMonster.cpp" />
@@ -216,6 +219,7 @@
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="timer.cpp" />
+    <ClCompile Include="TreeNode.cpp" />
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="wallManager.cpp" />
