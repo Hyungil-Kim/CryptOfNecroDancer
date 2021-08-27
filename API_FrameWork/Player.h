@@ -72,7 +72,7 @@ struct tagPlayer
 	int sholve;
 	int limit;
 	int speed;
-	
+	int posx, posy;
 	bool goleft = true;
 	bool goright = true;
 	bool gotop = true;
@@ -81,7 +81,7 @@ struct tagPlayer
 	float jumpPower = 500.f;
 	float moveTime = 0.1f;
 };
-
+class wallManager;
 class Player :public Singleton<Player>
 {
 private:
@@ -89,6 +89,8 @@ private:
 	MOVESTATE _movestate;
 	InputDirection _inputdirection;
 	tagPlayer _player;
+	int tileX;
+	int tileY;
 
 private:
 	image* player_headL;
@@ -107,11 +109,12 @@ private:
 	image* daggerEffect;
 	animation* AdaggerEffect;
 	RECT attackrange;
-	int tileX, tileY;
+	int checkwall[30][30];
 	int curTile;
 private:
 	bool _isDebug;
 public:
+	wallManager* _wm;
 	 HRESULT init();
 	 void release();
 	 void update(); //계산하는곳
@@ -123,6 +126,8 @@ public:
 	 void changeAttackRange();
 	 void playerMove();
 	 void detective();
+	 
+	 void setWallmanagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
 	tagPlayer& getPlayerAddress() { return _player; }
 	
 	 void setIsDebug(bool isDebug) { _isDebug = isDebug; }

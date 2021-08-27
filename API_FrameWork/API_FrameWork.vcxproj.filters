@@ -79,6 +79,9 @@
     <Filter Include="TreeNode">
       <UniqueIdentifier>{0f160a99-fea1-4217-a735-cb925fac3ec0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CryptOfNecroDancer\map\object">
+      <UniqueIdentifier>{9b498055-781f-4330-afe4-a753f3130467}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -195,12 +198,6 @@
     <ClInclude Include="addImage.h">
       <Filter>gameNode</Filter>
     </ClInclude>
-    <ClInclude Include="makeWall.h">
-      <Filter>CryptOfNecroDancer\map</Filter>
-    </ClInclude>
-    <ClInclude Include="CWall.h">
-      <Filter>CryptOfNecroDancer\map</Filter>
-    </ClInclude>
     <ClInclude Include="wallManager.h">
       <Filter>CryptOfNecroDancer\gameManager</Filter>
     </ClInclude>
@@ -209,6 +206,15 @@
     </ClInclude>
     <ClInclude Include="TreeNode.h">
       <Filter>TreeNode</Filter>
+    </ClInclude>
+    <ClInclude Include="CWall.h">
+      <Filter>CryptOfNecroDancer\map\object</Filter>
+    </ClInclude>
+    <ClInclude Include="makeWall.h">
+      <Filter>CryptOfNecroDancer\map\object</Filter>
+    </ClInclude>
+    <ClInclude Include="CObstacle.h">
+      <Filter>CryptOfNecroDancer\map\object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -302,12 +308,6 @@
     <ClCompile Include="addImage.cpp">
       <Filter>gameNode</Filter>
     </ClCompile>
-    <ClCompile Include="makeWall.cpp">
-      <Filter>CryptOfNecroDancer\map</Filter>
-    </ClCompile>
-    <ClCompile Include="CWall.cpp">
-      <Filter>CryptOfNecroDancer\map</Filter>
-    </ClCompile>
     <ClCompile Include="wallManager.cpp">
       <Filter>CryptOfNecroDancer\gameManager</Filter>
     </ClCompile>
@@ -316,6 +316,15 @@
     </ClCompile>
     <ClCompile Include="TreeNode.cpp">
       <Filter>TreeNode</Filter>
+    </ClCompile>
+    <ClCompile Include="CWall.cpp">
+      <Filter>CryptOfNecroDancer\map\object</Filter>
+    </ClCompile>
+    <ClCompile Include="makeWall.cpp">
+      <Filter>CryptOfNecroDancer\map\object</Filter>
+    </ClCompile>
+    <ClCompile Include="CObstacle.cpp">
+      <Filter>CryptOfNecroDancer\map\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

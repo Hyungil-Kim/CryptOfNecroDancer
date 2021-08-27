@@ -1,10 +1,11 @@
 #pragma once
-#include "gameNode.h"
+#include "CObstacle.h"
 struct tagWall
 {
 	image* img;
 	animation* ani;
 	RECT rc;
+	RECT colrc;
 	WALL_TYPE _wallType;
 	float x, y;
 	int hard;
@@ -14,7 +15,7 @@ struct tagWall
 	bool isDead = false;
 
 };
-class CWall: public gameNode
+class CWall: public CObstacle
 {
 	protected:
 		vector<tagWall> _vWall;

@@ -67,7 +67,7 @@ void necroDancerMain::gameinit()
 	_mm->init();
 	_wm->init();
 	_cm->init();
-	
+	PLAYER->setWallmanagerMemoryLink(_wm);
 	_cm->setMonsterMemoryLink(_mm);
-
+	_mm->setWallMemoryLink(_wm);
 }

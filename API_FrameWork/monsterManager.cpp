@@ -1,6 +1,6 @@
 #include "framework.h"
 #include "monsterManager.h"
-
+#include "wallManager.h"
 monsterManager::monsterManager()
 {
 

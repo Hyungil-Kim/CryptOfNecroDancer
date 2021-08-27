@@ -1,5 +1,5 @@
 #pragma once
-#include "gameNode.h"
+#include"CObstacle.h"
 
 class Player;
 enum class MONSTERSTATE {
@@ -48,7 +48,7 @@ struct tagMonster
 	MONSTERMOVESTATE monsterMoveState;
 };
 
-class monster : public gameNode
+class monster : public CObstacle
 {
 protected:
 	vector<tagMonster> _vMonster;
