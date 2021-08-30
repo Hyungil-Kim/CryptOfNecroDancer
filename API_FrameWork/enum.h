@@ -15,3 +15,4 @@ enum class OBJECT
 	OBG_MON,
 	OBG_PLAYER
 };
+

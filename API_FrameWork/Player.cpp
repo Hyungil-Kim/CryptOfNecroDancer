@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "Player.h"
 #include "wallManager.h"
+#include "monster.h"
 HRESULT Player::init()
 {
 	_player.hp = 12;
@@ -11,6 +12,7 @@ HRESULT Player::init()
 	_player.ishit = false;
 	_player.x = 0;
 	_player.y = 0;
+
 	_player.posx = _player.x / 48;
 	_player.posy = _player.y / 48;
 	_player.speed = 4;
@@ -27,14 +29,14 @@ HRESULT Player::init()
 	player_bodyL = IMAGE->addFrameImage("플레이어왼쪽몸", "images/player/player_bodyL.bmp", 48 * 16, 48 * 14, 16, 14, true, RGB(255, 0, 255));
 	player_headR = IMAGE->addFrameImage("플레이어오른쪽머리", "images/player/player_headR.bmp", 48 * 16, 48 * 2, 16, 2, true, RGB(255, 0, 255));
 	player_bodyR = IMAGE->addFrameImage("플레이어오른쪽몸", "images/player/player_bodyR.bmp", 48 * 16, 48 * 14, 16, 14, true, RGB(255, 0, 255));
-
+	_player.isSpawn = true;
 	Aplayer_headL = ANIMATION->addNoneKeyAnimation("플레이어왼쪽머리", 15, 13, 10, false, true);
 	Aplayer_bodyL = ANIMATION->addNoneKeyAnimation("플레이어왼쪽몸", 15, 13, 10, false, true);
 	Aplayer_headR = ANIMATION->addNoneKeyAnimation("플레이어오른쪽머리", 0, 3, 10, false, true);
 	Aplayer_bodyR = ANIMATION->addNoneKeyAnimation("플레이어오른쪽몸", 0, 3, 10, false, true);
 	
 	_player.player_rc = RectMake(_player.x, _player.y, player_bodyL->getFrameWidth(), player_bodyL->getFrameHeight());
-
+	
 	return S_OK;
 }
 
@@ -44,7 +46,10 @@ void Player::release()
 
 void Player::update()
 {
-	
+	if (_player.isSpawn == true) {
+		this->spawn();
+		
+	}
 	this->inputCheck();
 	this->inputDirectionCheck();
 	this->stateCheck();
@@ -59,12 +64,12 @@ void Player::render(HDC hdc)
 	{
 		if ((_player.isCurrentRight == false && _movestate == MOVESTATE::UP) || (_player.isCurrentRight == false && _movestate == MOVESTATE::DOWN) || (_player.isCurrentRight == false && _movestate == MOVESTATE::LEFT))
 		{
-			ZORDER->ZorderAniRender(player_headL, 4, player_body_rc.bottom, _player.x, _player.y, Aplayer_headL);
+			ZORDER->ZorderAniRender(player_headL, 4, 3000, _player.x, _player.y, Aplayer_headL);
 			ZORDER->ZorderAniRender(player_bodyL, 4, player_body_rc.bottom, _player.x, _player.y, Aplayer_bodyL);
 		}
 		else if ((_player.isCurrentRight == true && _movestate == MOVESTATE::UP) || (_player.isCurrentRight == true && _movestate == MOVESTATE::DOWN) || (_player.isCurrentRight == true && _movestate == MOVESTATE::RIGHT))
 		{
-			ZORDER->ZorderAniRender(player_headR, 4, player_body_rc.bottom, _player.x, _player.y, Aplayer_headR);
+			ZORDER->ZorderAniRender(player_headR, 4, 3000, _player.x, _player.y, Aplayer_headR);
 			ZORDER->ZorderAniRender(player_bodyR, 4, player_body_rc.bottom, _player.x, _player.y, Aplayer_bodyR);
 		}
 	}
@@ -172,6 +177,20 @@ void Player::changeAttackRange()
 
 }
 
+void Player::spawn()
+{
+
+	for (int i = 0; i < _wm->getVSpawnPoint().size(); i++)
+	{
+		_player.x = _wm->getVSpawnPoint()[0].x;
+		_player.y = _wm->getVSpawnPoint()[0].y;
+		_player.posx = _player.x / 48;
+		_player.posy = _player.y / 48;
+		_wm->eraseSPoint(0);
+	_player.isSpawn = false;
+	}
+}
+
 
 void Player::playerMove()
 {
@@ -195,7 +214,55 @@ void Player::playerMove()
 		break;
 	}
 
-	if (_wm->getDungeon(tempX, tempY) != 0)
+	if (_wm->getDungeon(tempX, tempY) != 0 )
+	{
+		_player.posx = tempX;
+		_player.posy = tempY;
+	
+		switch (_movestate)
+		{
+		case LEFT:
+			_player.x -= TILE_SIZE_X;
+			break;
+		case UP:
+			_player.y -= TILE_SIZE_Y;
+			break;
+		case RIGHT:
+			_player.x += TILE_SIZE_X;
+			break;
+		case DOWN:
+			_player.y += TILE_SIZE_Y;
+			break;
+		default:
+			break;
+		}
+	}
+	if (_wm->getDungeon(tempX, tempY) == 0)
+	{
+		
+		switch (_movestate)
+		{
+		case LEFT:
+			_wm->setDungeon(tempX, tempY, 1);
+			_wm->getsoftWall()->eraseWall(tempX,tempY); 
+			break;
+		case UP:
+			_wm->setDungeon(tempX, tempY, 1);
+			_wm->getsoftWall()->eraseWall(tempX, tempY);
+			break;
+		case RIGHT:
+			_wm->setDungeon(tempX, tempY, 1);
+			_wm->getsoftWall()->eraseWall(tempX, tempY);
+			break;
+		case DOWN:
+			_wm->setDungeon(tempX, tempY, 1);
+			_wm->getsoftWall()->eraseWall(tempX, tempY);
+			break;
+		default:
+			break;
+		}
+	}
+	/*if (_wm->getDungeon(tempX, tempY) != 0)
 	{
 		_player.posx = tempX;
 		_player.posy = tempY;
@@ -216,8 +283,7 @@ void Player::playerMove()
 		default:
 			break;
 		}
-	}
-
+	}*/
 
 
 }

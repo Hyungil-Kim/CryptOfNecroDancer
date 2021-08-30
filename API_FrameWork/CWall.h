@@ -14,6 +14,8 @@ struct tagWall
 	bool isHit = false;
 	bool isDead = false;
 
+
+
 };
 class CWall: public CObstacle
 {
@@ -28,13 +30,14 @@ class CWall: public CObstacle
 
 		HRESULT init();
 		void release();
-		void update();//플레이어 위치 참고하기위해 
+		void update(); 
 		void render();
 
 		virtual void addWall(float x, float y);
 	
 
 
-		vector<tagWall>& getVMonster() { return _vWall; }
+		vector<tagWall>& getVWall() { return _vWall; }
+		vector<tagWall>::iterator& getVIWall() { return _viWall; }
 		void setIsDebug(bool isDebug) { _isDebug = isDebug; }
 };

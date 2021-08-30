@@ -77,11 +77,13 @@ struct tagPlayer
 	bool goright = true;
 	bool gotop = true;
 	bool gobottom = true;
+	bool isSpawn;
 	float _speed;
 	float jumpPower = 500.f;
 	float moveTime = 0.1f;
 };
 class wallManager;
+class monster;
 class Player :public Singleton<Player>
 {
 private:
@@ -113,8 +115,9 @@ private:
 	int curTile;
 private:
 	bool _isDebug;
-public:
 	wallManager* _wm;
+	monster* _mon;
+public:
 	 HRESULT init();
 	 void release();
 	 void update(); //계산하는곳
@@ -125,9 +128,9 @@ public:
 	 void stateCheck();
 	 void changeAttackRange();
 	 void playerMove();
-	 void detective();
-	 
+	 void spawn();
 	 void setWallmanagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
+	 void setmonsterMemoryLink(monster* monster) { _mon = monster; }
 	tagPlayer& getPlayerAddress() { return _player; }
 	
 	 void setIsDebug(bool isDebug) { _isDebug = isDebug; }

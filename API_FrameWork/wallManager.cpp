@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "wallManager.h"
-
+#include "monsterManager.h"
+#include"monster.h"
 wallManager::wallManager()
 {
 }
@@ -13,6 +14,11 @@ HRESULT wallManager::init()
 {
 	_makeSoftWall = new makeSoftWall;
 	_makeHardWall = new makeHardWall;
+	spawnTime = true;
+	level = 1;
+	startNum = 0;
+	monsterNum = 12 + level * 2.5;
+
 	for (int i = 0; i < TILE_NUM_X; i++)
 	{
 		for (int k = 0; k < TILE_NUM_Y; k++)
@@ -23,7 +29,7 @@ HRESULT wallManager::init()
 	srand(time(NULL));
 	makeDungeon();
 	showDungeon();
-	
+
 	return S_OK;
 }
 
@@ -40,6 +46,14 @@ void wallManager::update()
 {
 	_makeSoftWall->update();
 	_makeHardWall->update();
+	if (spawnTime == true)
+	{
+		if (monsterNum > startNum)
+		{
+			spawnMon();
+			startNum++;
+		}
+	}
 }
 
 void wallManager::render()
@@ -59,8 +73,9 @@ DLocation wallManager::divideDungeon(int depth, int r1, int c1, int r2, int c2)
 				Dungeon[i][k] = 1;// _makeSoftWall->addWall(i * 48, k * 48);
 				if (Dungeon[i][k] == 1)
 				{
-					SpawnPoint tag;
-			
+					SpawnPoint newspawnPoint;
+					newspawnPoint.x = i*48;
+					newspawnPoint.y = k*48;
 					_vSpawn.push_back(newspawnPoint);
 				}
 			}
@@ -112,9 +127,6 @@ DLocation wallManager::divideDungeon(int depth, int r1, int c1, int r2, int c2)
 	return Location;
 }
 
-void wallManager::SpawnPoint()
-{
-}
 
 
 void wallManager::makeDungeon()
@@ -128,7 +140,43 @@ void wallManager::showDungeon() {
 			if (Dungeon[i][k] == 0)
 			{
 				_makeSoftWall->addWall(i*48,k*48);
+				
 			}
 		}
 	}
+}
+
+void wallManager::spawnMon()
+{
+	for (int j = 0; j < _vSpawn.size(); j++)
+	{
+		int random = 0;
+		random = RND->getFromInTo(0, _vSpawn.size()-1);
+		int randdomNum = RND->getFromInTo(0, 2);
+		int i =	_vSpawn[random].x;
+		int k =	_vSpawn[random].y;
+		switch (randdomNum)
+		{
+			case 0:
+			_mm->getBlueSlime()->addMonster(i, k);
+			eraseSPoint(random);
+				break;
+			case 1:
+			_mm->getGreenSlime()->addMonster(i, k);
+			eraseSPoint(random);
+				break;
+			case 2:
+			_mm->getOrangeSlime()->addMonster(i, k);
+			eraseSPoint(random);
+				break;
+		default:
+			break;
+		}
+		break;
+	}
+}
+
+void wallManager::eraseSPoint(int arrNum)
+{
+	_vSpawn.erase(_vSpawn.begin() + arrNum);
 }

@@ -201,9 +201,6 @@
     <ClInclude Include="wallManager.h">
       <Filter>CryptOfNecroDancer\gameManager</Filter>
     </ClInclude>
-    <ClInclude Include="collisionManager.h">
-      <Filter>CryptOfNecroDancer\gameManager</Filter>
-    </ClInclude>
     <ClInclude Include="TreeNode.h">
       <Filter>TreeNode</Filter>
     </ClInclude>
@@ -309,9 +306,6 @@
       <Filter>gameNode</Filter>
     </ClCompile>
     <ClCompile Include="wallManager.cpp">
-      <Filter>CryptOfNecroDancer\gameManager</Filter>
-    </ClCompile>
-    <ClCompile Include="collisionManager.cpp">
       <Filter>CryptOfNecroDancer\gameManager</Filter>
     </ClCompile>
     <ClCompile Include="TreeNode.cpp">

@@ -16,9 +16,9 @@ HRESULT monsterManager::init()
 	_blue_slime = new blue_slime;
 	_orange_slime = new orange_slime;
 
-	_green_slime->addMonster(48*10, 48*10);
-	_blue_slime->addMonster(48*11,48*10);
-	_orange_slime->addMonster(48*13,48*10);
+	_green_slime->setwallManagerMemoryLink(_wm);
+	_blue_slime->setwallManagerMemoryLink(_wm);
+	_orange_slime->setwallManagerMemoryLink(_wm);
 	return S_OK;
 }
 
@@ -44,4 +44,8 @@ void monsterManager::render()
 	_green_slime->render();
 	_blue_slime->render();
 	_orange_slime->render();
+}
+
+void monsterManager::spawn()
+{
 }

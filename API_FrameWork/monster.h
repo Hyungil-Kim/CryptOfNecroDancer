@@ -2,6 +2,7 @@
 #include"CObstacle.h"
 
 class Player;
+class wallManager;
 enum class MONSTERSTATE {
 	MOVE,
 	STOP,
@@ -28,12 +29,18 @@ struct tagMonster
 	animation* leftshadowani;
 	RECT rc;
 	float x, y;
+	float posx, posy;
 
 	int hp;
 	int atk;
 	int speed;
 	int limit;
 	//int def; 확인후 삭제
+	
+	bool canleft = false;
+	bool canright = false;
+	bool canup = false;
+	bool candown = false;
 	
 	bool canBreakWall = false;
 	bool isDetecting = false;
@@ -44,6 +51,7 @@ struct tagMonster
 	bool isOnceMove = false;
 	bool AniLeft = false;
 	bool AttackOn = false;
+
 	MONSTERSTATE monsterState;
 	MONSTERMOVESTATE monsterMoveState;
 };
@@ -53,8 +61,8 @@ class monster : public CObstacle
 protected:
 	vector<tagMonster> _vMonster;
 	vector<tagMonster>::iterator _viMonster;
-
 	bool _isDebug;
+	wallManager* _wm;
 public:
 	monster();
 	~monster();
@@ -68,9 +76,11 @@ public:
 	virtual void move();
 	virtual void stateCheck();
 	virtual void moveMonster();
-
-
+	virtual void setwallManagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
+	virtual void isCanMove();
+	
 	vector<tagMonster>& getVMonster() { return _vMonster; }
+	vector<tagMonster>::iterator& getVIMonster() { return _viMonster; }
 	void setIsDebug(bool isDebug) { _isDebug = isDebug; }
 
 };

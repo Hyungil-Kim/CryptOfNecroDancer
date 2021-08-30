@@ -151,7 +151,6 @@
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CObject.h" />
     <ClInclude Include="CObstacle.h" />
-    <ClInclude Include="collisionManager.h" />
     <ClInclude Include="CTile.h" />
     <ClInclude Include="CWall.h" />
     <ClInclude Include="enum.h" />
@@ -197,7 +196,6 @@
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="CObstacle.cpp" />
-    <ClCompile Include="collisionManager.cpp" />
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="CWall.cpp" />
     <ClCompile Include="makeMonster.cpp" />

@@ -13,12 +13,14 @@ public:
 	void render();
 
 	virtual void addWall(float x, float y);
+	virtual void eraseWall(int x, int y);
 	virtual void updateRect(vector<tagWall>::iterator iter);
 };
 
 class makeHardWall :public CWall
 {
 	image* hard_wall;
+
 public:
 	makeHardWall();
 	~makeHardWall();
@@ -27,7 +29,7 @@ public:
 	void release();
 	void update();//플레이어 위치 참고하기위해 
 	void render();
-
+	virtual void eraseWall(int x, int y);
 	virtual void addWall(float x, float y);
 	virtual void updateRect(vector<tagWall>::iterator iter);
 };

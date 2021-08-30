@@ -48,6 +48,18 @@ void makeSoftWall::addWall(float x, float y)
 	_vWall.push_back(newWall);
 }
 
+void makeSoftWall::eraseWall(int x, int y)
+{
+	for (_viWall = _vWall.begin(); _viWall != _vWall.end(); _viWall++)
+	{
+		if (x == _viWall->x/48 && y == _viWall->y/48)
+		{
+			_vWall.erase(_viWall);
+			break;
+		}
+	}
+}
+
 void makeSoftWall::updateRect(vector<tagWall>::iterator iter)
 {
 	iter->rc = RectMake(iter->x, iter->y, iter->img->getFrameWidth(), iter->img->getFrameHeight());
@@ -83,6 +95,17 @@ void makeHardWall::render()
 			ZORDER->ZorderRectangle(_viWall->rc, 4);
 		}
 		ZORDER->ZorderFrameRender(hard_wall, 3, _viWall->rc.bottom, _viWall->x, _viWall->y);
+	}
+}
+
+void makeHardWall::eraseWall(int x, int y)
+{
+	for (_viWall = _vWall.begin(); _viWall != _vWall.end(); _viWall++)
+	{
+		if (x == _viWall->x && y == _viWall->y)
+		{
+			_vWall.erase(_viWall);
+		}
 	}
 }
 

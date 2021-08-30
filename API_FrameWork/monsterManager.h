@@ -41,7 +41,7 @@ public:
 
 	//링크
 	void setPlayerMemoryLink(Player* py) { _py = py; }
-
+	void spawn();
 	void setWallMemoryLink(wallManager* wallManager) { _wm = wallManager; }
 	//디버그
 	void setIsDebug(bool isDebug) {
