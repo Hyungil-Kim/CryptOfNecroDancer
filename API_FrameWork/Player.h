@@ -73,10 +73,15 @@ struct tagPlayer
 	int limit;
 	int speed;
 	int posx, posy;
-	bool goleft = true;
-	bool goright = true;
-	bool gotop = true;
-	bool gobottom = true;
+	bool goleft;
+	bool goright;
+	bool gotop;
+	bool gobottom;
+	bool atkleft;
+	bool atkright;
+	bool atktop;
+	bool atkbottom;
+	bool isInput;
 	bool isSpawn;
 	float _speed;
 	float jumpPower = 500.f;
@@ -105,11 +110,15 @@ private:
 	animation* Aplayer_headR;
 	animation* Aplayer_bodyR;
 
+	image* player_dagAtk;
+	animation* Aplayer_dagAtkL;
+	animation* Aplayer_dagAtkU;
+	animation* Aplayer_dagAtkD;
+	animation* Aplayer_dagAtkR;
 	RECT player_head_rc;
 	RECT player_body_rc;
 private:
-	image* daggerEffect;
-	animation* AdaggerEffect;
+
 	RECT attackrange;
 	int checkwall[30][30];
 	int curTile;
@@ -129,6 +138,7 @@ public:
 	 void changeAttackRange();
 	 void playerMove();
 	 void spawn();
+	 void Attack();
 	 void setWallmanagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
 	 void setmonsterMemoryLink(monster* monster) { _mon = monster; }
 	tagPlayer& getPlayerAddress() { return _player; }

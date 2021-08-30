@@ -28,8 +28,8 @@ struct tagMonster
 	animation* shadowani;
 	animation* leftshadowani;
 	RECT rc;
-	float x, y;
-	float posx, posy;
+	int x, y;
+	int posx, posy;
 
 	int hp;
 	int atk;
@@ -51,6 +51,7 @@ struct tagMonster
 	bool isOnceMove = false;
 	bool AniLeft = false;
 	bool AttackOn = false;
+	
 
 	MONSTERSTATE monsterState;
 	MONSTERMOVESTATE monsterMoveState;
@@ -78,7 +79,8 @@ public:
 	virtual void moveMonster();
 	virtual void setwallManagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
 	virtual void isCanMove();
-	
+	virtual bool findMonster(int x , int y);
+	virtual bool findPlayer(int x , int y);
 	vector<tagMonster>& getVMonster() { return _vMonster; }
 	vector<tagMonster>::iterator& getVIMonster() { return _viMonster; }
 	void setIsDebug(bool isDebug) { _isDebug = isDebug; }

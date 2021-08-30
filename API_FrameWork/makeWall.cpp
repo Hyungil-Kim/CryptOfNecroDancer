@@ -28,9 +28,6 @@ void makeSoftWall::render()
 {
 	for(_viWall = _vWall.begin() ; _viWall != _vWall.end(); _viWall++)
 	{
-		if (_isDebug) {
-			ZORDER->ZorderRectangle(_viWall->rc,4);
-		}
 		ZORDER->ZorderFrameRender(normal_wall, 3, _viWall->rc.bottom, _viWall->x, _viWall->y);
 	}
 }
@@ -43,7 +40,7 @@ void makeSoftWall::addWall(float x, float y)
 	newWall.y = y ;
 	newWall._wallType = WALL_TYPE::SOFT_WALL;
 	newWall.rc = RectMake(x , y, newWall.img->getFrameWidth(), newWall.img->getFrameHeight());
-	newWall.colrc = RectMake(x , y, newWall.img->getFrameWidth(), newWall.img->getFrameHeight());
+	
 	newWall.hard = 2;
 	_vWall.push_back(newWall);
 }
@@ -117,7 +114,6 @@ void makeHardWall::addWall(float x, float y)
 	newWall.y = y;
 	newWall._wallType = WALL_TYPE::HARD_WALL;
 	newWall.rc = RectMake(x, y, newWall.img->getFrameWidth(), newWall.img->getFrameHeight());
-	newWall.colrc = RectMake(x, y, newWall.img->getFrameWidth(), newWall.img->getFrameHeight());
 	newWall.hard = 3;
 	_vWall.push_back(newWall);
 }

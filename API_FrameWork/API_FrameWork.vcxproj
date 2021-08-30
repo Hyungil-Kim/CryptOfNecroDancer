@@ -175,6 +175,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="rhythmUI.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="singleton.h" />
     <ClInclude Include="soundManager.h" />
@@ -215,6 +216,7 @@
     <ClCompile Include="necroDancerMain.cpp" />
     <ClCompile Include="OBBCollision.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="rhythmUI.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="timeManager.cpp" />

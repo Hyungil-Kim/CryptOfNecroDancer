@@ -8,8 +8,8 @@ monstername					imagename
 1.	green_slime				그린슬라임
 2.	blue_slime				블루슬라임
 3.	orange_slime			오랜지슬라임
-4	
-5.	
+4
+5.
 
 */
 //////////////////////////////////////////////////////////////
@@ -17,8 +17,8 @@ monstername					imagename
 //////////////////////////////////////////////////////////////
 green_slime::green_slime()
 {
-	IMAGE->addFrameImage("그린슬라임", "images/monster/slime_green.bmp", 48*4, 48*2, 4, 2, true);
-	
+	IMAGE->addFrameImage("그린슬라임", "images/monster/slime_green.bmp", 48 * 4, 48 * 2, 4, 2, true);
+
 }
 
 green_slime::~green_slime()
@@ -70,13 +70,13 @@ void green_slime::addMonster(float x, float y)
 	newMonster.img = IMAGE->findImage("그린슬라임");
 	newMonster.x = x;
 	newMonster.y = y;
-	newMonster.posx = x/48;
-	newMonster.posy = y/48;
+	newMonster.posx = x / 48;
+	newMonster.posy = y / 48;
 	newMonster.rc = RectMake(x, y, newMonster.img->getFrameWidth(), newMonster.img->getFrameHeight());
 	newMonster.hp = 4;
 	newMonster.atk = 2;
-	newMonster.ani = ANIMATION->addNoneKeyAnimation("그린슬라임",0,3, 5, false,true);
-	newMonster.shadowani = ANIMATION->addNoneKeyAnimation("그린슬라임",4,7,5,false,true);
+	newMonster.ani = ANIMATION->addNoneKeyAnimation("그린슬라임", 0, 3, 5, false, true);
+	newMonster.shadowani = ANIMATION->addNoneKeyAnimation("그린슬라임", 4, 7, 5, false, true);
 	newMonster.canBreakWall = false;
 	newMonster.isDetecting = false;
 	newMonster.isDead = false;
@@ -104,7 +104,7 @@ void green_slime::updateRect(vector<tagMonster>::iterator iter)
 //////////////////////////////////////////////////////////////
 blue_slime::blue_slime()
 {
-	IMAGE->addFrameImage("블루슬라임", "images/monster/slime_blue.bmp", 48*8, 48*2, 8, 2, true);
+	IMAGE->addFrameImage("블루슬라임", "images/monster/slime_blue.bmp", 48 * 8, 48 * 2, 8, 2, true);
 
 }
 
@@ -161,7 +161,7 @@ void blue_slime::addMonster(float x, float y)
 	newMonster.hp = 4;
 	newMonster.atk = 2;
 	newMonster.ani = ANIMATION->addNoneKeyAnimation("블루슬라임", 0, 7, 4, false, true);
-	newMonster.shadowani = ANIMATION->addNoneKeyAnimation("블루슬라임", 8,15, 5, false, true);
+	newMonster.shadowani = ANIMATION->addNoneKeyAnimation("블루슬라임", 8, 15, 5, false, true);
 	newMonster.canBreakWall = false;
 	newMonster.isDetecting = false;
 	newMonster.isDead = false;
@@ -189,6 +189,7 @@ void blue_slime::moveMonster()
 {
 	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
 	{
+		_viMonster->posy = _viMonster->y / 48;
 		isCanMove();
 		if (_viMonster->canup == true)
 		{
@@ -205,23 +206,27 @@ void blue_slime::moveMonster()
 					_viMonster->isOnceMove = true;
 					_viMonster->monsterMoveState = MONSTERMOVESTATE::DOWN;
 					updateRect(_viMonster);
-					break;
+
 				}
 			}
 		}
-		if (_viMonster->ani->findNowPlayIndex() == 7 && _viMonster->isOnceMove == false && _viMonster->isMove == true)
+		isCanMove();
+		if (_viMonster->candown == true)
 		{
-			_viMonster->y += _viMonster->speed;
-			_viMonster->AttackOn = true;
-			_viMonster->limit -= _viMonster->speed;
-			if (_viMonster->limit - _viMonster->speed <= -2)
-			{	
-				_viMonster->limit = TILE_SIZE_Y;
-				_viMonster->isMove = false;
-				_viMonster->AttackOn = false;
-				_viMonster->isOnceMove = true;
-				updateRect(_viMonster);
-				_viMonster->monsterMoveState = MONSTERMOVESTATE::UP;
+			if (_viMonster->ani->findNowPlayIndex() == 7 && _viMonster->isOnceMove == false && _viMonster->isMove == true)
+			{
+				_viMonster->y += _viMonster->speed;
+				_viMonster->AttackOn = true;
+				_viMonster->limit -= _viMonster->speed;
+				if (_viMonster->limit - _viMonster->speed <= -2)
+				{
+					_viMonster->limit = TILE_SIZE_Y;
+					_viMonster->isMove = false;
+					_viMonster->AttackOn = false;
+					_viMonster->isOnceMove = true;
+					_viMonster->monsterMoveState = MONSTERMOVESTATE::UP;
+					updateRect(_viMonster);
+				}
 			}
 		}
 		if (_viMonster->ani->findNowPlayIndex() == 0)
@@ -233,7 +238,7 @@ void blue_slime::moveMonster()
 
 void blue_slime::movestate()
 {
-	
+
 }
 
 void blue_slime::updateRect(vector<tagMonster>::iterator iter)
@@ -350,6 +355,7 @@ void orange_slime::moveMonster()
 				{
 					_viMonster->AttackOn = false;
 					_viMonster->limit = TILE_SIZE_Y;
+					_viMonster->posy = _viMonster->y / 48;
 					_viMonster->isMove = true;
 					_viMonster->isOnceMove = true;
 					updateRect(_viMonster);
@@ -369,6 +375,7 @@ void orange_slime::moveMonster()
 				{
 					_viMonster->limit = TILE_SIZE_Y;
 					_viMonster->isMove = false;
+					_viMonster->posx = _viMonster->x / 48;
 					_viMonster->AttackOn = false;
 					_viMonster->isOnceMove = true;
 					_viMonster->AniLeft = false;
@@ -392,6 +399,7 @@ void orange_slime::moveMonster()
 					_viMonster->isMove = true;
 					_viMonster->isOnceMove = true;
 					updateRect(_viMonster);
+					_viMonster->posy = _viMonster->y / 48;
 					_viMonster->monsterMoveState = MONSTERMOVESTATE::RIGHT;
 				}
 			}
@@ -409,6 +417,7 @@ void orange_slime::moveMonster()
 					_viMonster->limit = TILE_SIZE_Y;
 					_viMonster->isMove = false;
 					_viMonster->AttackOn = false;
+					_viMonster->posx = _viMonster->x / 48;
 					_viMonster->isOnceMove = true;
 					_viMonster->AniLeft = true;
 					updateRect(_viMonster);
@@ -494,7 +503,7 @@ void white_skeleton::addMonster(float x, float y)
 	newMonster.hp = 4;
 	newMonster.atk = 2;
 	newMonster.ani = ANIMATION->addNoneKeyAnimation("해골", 0, 15, 4, false, true);
-	newMonster.leftani = ANIMATION->addNoneKeyAnimation("해골",32 , 47, 4, false, true);
+	newMonster.leftani = ANIMATION->addNoneKeyAnimation("해골", 32, 47, 4, false, true);
 	newMonster.shadowani = ANIMATION->addNoneKeyAnimation("해골", 16, 31, 4, false, true);
 	newMonster.shadowani = ANIMATION->addNoneKeyAnimation("해골", 48, 63, 4, false, true);
 	newMonster.canBreakWall = false;

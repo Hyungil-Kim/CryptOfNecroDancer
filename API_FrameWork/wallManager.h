@@ -45,7 +45,7 @@ public:
 	void showDungeon();
 	void spawnMon();
 	void eraseSPoint(int arrNum);
-
+	
 	int getDungeon(int i , int k) { return Dungeon[i][k]; }
 	void setDungeon(int i, int k, int t) { Dungeon[i][k] = t; }
 	
@@ -55,7 +55,7 @@ public:
 	makeSoftWall* getsoftWall() { return _makeSoftWall; }
 	makeHardWall* gethardWall() { return _makeHardWall; }
 
-
+	
 	void setMonsterManagerMemoryLink(monsterManager* monsterManager) { _mm = monsterManager; }
 	void setMonsterMemoryLink(monster* monster) { _mon = monster; }
 	void setIsDebug(bool isDebug) {

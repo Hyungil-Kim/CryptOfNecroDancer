@@ -82,6 +82,9 @@
     <Filter Include="CryptOfNecroDancer\map\object">
       <UniqueIdentifier>{9b498055-781f-4330-afe4-a753f3130467}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CryptOfNecroDancer\UI">
+      <UniqueIdentifier>{51f6d0eb-78eb-4139-b692-39ecc522fdb2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -213,6 +216,9 @@
     <ClInclude Include="CObstacle.h">
       <Filter>CryptOfNecroDancer\map\object</Filter>
     </ClInclude>
+    <ClInclude Include="rhythmUI.h">
+      <Filter>CryptOfNecroDancer\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -319,6 +325,9 @@
     </ClCompile>
     <ClCompile Include="CObstacle.cpp">
       <Filter>CryptOfNecroDancer\map\object</Filter>
+    </ClCompile>
+    <ClCompile Include="rhythmUI.cpp">
+      <Filter>CryptOfNecroDancer\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

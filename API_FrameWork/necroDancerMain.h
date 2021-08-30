@@ -32,7 +32,7 @@ public:
 		PLAYER->setIsDebug(_isDebug);
 		_mm->setIsDebug(_isDebug);
 		_wm->setIsDebug(_isDebug);
-		map->setIsDebug(_isDebug);
+		//map->setIsDebug(_isDebug);
 	}
 };
 

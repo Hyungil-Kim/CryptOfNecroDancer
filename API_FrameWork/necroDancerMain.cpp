@@ -23,6 +23,7 @@ void necroDancerMain::release()
 	_mm->release();
 	_wm->release();
 	PLAYER->release();
+	RHYTHMUI->release();
 	_mon->release();
 	SAFE_DELETE(_mm);
 	SAFE_DELETE(_mon);
@@ -39,6 +40,7 @@ void necroDancerMain::update()
 	CAMERA->update();
 	PLAYER->update();
 	_mon->update(PLAYER);
+	RHYTHMUI->update();
 	
 }
 
@@ -48,8 +50,8 @@ void necroDancerMain::render()
 	_wm->render();
 	map->render();
 	PLAYER->render(getMapDC());
-
 	_mon->render();
+	RHYTHMUI->render(getMemDC());
 	ZORDER->ZorderTotalRender(getMapDC());
 	this->getMapBuffer()->render(getMemDC(), 0, 0,CAMERA->getRect().left, CAMERA->getRect().top,
 		RecWidth(CAMERA->getRect()), RecHeight(CAMERA->getRect()));
@@ -57,6 +59,7 @@ void necroDancerMain::render()
 	//_mapBuffer->render(IMAGE->findImage("SCORPDC")->getMemDC(), 0, 0, CAMERA->getRect().left, CAMERA->getRect().top,
 	//	RecWidth(CAMERA->getRect()), RecHeight(CAMERA->getRect()));
 	//IMAGE->findImage("SCORPDC")->stretchRenderXY(getMemDC(), 0, 0, GAMEDCRATIO);
+	ZORDER->ZorderUITotalRender(getMemDC());
 }
 
 void necroDancerMain::gameinit()
@@ -64,14 +67,15 @@ void necroDancerMain::gameinit()
 	_mm = new monsterManager;
 	_wm = new wallManager;
 	_mon = new monster;
+	RHYTHMUI->init();
 	PLAYER->init();
 	CAMERA->init(PLAYER->getPlayerAddress().x,PLAYER->getPlayerAddress().y,MAP_SIZE_X, MAP_SIZE_Y,0,0,WINSIZEX/2,WINSIZEY/2,CAMERASIZEX,CAMERASIZEY);
 	_wm->init();
-	_mon->init();
-	PLAYER->setWallmanagerMemoryLink(_wm);
 	PLAYER->setmonsterMemoryLink(_mon);
+	_mon->init();
 	_mm->setWallMemoryLink(_wm);
+	PLAYER->setWallmanagerMemoryLink(_wm);
 	_mm->init();
 	_wm->setMonsterManagerMemoryLink(_mm);
-	
+	RHYTHMUI->setwallManagerMemoryLink(_wm);
 }
