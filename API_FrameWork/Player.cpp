@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "wallManager.h"
 #include "monster.h"
+#include "rhythmUI.h"
 HRESULT Player::init()
 {
 	_player.hp = 12;
@@ -38,15 +39,15 @@ HRESULT Player::init()
 	Aplayer_bodyL = ANIMATION->addNoneKeyAnimation("플레이어왼쪽몸", 15, 13, 10, false, true);
 	Aplayer_headR = ANIMATION->addNoneKeyAnimation("플레이어오른쪽머리", 0, 3, 10, false, true);
 	Aplayer_bodyR = ANIMATION->addNoneKeyAnimation("플레이어오른쪽몸", 0, 3, 10, false, true);
-	
-	player_dagAtk = IMAGE->addFrameImage("플레이어단검공격", "images/player/attack/swipe_dagger.bmp", 48 * 3,48*4, 3, 4, true,RGB(255,0,255));
-	Aplayer_dagAtkR = ANIMATION->addNoneKeyAnimation("플레이어단검공격",0,2,10,false,true);
+
+	player_dagAtk = IMAGE->addFrameImage("플레이어단검공격", "images/player/attack/swipe_dagger.bmp", 48 * 3, 48 * 4, 3, 4, true, RGB(255, 0, 255));
+	Aplayer_dagAtkR = ANIMATION->addNoneKeyAnimation("플레이어단검공격", 0, 2, 10, false, true);
 	Aplayer_dagAtkL = ANIMATION->addNoneKeyAnimation("플레이어단검공격", 3, 5, 10, false, true);
 	Aplayer_dagAtkU = ANIMATION->addNoneKeyAnimation("플레이어단검공격", 6, 8, 10, false, true);
 	Aplayer_dagAtkD = ANIMATION->addNoneKeyAnimation("플레이어단검공격", 9, 11, 10, false, true);
-	
+
 	_player.player_rc = RectMake(_player.x, _player.y, player_bodyL->getFrameWidth(), player_bodyL->getFrameHeight());
-	
+
 	return S_OK;
 }
 
@@ -58,14 +59,14 @@ void Player::update()
 {
 	if (_player.isSpawn == true) {
 		this->spawn();
-		
+
 	}
 	this->inputCheck();
 	this->inputDirectionCheck();
 	this->stateCheck();
 	this->moveCharater();
 	_player.player_rc = RectMake(_player.x, _player.y, player_headL->getFrameWidth(), player_bodyL->getFrameHeight());
-	
+
 }
 
 void Player::render(HDC hdc)
@@ -99,21 +100,21 @@ void Player::render(HDC hdc)
 	}
 	if (_player.atkright == true)
 	{
-		ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1 , _player.x+36, _player.y, Aplayer_dagAtkR);
+		ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x + 36, _player.y, Aplayer_dagAtkR);
 
 	}
 	else if (_player.atktop == true)
 	{
-		ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x , _player.y-36, Aplayer_dagAtkU);
+		ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x, _player.y - 36, Aplayer_dagAtkU);
 	}
 	else if (_player.atkleft == true)
 	{
-		ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x-36, _player.y, Aplayer_dagAtkL);
+		ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x - 36, _player.y, Aplayer_dagAtkL);
 
 	}
 	else if (_player.atkbottom == true)
 	{
-		ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x , _player.y+36, Aplayer_dagAtkD);
+		ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x, _player.y + 36, Aplayer_dagAtkD);
 
 	}
 
@@ -150,38 +151,50 @@ void Player::moveCharater()
 
 void Player::inputCheck()
 {
-	_player.isInput = true;
+	_rtm->step();
 	if (INPUT->isOnceKeyDown(VK_RIGHT))
 	{
-		_inputdirection.isRight = true;
-		_inputdirection.isLeft = false;
-		_player.isCurrentRight = true;
-		_player.isInput = false;
-
+		_player.isInput = true;
+		if (_rtm->checkstep() == true)
+		{
+			_inputdirection.isRight = true;
+			_inputdirection.isLeft = false;
+			_player.isCurrentRight = true;
+		}
 	}
 	else _inputdirection.isRight = false;
 
 	if (INPUT->isOnceKeyDown(VK_LEFT))
 	{
-		_inputdirection.isLeft = true;
-		_inputdirection.isRight = false;
-		_player.isCurrentRight = false;
-		_player.isInput = false;
+		_player.isInput = true;
+		if (_rtm->checkstep() == true)
+		{
+			_inputdirection.isLeft = true;
+			_inputdirection.isRight = false;
+			_player.isCurrentRight = false;
+		}
 
 	}
 	else _inputdirection.isLeft = false;
 
 	if (INPUT->isOnceKeyDown(VK_UP))
 	{
-		_inputdirection.isUp = true;
-		_player.isInput = false;
+		_player.isInput = true;
+		if (_rtm->checkstep() == true)
+		{
+			_inputdirection.isUp = true;
+		}
+
 	}
 	else _inputdirection.isUp = false;
 
 	if (INPUT->isOnceKeyDown(VK_DOWN))
 	{
-		_inputdirection.isDown = true;
-		_player.isInput = false;
+		_player.isInput = true;
+		if (_rtm->checkstep() == true)
+		{
+			_inputdirection.isDown = true;
+		}
 	}
 	else _inputdirection.isDown = false;
 
@@ -226,7 +239,7 @@ void Player::spawn()
 		_player.posx = _player.x / 48;
 		_player.posy = _player.y / 48;
 		_wm->eraseSPoint(0);
-	_player.isSpawn = false;
+		_player.isSpawn = false;
 	}
 }
 
@@ -238,13 +251,13 @@ void Player::Attack()
 		_player.atkleft = true;
 		break;
 	case UP:
-		
+
 		break;
 	case RIGHT:
-		
+
 		break;
 	case DOWN:
-	
+
 		break;
 	default:
 		break;
@@ -274,7 +287,7 @@ void Player::playerMove()
 		break;
 	}
 
-	if (_wm->getDungeon(tempX, tempY) != 0 )
+	if (_wm->getDungeon(tempX, tempY) != 0)
 	{
 		if (_mon->findMonster(tempX, tempY) == true)
 		{
@@ -305,12 +318,12 @@ void Player::playerMove()
 	}
 	if (_wm->getDungeon(tempX, tempY) == 0)
 	{
-		
+
 		switch (_movestate)
 		{
 		case LEFT:
 			_wm->setDungeon(tempX, tempY, 1);
-			_wm->getsoftWall()->eraseWall(tempX,tempY); 
+			_wm->getsoftWall()->eraseWall(tempX, tempY);
 			break;
 		case UP:
 			_wm->setDungeon(tempX, tempY, 1);

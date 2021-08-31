@@ -9,6 +9,7 @@ private:
 
 	image* _finalBuffer;
 
+	float timer;
 
 	bool _isDebug;
 	bool _showFPS;

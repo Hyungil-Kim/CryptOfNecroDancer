@@ -90,13 +90,7 @@ void monster::isCanMove()
 			}
 		}
 	}
-	else
-	{
-		_viMonster->canleft = false;
-		_viMonster->canright = false;
-		_viMonster->canup = false;
-		_viMonster->candown = false;
-	}
+
 }
 
 bool monster::findMonster(int x, int y)

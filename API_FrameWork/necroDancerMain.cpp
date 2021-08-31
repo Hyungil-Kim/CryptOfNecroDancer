@@ -23,7 +23,7 @@ void necroDancerMain::release()
 	_mm->release();
 	_wm->release();
 	PLAYER->release();
-	RHYTHMUI->release();
+	_rUI->release();
 	_mon->release();
 	SAFE_DELETE(_mm);
 	SAFE_DELETE(_mon);
@@ -33,6 +33,7 @@ void necroDancerMain::release()
 void necroDancerMain::update()
 {
 	_mm->update();
+	_rUI->update();
 	_wm->update();
 	map->update();
 
@@ -40,18 +41,17 @@ void necroDancerMain::update()
 	CAMERA->update();
 	PLAYER->update();
 	_mon->update(PLAYER);
-	RHYTHMUI->update();
 	
 }
 
 void necroDancerMain::render()
 {
 	_mm->render();
-	_wm->render();
 	map->render();
+	_wm->render();
+	_rUI->render();
 	PLAYER->render(getMapDC());
 	_mon->render();
-	RHYTHMUI->render(getMemDC());
 	ZORDER->ZorderTotalRender(getMapDC());
 	this->getMapBuffer()->render(getMemDC(), 0, 0,CAMERA->getRect().left, CAMERA->getRect().top,
 		RecWidth(CAMERA->getRect()), RecHeight(CAMERA->getRect()));
@@ -59,6 +59,7 @@ void necroDancerMain::render()
 	//_mapBuffer->render(IMAGE->findImage("SCORPDC")->getMemDC(), 0, 0, CAMERA->getRect().left, CAMERA->getRect().top,
 	//	RecWidth(CAMERA->getRect()), RecHeight(CAMERA->getRect()));
 	//IMAGE->findImage("SCORPDC")->stretchRenderXY(getMemDC(), 0, 0, GAMEDCRATIO);
+
 	ZORDER->ZorderUITotalRender(getMemDC());
 }
 
@@ -67,9 +68,11 @@ void necroDancerMain::gameinit()
 	_mm = new monsterManager;
 	_wm = new wallManager;
 	_mon = new monster;
-	RHYTHMUI->init();
+	_rUI = new rhythmUI;
+
 	PLAYER->init();
-	CAMERA->init(PLAYER->getPlayerAddress().x,PLAYER->getPlayerAddress().y,MAP_SIZE_X, MAP_SIZE_Y,0,0,WINSIZEX/2,WINSIZEY/2,CAMERASIZEX,CAMERASIZEY);
+	_rUI->init();
+	CAMERA->init(PLAYER->getPlayerAddress().x, PLAYER->getPlayerAddress().y, MAP_SIZE_X, MAP_SIZE_Y, 0, 0, WINSIZEX / 2, WINSIZEY / 2, CAMERASIZEX, CAMERASIZEY);
 	_wm->init();
 	PLAYER->setmonsterMemoryLink(_mon);
 	_mon->init();
@@ -77,5 +80,7 @@ void necroDancerMain::gameinit()
 	PLAYER->setWallmanagerMemoryLink(_wm);
 	_mm->init();
 	_wm->setMonsterManagerMemoryLink(_mm);
-	RHYTHMUI->setwallManagerMemoryLink(_wm);
+	_wm->setrtmMemoryLink(_rUI);
+	PLAYER->setrtmMemoryLink(_rUI);
+	_rUI->setwallManagerMemoryLink(_wm);
 }

@@ -11,6 +11,7 @@ struct SpawnPoint {
 	int x;
 	int y;
 };
+class rhythmUI;
 class monsterManager;
 class monster;
 class wallManager : public gameNode
@@ -20,6 +21,7 @@ private:
 	makeSoftWall* _makeSoftWall;
 	makeHardWall* _makeHardWall;
 	monster* _mon;
+	rhythmUI* _rtm;
 	CMap* _cmap;
 	int Dungeon[TILE_NUM_X][TILE_NUM_Y] = {};
 	float monsterNum;
@@ -27,12 +29,13 @@ private:
 	int level;
 	int randdomNum;
 	bool spawnTime;
+	float timing;
 	vector<SpawnPoint> _vSpawn;
 	vector<SpawnPoint>::iterator _viSpawn;
 
 private:
 	bool _isDebug;
-
+	float count = 0;//1,9167
 public:
 	wallManager();
 	~wallManager();
@@ -46,6 +49,7 @@ public:
 	void spawnMon();
 	void eraseSPoint(int arrNum);
 	
+	float getcount() { return count; }
 	int getDungeon(int i , int k) { return Dungeon[i][k]; }
 	void setDungeon(int i, int k, int t) { Dungeon[i][k] = t; }
 	
@@ -55,13 +59,13 @@ public:
 	makeSoftWall* getsoftWall() { return _makeSoftWall; }
 	makeHardWall* gethardWall() { return _makeHardWall; }
 
-	
+	void setrtmMemoryLink(rhythmUI* rhythmUI) { _rtm = rhythmUI; }
 	void setMonsterManagerMemoryLink(monsterManager* monsterManager) { _mm = monsterManager; }
 	void setMonsterMemoryLink(monster* monster) { _mon = monster; }
 	void setIsDebug(bool isDebug) {
 		_isDebug = isDebug;
 		_makeSoftWall->setIsDebug(_isDebug);
-	
+	 
 	}
 	
 };

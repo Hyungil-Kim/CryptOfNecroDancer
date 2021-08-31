@@ -2,6 +2,7 @@
 #include "wallManager.h"
 #include "monsterManager.h"
 #include"monster.h"
+#include"rhythmUI.h"
 wallManager::wallManager()
 {
 }
@@ -14,11 +15,14 @@ HRESULT wallManager::init()
 {
 	_makeSoftWall = new makeSoftWall;
 	_makeHardWall = new makeHardWall;
+	_rtm = new rhythmUI;
 	spawnTime = true;
 	level = 1;
 	startNum = 0;
-	monsterNum = 12 + level * 2.5;
-
+	count = 0.0f;
+	timing = 0.0f;
+	monsterNum = 10 + level * 2.5;
+	count = 0;
 	for (int i = 0; i < TILE_NUM_X; i++)
 	{
 		for (int k = 0; k < TILE_NUM_Y; k++)
@@ -44,6 +48,9 @@ void wallManager::release()
 
 void wallManager::update()
 {
+	
+	count += TIME->getElapsedTime();
+	timing += TIME->getElapsedTime();
 	_makeSoftWall->update();
 	_makeHardWall->update();
 	if (spawnTime == true)
@@ -54,13 +61,17 @@ void wallManager::update()
 			startNum++;
 		}
 	}
+	if (count > 1.9167f/4)
+	{
+		_rtm->spawnBeat(480, 0);
+		count = 0.0f;	
+	}
 }
 
 void wallManager::render()
 {
 	_makeSoftWall->render();
 	_makeHardWall->render();
-	
 }
 
 DLocation wallManager::divideDungeon(int depth, int r1, int c1, int r2, int c2)

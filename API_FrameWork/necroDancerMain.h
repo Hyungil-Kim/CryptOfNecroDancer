@@ -2,14 +2,15 @@
 #include "gameNode.h"
 #include"monsterManager.h"
 #include"wallManager.h"
-
+#include"rhythmUI.h"
 #include "CMap.h"
 #include "monster.h"
+
 class necroDancerMain : public gameNode
 {
 private:
 	monsterManager* _mm;
-
+	rhythmUI* _rUI;
 	wallManager* _wm;
 	CMap* map;
 	monster* _mon;
@@ -29,10 +30,11 @@ public:
 	 void gameinit();
 	void setIsDebug(bool isDebug) { 
 		_isDebug = isDebug; 
-		PLAYER->setIsDebug(_isDebug);
-		_mm->setIsDebug(_isDebug);
-		_wm->setIsDebug(_isDebug);
+		//PLAYER->setIsDebug(_isDebug);
+		//_mm->setIsDebug(_isDebug);
+		//_wm->setIsDebug(_isDebug);
 		//map->setIsDebug(_isDebug);
+		_rUI->setIsDebug(_isDebug);
 	}
 };
 

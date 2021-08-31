@@ -46,7 +46,6 @@ using namespace std;
 #include"button.h"
 #include"camera.h"
 #include"Player.h"
-#include"rhythmUI.h"
 #include"tileSize.h"
 #include "enum.h"
 
@@ -69,7 +68,6 @@ using namespace std;
 #define BUTTON			Cbutton::getSingleton()
 #define CAMERA			camera::getSingleton()
 #define PLAYER			Player::getSingleton()
-#define RHYTHMUI		rhythmUI::getSingleton()
 	
 //===================//
 //	매크로 설정부분	//

@@ -12,6 +12,7 @@ mainGame::~mainGame()
 
 HRESULT mainGame::init()
 {
+
 	gameNode::init(true);	//필요한동적할당
 	_necroMain = new necroDancerMain;
 	_necroMain->init();

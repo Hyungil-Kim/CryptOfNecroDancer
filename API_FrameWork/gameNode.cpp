@@ -37,7 +37,6 @@ HRESULT gameNode::init(bool managerInit)
 		IMAGE->init();
 		TIME->init();
 		SOUND->init();
-		RHYTHMUI->init();
 	}
 
 	return S_OK;
@@ -84,8 +83,7 @@ void gameNode::release()
 		PLAYER->release();
 		PLAYER->releaseSingleton();
 
-		RHYTHMUI->release();
-		RHYTHMUI->releaseSingleton();
+		
 
 	}
 	ReleaseDC(m_hWnd, _hdc);
