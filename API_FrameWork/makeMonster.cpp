@@ -36,6 +36,18 @@ void green_slime::release()
 
 void green_slime::update(Player* cp)
 {
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end();)
+	{
+		deathcheck();
+		if (_viMonster->monsterState == MONSTERSTATE::DEAD)
+		{
+			_viMonster = _vMonster.erase(_viMonster);
+		}
+		else
+		{
+			++_viMonster;
+		}
+	}
 	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
 	{
 		RectMake(_viMonster->x, _viMonster->y, _viMonster->img->getFrameWidth(), _viMonster->img->getFrameHeight());
@@ -95,6 +107,16 @@ void green_slime::stateCheck()
 void green_slime::moveMonster()
 {
 }
+void green_slime::dead()
+{
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); _viMonster++)
+	{
+		if (_viMonster->hp <= 0)
+		{
+			_vMonster.erase(_viMonster);
+		}
+	}
+}
 void green_slime::updateRect(vector<tagMonster>::iterator iter)
 {
 	iter->rc = RectMake(iter->x, iter->y, iter->img->getFrameWidth(), iter->img->getFrameHeight());
@@ -123,6 +145,18 @@ void blue_slime::release()
 
 void blue_slime::update(Player* cp)
 {
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end();)
+	{
+		deathcheck();
+		if (_viMonster->monsterState == MONSTERSTATE::DEAD)
+		{
+			_viMonster = _vMonster.erase(_viMonster);
+		}
+		else
+		{
+			++_viMonster;
+		}
+	}
 	moveMonster();
 	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
 	{
@@ -317,6 +351,18 @@ void orange_slime::release()
 
 void orange_slime::update(Player* cp)
 {
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end();)
+	{
+		deathcheck();
+		if (_viMonster->monsterState == MONSTERSTATE::DEAD)
+		{
+			_viMonster = _vMonster.erase(_viMonster);
+		}
+		else
+		{
+			++_viMonster;
+		}
+	}
 	moveMonster();
 	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
 	{

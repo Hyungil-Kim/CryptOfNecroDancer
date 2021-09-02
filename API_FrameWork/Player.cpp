@@ -7,7 +7,7 @@
 HRESULT Player::init()
 {
 	_player.hp = 12;
-	_player.atk = 0;
+	_player.atk = 2;
 	_player.def = 0;
 	_player.sight = 2;
 	_player.sholve = 0;
@@ -105,16 +105,16 @@ void Player::render(HDC hdc)
 		ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x + 36, _player.y, Aplayer_dagAtkR);
 
 	}
-	else if (_player.atktop == true)
+	if (_player.atktop == true)
 	{
 		ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x, _player.y - 36, Aplayer_dagAtkU);
 	}
-	else if (_player.atkleft == true)
+	if (_player.atkleft == true)
 	{
 		ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x - 36, _player.y, Aplayer_dagAtkL);
 
 	}
-	else if (_player.atkbottom == true)
+	if (_player.atkbottom == true)
 	{
 		ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x, _player.y + 36, Aplayer_dagAtkD);
 
@@ -266,6 +266,33 @@ void Player::Attack()
 	}
 }
 
+void Player::giveDamage(int x, int y)
+{
+
+	if (findMonster(_mm->getGreenSlime(), x, y))
+	{
+		for(int i =0 ; i< _mm->getGreenSlime()->getVMonster().size();++i)
+		{
+			_mm->getGreenSlime()->getVMonster()[i].hp -= _player.atk;
+		}
+	}
+	if (findMonster(_mm->getBlueSlime(), x, y))
+	{
+		for (int i = 0; i < _mm->getBlueSlime()->getVMonster().size(); ++i)
+		{
+			_mm->getBlueSlime()->getVMonster()[i].hp -= _player.atk;
+		}
+	}
+	if (findMonster(_mm->getOrangeSlime(), x, y))
+	{
+		for (int i = 0; i < _mm->getOrangeSlime()->getVMonster().size(); ++i)
+		{
+			_mm->getOrangeSlime()->getVMonster()[i].hp -= _player.atk;
+		}
+	}
+	
+}
+
 bool Player::playerToMon(int x, int y)
 {
 	if (findMonster(_mm->getGreenSlime(), x, y) ||
@@ -324,6 +351,7 @@ void Player::playerMove()
 		if (playerToMon(tempX,tempY)==true)
 		{
 			Attack();
+			giveDamage(tempX, tempY);
 		}
 		else
 		{
@@ -377,29 +405,6 @@ void Player::playerMove()
 			break;
 		}
 	}
-	/*if (_wm->getDungeon(tempX, tempY) != 0)
-	{
-		_player.posx = tempX;
-		_player.posy = tempY;
-		switch (_movestate)
-		{
-		case LEFT:
-			_player.x -= TILE_SIZE_X;
-			break;
-		case UP:
-			_player.y -= TILE_SIZE_Y;
-			break;
-		case RIGHT:
-			_player.x += TILE_SIZE_X;
-			break;
-		case DOWN:
-			_player.y += TILE_SIZE_Y;
-			break;
-		default:
-			break;
-		}
-	}*/
-
 
 }
 

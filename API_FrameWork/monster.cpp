@@ -173,3 +173,12 @@ void monster::checkInvincibility()
 		}
 	}
 }
+
+void monster::deathcheck()
+{
+	if (_viMonster->monsterState != MONSTERSTATE::DEAD && _viMonster->hp <= 0) {
+		_viMonster->hp = 0;
+		_viMonster->monsterState = MONSTERSTATE::DEAD;
+	}
+
+}

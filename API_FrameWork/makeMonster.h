@@ -16,7 +16,7 @@ public:
 	virtual void addMonster(float x, float y);
 	virtual void stateCheck();
 	virtual void moveMonster();
-	
+	virtual void dead();
 	virtual void updateRect(vector<tagMonster>::iterator iter);
 	
 };

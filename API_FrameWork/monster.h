@@ -101,6 +101,7 @@ public:
 	virtual void attack();
 	virtual void getDamage();
 	virtual void checkInvincibility();
+	virtual void deathcheck();
 	virtual void setmonsterManagerMemoryLink(monsterManager* monsterManager) { _mm = monsterManager; }
 	virtual void setwallManagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
 	vector<tagMonster>& getVMonster() { return _vMonster; }

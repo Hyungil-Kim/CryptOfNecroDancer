@@ -145,6 +145,7 @@ public:
 	 void playerMove();
 	 void spawn();
 	 void Attack();
+	 void giveDamage(int x, int y);
 	 bool findMonster(monster* monster,int x, int y);
 	 bool playerToMon(int x, int y);
 	 void setrtmMemoryLink(rhythmUI* rhythmUI) { _rtm = rhythmUI; }
