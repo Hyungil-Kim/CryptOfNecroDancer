@@ -105,7 +105,7 @@ void green_slime::updateRect(vector<tagMonster>::iterator iter)
 blue_slime::blue_slime()
 {
 	IMAGE->addFrameImage("블루슬라임", "images/monster/slime_blue.bmp", 48 * 8, 48 * 2, 8, 2, true);
-
+	
 }
 
 blue_slime::~blue_slime()
@@ -123,8 +123,11 @@ void blue_slime::release()
 
 void blue_slime::update(Player* cp)
 {
-
 	moveMonster();
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
+	{
+		checkInvincibility();
+	}
 }
 
 void blue_slime::render()
@@ -133,8 +136,24 @@ void blue_slime::render()
 	{
 		switch (_viMonster->monsterState)
 		{
-		case MONSTERSTATE::MOVE:
 		case MONSTERSTATE::ATTACK:
+			if (_viMonster->atkdown == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkup, 6, 0, _viMonster->x, _viMonster->y + 24, _viMonster->A_atkdown);
+			}
+			if(_viMonster->atkup == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkup, 6, 0, _viMonster->x, _viMonster->y - 24, _viMonster->A_atkup);
+			}
+			if(_viMonster->atkright == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkleft, 6, 0, _viMonster->x - 24, _viMonster->y, _viMonster->A_atkright);
+			}
+			if(_viMonster->atkleft == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkleft, 6, 0, _viMonster->x + 24, _viMonster->y, _viMonster->A_atkleft);
+			}
+		case MONSTERSTATE::MOVE:
 		case MONSTERSTATE::DIGGING:
 		case MONSTERSTATE::HIT:
 		case MONSTERSTATE::STOP:
@@ -162,18 +181,22 @@ void blue_slime::addMonster(float x, float y)
 	newMonster.atk = 2;
 	newMonster.ani = ANIMATION->addNoneKeyAnimation("블루슬라임", 0, 7, 4, false, true);
 	newMonster.shadowani = ANIMATION->addNoneKeyAnimation("블루슬라임", 8, 15, 5, false, true);
+	newMonster._atkup = IMAGE->findImage("상하공격");
+	newMonster.A_atkdown = ANIMATION->addNoneKeyAnimation("상하공격", 0, 4, 5, false, true);
+	newMonster.A_atkup = ANIMATION->addNoneKeyAnimation("상하공격", 9, 5, 5, false, true);
 	newMonster.canBreakWall = false;
 	newMonster.isDetecting = false;
 	newMonster.isDead = false;
-	newMonster.isHit = false;
+	newMonster.isHit = 0;
 	newMonster.isCurrentRight = false;
 	newMonster.isMove = false;
-	newMonster.AttackOn = false;
 	newMonster.candown = false;
-	newMonster.canleft = false;
-	newMonster.canright = false;
 	newMonster.canup = false;
+	newMonster.atkup = false;
+	newMonster.atkdown = false;
 	newMonster.speed = 4;
+	newMonster.isGraceperiod = false;
+	newMonster.gracePeriodCount = 0;
 	newMonster.limit = TILE_SIZE_Y;
 	newMonster.isOnceMove = false;
 	newMonster.monsterState = MONSTERSTATE::STOP;
@@ -195,20 +218,29 @@ void blue_slime::moveMonster()
 			isCanMove();
 			if (_viMonster->canup == true)
 			{
+				_viMonster->monsterState = MONSTERSTATE::MOVE;
 				_viMonster->y -= 4;
-				_viMonster->AttackOn = true;
 				_viMonster->limit -= _viMonster->speed;
 				if (_viMonster->limit - _viMonster->speed <= -2)
 				{
 					_viMonster->limit = TILE_SIZE_Y;
 					_viMonster->isMove = true;
-					_viMonster->AttackOn = false;
 					_viMonster->isOnceMove = true;
 					_viMonster->monsterMoveState = MONSTERMOVESTATE::DOWN;
 					updateRect(_viMonster);
 					_viMonster->canup = false;
 
 				}
+			}
+			else
+			{
+				_viMonster->monsterState = MONSTERSTATE::ATTACK;
+				_viMonster->atkdown = false;
+				_viMonster->atkright = false;
+				_viMonster->atkleft = false;
+				if(_viMonster->isGraceperiod == false) attack();
+				_viMonster->isGraceperiod = true;
+				
 			}
 		}
 		_viMonster->posy = _viMonster->y / 48;
@@ -217,25 +249,34 @@ void blue_slime::moveMonster()
 			isCanMove();
 			if (_viMonster->candown == true)
 			{
+				_viMonster->monsterState = MONSTERSTATE::MOVE;
 				_viMonster->y += _viMonster->speed;
-				_viMonster->AttackOn = true;
 				_viMonster->limit -= _viMonster->speed;
 				if (_viMonster->limit - _viMonster->speed <= -2)
 				{
 
 					_viMonster->limit = TILE_SIZE_Y;
 					_viMonster->isMove = false;
-					_viMonster->AttackOn = false;
 					_viMonster->isOnceMove = true;
 					_viMonster->monsterMoveState = MONSTERMOVESTATE::UP;
 					updateRect(_viMonster);
 					_viMonster->candown = false;
 				}
 			}
+			else
+			{
+				_viMonster->monsterState = MONSTERSTATE::ATTACK;
+				_viMonster->atkup = false;
+				_viMonster->atkright = false;
+				_viMonster->atkleft = false;
+				if (_viMonster->isGraceperiod == false) attack();
+				_viMonster->isGraceperiod = true;
+			}
 		}
 		if (_viMonster->ani->findNowPlayIndex() == 0)
 		{
 			_viMonster->isOnceMove = false;
+			_viMonster->isHit = 0;
 		}
 	}
 }
@@ -277,6 +318,10 @@ void orange_slime::release()
 void orange_slime::update(Player* cp)
 {
 	moveMonster();
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
+	{
+		checkInvincibility();
+	}
 }
 
 void orange_slime::render()
@@ -285,8 +330,24 @@ void orange_slime::render()
 	{
 		switch (_viMonster->monsterState)
 		{
-		case MONSTERSTATE::MOVE:
 		case MONSTERSTATE::ATTACK:
+			if (_viMonster->atkdown == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkup, 6, 0, _viMonster->x, _viMonster->y + 24, _viMonster->A_atkdown);
+			}
+			if (_viMonster->atkup == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkup, 6, 0, _viMonster->x, _viMonster->y - 24, _viMonster->A_atkup);
+			}
+			if (_viMonster->atkright == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkleft, 6, 0, _viMonster->x + 24, _viMonster->y, _viMonster->A_atkright);
+			}
+			if (_viMonster->atkleft == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkleft, 6, 0, _viMonster->x - 24, _viMonster->y, _viMonster->A_atkleft);
+			}
+		case MONSTERSTATE::MOVE:
 		case MONSTERSTATE::DIGGING:
 		case MONSTERSTATE::HIT:
 		case MONSTERSTATE::STOP:
@@ -323,13 +384,18 @@ void orange_slime::addMonster(float x, float y)
 	newMonster.leftani = ANIMATION->addNoneKeyAnimation("주황슬라임", 4, 7, 4, false, true);
 	newMonster.shadowani = ANIMATION->addNoneKeyAnimation("주황슬라임", 15, 12, 4, false, true);
 	newMonster.shadowani = ANIMATION->addNoneKeyAnimation("주황슬라임", 11, 8, 4, false, true);
+	newMonster._atkup = IMAGE->findImage("상하공격");
+	newMonster._atkleft = IMAGE->findImage("좌우공격");
+	newMonster.A_atkdown = ANIMATION->addNoneKeyAnimation("상하공격", 0, 4, 5, false, true);
+	newMonster.A_atkup = ANIMATION->addNoneKeyAnimation("상하공격", 9, 5, 5, false, true);
+	newMonster.A_atkright = ANIMATION->addNoneKeyAnimation("좌우공격", 0, 4, 5, false, true);
+	newMonster.A_atkleft = ANIMATION->addNoneKeyAnimation("좌우공격", 9, 5, 5, false, true);
 	newMonster.canBreakWall = false;
 	newMonster.isDetecting = false;
 	newMonster.isDead = false;
 	newMonster.isHit = false;
 	newMonster.isCurrentRight = false;
 	newMonster.isMove = false;
-	newMonster.AttackOn = false;
 	newMonster.AniLeft = true;
 	newMonster.limit = TILE_SIZE_Y;
 	newMonster.speed = 4;
@@ -355,11 +421,10 @@ void orange_slime::moveMonster()
 			if (_viMonster->canup == true)
 			{
 				_viMonster->y -= _viMonster->speed;
-				_viMonster->AttackOn = true;
 				_viMonster->limit -= _viMonster->speed;
+				_viMonster->monsterState = MONSTERSTATE::MOVE;
 				if (_viMonster->limit - _viMonster->speed <= -2)
 				{
-					_viMonster->AttackOn = false;
 					_viMonster->limit = TILE_SIZE_Y;
 					_viMonster->isMove = true;
 					_viMonster->isOnceMove = true;
@@ -368,6 +433,15 @@ void orange_slime::moveMonster()
 					_viMonster->monsterMoveState = MONSTERMOVESTATE::LEFT;
 				}
 			}
+			else
+			{
+				_viMonster->monsterState = MONSTERSTATE::ATTACK;
+				_viMonster->atkdown = false;
+				_viMonster->atkright = false;
+				_viMonster->atkleft = false;
+				if (_viMonster->isGraceperiod == false) attack();
+				_viMonster->isGraceperiod = true;
+			}
 		}
 		_viMonster->posx = _viMonster->x / 48;
 		if (_viMonster->ani->findNowPlayIndex() == 3 && _viMonster->isOnceMove == false && _viMonster->isMove == true && _viMonster->AniLeft == true)
@@ -375,20 +449,28 @@ void orange_slime::moveMonster()
 			isCanMove();
 			if (_viMonster->canleft == true)
 			{
-				_viMonster->AttackOn = true;
 				_viMonster->x -= _viMonster->speed;
 				_viMonster->limit -= _viMonster->speed;
+				_viMonster->monsterState = MONSTERSTATE::MOVE;
 				if (_viMonster->limit - _viMonster->speed <= -2)
 				{
 					_viMonster->limit = TILE_SIZE_Y;
 					_viMonster->isMove = false;
-					_viMonster->AttackOn = false;
 					_viMonster->isOnceMove = true;
 					_viMonster->AniLeft = false;
 					_viMonster->canleft = false;
 					updateRect(_viMonster);
 					_viMonster->monsterMoveState = MONSTERMOVESTATE::DOWN;
 				}
+			}
+			else
+			{
+				_viMonster->monsterState = MONSTERSTATE::ATTACK;
+				_viMonster->atkup = false;
+				_viMonster->atkdown = false;
+				_viMonster->atkright = false;
+				if (_viMonster->isGraceperiod == false) attack();
+				_viMonster->isGraceperiod = true;
 			}
 		}
 		_viMonster->posy = _viMonster->y / 48;
@@ -398,18 +480,26 @@ void orange_slime::moveMonster()
 			if (_viMonster->candown == true)
 			{
 				_viMonster->y += _viMonster->speed;
-				_viMonster->AttackOn = true;
 				_viMonster->limit -= _viMonster->speed;
+				_viMonster->monsterState = MONSTERSTATE::MOVE;
 				if (_viMonster->limit - _viMonster->speed <= -2)
 				{
 					_viMonster->limit = TILE_SIZE_Y;
-					_viMonster->AttackOn = false;
 					_viMonster->isMove = true;
 					_viMonster->candown = false;
 					_viMonster->isOnceMove = true;
 					updateRect(_viMonster);
 					_viMonster->monsterMoveState = MONSTERMOVESTATE::RIGHT;
 				}
+			}
+			else
+			{
+				_viMonster->monsterState = MONSTERSTATE::ATTACK;
+				_viMonster->atkup = false;
+				_viMonster->atkright = false;
+				_viMonster->atkleft = false;
+				if (_viMonster->isGraceperiod == false) attack();
+				_viMonster->isGraceperiod = true;
 			}
 		}
 		_viMonster->posx = _viMonster->x / 48;
@@ -419,19 +509,27 @@ void orange_slime::moveMonster()
 			if (_viMonster->canright == true)
 			{
 				_viMonster->x += _viMonster->speed;
-				_viMonster->AttackOn = true;
 				_viMonster->limit -= _viMonster->speed;
+				_viMonster->monsterState = MONSTERSTATE::MOVE;
 				if (_viMonster->limit - _viMonster->speed <= -2)
 				{
 					_viMonster->limit = TILE_SIZE_Y;
 					_viMonster->isMove = false;
-					_viMonster->AttackOn = false;
 					_viMonster->isOnceMove = true;
 					_viMonster->canright = false;
 					_viMonster->AniLeft = true;
 					updateRect(_viMonster);
 					_viMonster->monsterMoveState = MONSTERMOVESTATE::UP;
 				}
+			}
+			else
+			{
+				_viMonster->monsterState = MONSTERSTATE::ATTACK;
+				_viMonster->atkup = false;
+				_viMonster->atkdown = false;
+				_viMonster->atkleft = false;
+				if (_viMonster->isGraceperiod == false) attack();
+				_viMonster->isGraceperiod = true;
 			}
 		}
 		if (_viMonster->ani->findNowPlayIndex() == 0)
@@ -521,7 +619,6 @@ void white_skeleton::addMonster(float x, float y)
 	newMonster.isHit = false;
 	newMonster.isCurrentRight = false;
 	newMonster.isMove = false;
-	newMonster.AttackOn = false;
 	newMonster.AniLeft = true;
 	newMonster.limit = TILE_SIZE_Y;
 	newMonster.speed = 4;

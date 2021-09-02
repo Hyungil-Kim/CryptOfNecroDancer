@@ -4,7 +4,7 @@
 #include"wallManager.h"
 #include"rhythmUI.h"
 #include "CMap.h"
-#include "monster.h"
+
 
 class necroDancerMain : public gameNode
 {

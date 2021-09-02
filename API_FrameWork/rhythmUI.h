@@ -23,6 +23,7 @@ private:
 	RECT rc;
 	float _heartX;
 	float _heartY;
+	float _check;
 private:
 	vector<tagerhythm> _vbeat;
 	vector<tagerhythm>::iterator _vibeat;

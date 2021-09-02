@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "wallManager.h"
 #include "monster.h"
+#include "monsterManager.h"
 #include "rhythmUI.h"
 HRESULT Player::init()
 {
@@ -28,6 +29,7 @@ HRESULT Player::init()
 	_player.atkright = false;
 	_player.atktop = false;
 	_player.atkbottom = false;
+	_player.isatk = false;
 	_movestate = MOVESTATE::RIGHT;
 	_player.isCurrentRight = true;
 	player_headL = IMAGE->addFrameImage("플레이어왼쪽머리", "images/player/player_headL.bmp", 48 * 16, 48 * 2, 16, 2, true, RGB(255, 0, 255));
@@ -251,18 +253,47 @@ void Player::Attack()
 		_player.atkleft = true;
 		break;
 	case UP:
-
+		_player.atktop = true;
 		break;
 	case RIGHT:
-
+		_player.atkright = true;
 		break;
 	case DOWN:
-
+		_player.atkbottom = true;
 		break;
 	default:
 		break;
 	}
 }
+
+bool Player::playerToMon(int x, int y)
+{
+	if (findMonster(_mm->getGreenSlime(), x, y) ||
+		findMonster(_mm->getBlueSlime(), x, y) ||
+		findMonster(_mm->getOrangeSlime(), x, y)
+		)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Player::findMonster(monster* monster,int x , int y)
+{
+
+	vector<tagMonster>& vMonster = monster->getVMonster();
+	vector<tagMonster>::iterator iter = vMonster.begin();
+	for (iter; iter != vMonster.end(); ++iter)
+	{
+		if (iter->posx == x && iter->posy == y)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+
 
 
 void Player::playerMove()
@@ -289,12 +320,17 @@ void Player::playerMove()
 
 	if (_wm->getDungeon(tempX, tempY) != 0)
 	{
-		if (_mon->findMonster(tempX, tempY) == true)
+		
+		if (playerToMon(tempX,tempY)==true)
 		{
 			Attack();
 		}
 		else
 		{
+			_player.atkbottom = false;
+			_player.atktop = false;
+			_player.atkleft = false;
+			_player.atkright = false;
 			_player.posx = tempX;
 			_player.posy = tempY;
 			switch (_movestate)

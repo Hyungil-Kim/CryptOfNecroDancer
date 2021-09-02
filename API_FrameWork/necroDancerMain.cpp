@@ -74,7 +74,7 @@ void necroDancerMain::gameinit()
 	_rUI->init();
 	CAMERA->init(PLAYER->getPlayerAddress().x, PLAYER->getPlayerAddress().y, MAP_SIZE_X, MAP_SIZE_Y, 0, 0, WINSIZEX / 2, WINSIZEY / 2, CAMERASIZEX, CAMERASIZEY);
 	_wm->init();
-	PLAYER->setmonsterMemoryLink(_mon);
+	PLAYER->setmonsterManagerMemoryLink(_mm);
 	_mon->init();
 	_mm->setWallMemoryLink(_wm);
 	PLAYER->setWallmanagerMemoryLink(_wm);
@@ -83,4 +83,7 @@ void necroDancerMain::gameinit()
 	_wm->setrtmMemoryLink(_rUI);
 	PLAYER->setrtmMemoryLink(_rUI);
 	_rUI->setwallManagerMemoryLink(_wm);
+	PLAYER->setmonsterMemoryLink(_mon);
+	
+	
 }

@@ -83,12 +83,14 @@ struct tagPlayer
 	bool atkbottom;
 	bool isInput;
 	bool isSpawn;
+	bool isatk;
 	float _speed;
 	float jumpPower = 500.f;
 	float moveTime = 0.1f;
 };
 class rhythmUI;
 class wallManager;
+class monsterManager;
 class monster;
 class Player :public Singleton<Player>
 {
@@ -129,6 +131,7 @@ private:
 	wallManager* _wm;
 	monster* _mon;
 	rhythmUI* _rtm;
+	monsterManager* _mm;
 public:
 	 HRESULT init();
 	 void release();
@@ -142,10 +145,15 @@ public:
 	 void playerMove();
 	 void spawn();
 	 void Attack();
+	 bool findMonster(monster* monster,int x, int y);
+	 bool playerToMon(int x, int y);
 	 void setrtmMemoryLink(rhythmUI* rhythmUI) { _rtm = rhythmUI; }
 	 void setWallmanagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
 	 void setmonsterMemoryLink(monster* monster) { _mon = monster; }
+	 void setmonsterManagerMemoryLink(monsterManager* monsterManager) { _mm = monsterManager; }
 	tagPlayer& getPlayerAddress() { return _player; }
 	
 	 void setIsDebug(bool isDebug) { _isDebug = isDebug; }
+
+
 };

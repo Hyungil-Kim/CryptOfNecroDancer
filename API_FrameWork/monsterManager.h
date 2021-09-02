@@ -3,11 +3,13 @@
 #include "makeMonster.h"
 
 class wallManager;
+class monster;
 class monsterManager : public gameNode
 {
 private:
 	Player* _py;
 	wallManager* _wm;
+	monster* _mon;
 private:
 	green_slime* _green_slime;
 	blue_slime* _blue_slime;
@@ -43,6 +45,7 @@ public:
 	void setPlayerMemoryLink(Player* py) { _py = py; }
 	void spawn();
 	void setWallMemoryLink(wallManager* wallManager) { _wm = wallManager; }
+	void setmonsterMemoryLink(monster* monster) { _mon = monster; }
 	//µð¹ö±×
 	void setIsDebug(bool isDebug) {
 		_isDebug = isDebug;

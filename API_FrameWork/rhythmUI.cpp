@@ -3,7 +3,6 @@
 #include "wallManager.h"
 rhythmUI::rhythmUI()
 {
-
 }
 
 rhythmUI::~rhythmUI()
@@ -17,6 +16,7 @@ HRESULT rhythmUI::init()
 	IMAGE->addImage("적색바", "images/UI/TEMP_beat_marker_red.bmp", 12, 64, true);
 	_heartImage = IMAGE->addFrameImage("심장", "images/UI/TEMP_beat_heart.bmp", 82 * 2, 52 * 2, 2, 1, true);
 	_heartAni = ANIMATION->addNoneKeyAnimation("심장",1,0,4, false, true);
+	_check = 0;//1.2;
 	return S_OK;
 }
 
@@ -124,7 +124,7 @@ void rhythmUI::step()
 	for (_vibeat = _vbeat.begin(); _vibeat != _vbeat.end();++_vibeat)
 	{
 		_vibeat->count +=  TIME->getElapsedTime();
-		_vibeat->iscol = (1.3 < _vibeat->count);
+		_vibeat->iscol = (_check < _vibeat->count);
 	}
 }
 

@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "monsterManager.h"
 #include "wallManager.h"
+#include "monster.h"
 monsterManager::monsterManager()
 {
 
@@ -19,6 +20,9 @@ HRESULT monsterManager::init()
 	_green_slime->setwallManagerMemoryLink(_wm);
 	_blue_slime->setwallManagerMemoryLink(_wm);
 	_orange_slime->setwallManagerMemoryLink(_wm);
+	_green_slime->setmonsterManagerMemoryLink(this);
+	_blue_slime->setmonsterManagerMemoryLink(this);
+	_orange_slime->setmonsterManagerMemoryLink(this);
 	return S_OK;
 }
 

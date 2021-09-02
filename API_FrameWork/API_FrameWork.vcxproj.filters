@@ -171,9 +171,6 @@
     <ClInclude Include="necroDancerMain.h">
       <Filter>CryptOfNecroDancer\necroDancerMain</Filter>
     </ClInclude>
-    <ClInclude Include="monster.h">
-      <Filter>CryptOfNecroDancer\몬스터</Filter>
-    </ClInclude>
     <ClInclude Include="monsterManager.h">
       <Filter>CryptOfNecroDancer\gameManager</Filter>
     </ClInclude>
@@ -218,6 +215,9 @@
     </ClInclude>
     <ClInclude Include="rhythmUI.h">
       <Filter>CryptOfNecroDancer\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="monster.h">
+      <Filter>CryptOfNecroDancer\몬스터</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,10 @@
 #pragma once
 #include"CObstacle.h"
+#define INVINTIME 40
 
 class Player;
 class wallManager;
+
 enum class MONSTERSTATE {
 	MOVE,
 	STOP,
@@ -27,6 +29,15 @@ struct tagMonster
 	animation* leftani;
 	animation* shadowani;
 	animation* leftshadowani;
+
+	image* _atkup;
+	image* _atkleft;
+
+	animation* A_atkup;
+	animation* A_atkleft;
+	animation* A_atkright;
+	animation* A_atkdown;
+
 	RECT rc;
 	int x, y;
 	int posx, posy;
@@ -50,13 +61,17 @@ struct tagMonster
 	bool isMove = false;
 	bool isOnceMove = false;
 	bool AniLeft = false;
-	bool AttackOn = false;
-	
+	bool atkup = false;
+	bool atkdown = false;
+	bool atkleft = false;
+	bool atkright = false;
+	bool isGraceperiod = false;			
+	int gracePeriodCount = 0;
 
 	MONSTERSTATE monsterState;
 	MONSTERMOVESTATE monsterMoveState;
 };
-
+class monsterManager;
 class monster : public CObstacle
 {
 protected:
@@ -64,6 +79,7 @@ protected:
 	vector<tagMonster>::iterator _viMonster;
 	bool _isDebug;
 	wallManager* _wm;
+	monsterManager* _mm;
 public:
 	monster();
 	~monster();
@@ -77,10 +93,16 @@ public:
 	virtual void move();
 	virtual void stateCheck();
 	virtual void moveMonster();
-	virtual void setwallManagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
 	virtual void isCanMove();
-	virtual bool findMonster(int x , int y);
+	
 	virtual bool findPlayer(int x , int y);
+	virtual bool findMonster(monster* monster, int x, int y);
+	virtual bool monTomon(int x, int y);
+	virtual void attack();
+	virtual void getDamage();
+	virtual void checkInvincibility();
+	virtual void setmonsterManagerMemoryLink(monsterManager* monsterManager) { _mm = monsterManager; }
+	virtual void setwallManagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
 	vector<tagMonster>& getVMonster() { return _vMonster; }
 	vector<tagMonster>::iterator& getVIMonster() { return _viMonster; }
 	void setIsDebug(bool isDebug) { _isDebug = isDebug; }
