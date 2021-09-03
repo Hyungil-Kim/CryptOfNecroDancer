@@ -82,6 +82,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		}
 		else
 		{
+			//TIME->update(30.0f);
 			TIME->update(60.0f);
 			mg.update();
 			mg.render();

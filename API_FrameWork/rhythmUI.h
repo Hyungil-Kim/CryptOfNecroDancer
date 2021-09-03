@@ -11,7 +11,7 @@ struct tagerhythm {
 	bool iscol;
 	float count;
 };
-
+class monsterManager;
 class wallManager;
 class rhythmUI :public gameNode
 {
@@ -19,6 +19,7 @@ private:
 	image* _heartImage;
 	animation* _heartAni;
 	wallManager* _wm;
+	monsterManager* _mm;
 	int spawnbeat;
 	RECT rc;
 	float _heartX;
@@ -42,6 +43,7 @@ public:
 	bool checkstep();
 	void setIsDebug(bool isDebug) { _isDebug = isDebug; }
 	void setwallManagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
+	void setMonsterManagerMemoryLink(monsterManager* monsterManager) { _mm = monsterManager; }
 	vector<tagerhythm>& getVbeat() { return _vbeat; }
 	vector<tagerhythm>::iterator& getVIbeat() { return _vibeat; }
 };

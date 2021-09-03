@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "makeMonster.h"
+#include "rhythmUI.h"
 /*
 ================================================ =
 Find monster class ctrl + F4("name!")
@@ -8,7 +9,7 @@ monstername					imagename
 1.	green_slime				그린슬라임
 2.	blue_slime				블루슬라임
 3.	orange_slime			오랜지슬라임
-4
+4	skeleton				
 5.
 
 */
@@ -85,7 +86,7 @@ void green_slime::addMonster(float x, float y)
 	newMonster.posx = x / 48;
 	newMonster.posy = y / 48;
 	newMonster.rc = RectMake(x, y, newMonster.img->getFrameWidth(), newMonster.img->getFrameHeight());
-	newMonster.hp = 4;
+	newMonster.hp = 2;
 	newMonster.atk = 2;
 	newMonster.ani = ANIMATION->addNoneKeyAnimation("그린슬라임", 0, 3, 5, false, true);
 	newMonster.shadowani = ANIMATION->addNoneKeyAnimation("그린슬라임", 4, 7, 5, false, true);
@@ -610,9 +611,9 @@ void white_skeleton::release()
 {
 }
 
-void white_skeleton::update(Player* cp)
+void white_skeleton::update(Player* cp, rhythmUI* _rtm)
 {
-	moveMonster();
+	moveMonster(_rtm);
 }
 
 void white_skeleton::render()
@@ -653,12 +654,18 @@ void white_skeleton::addMonster(float x, float y)
 	newMonster.posx = x / 48;
 	newMonster.posy = y / 48;
 	newMonster.rc = RectMake(x, y, newMonster.img->getFrameWidth(), newMonster.img->getFrameHeight());
-	newMonster.hp = 4;
-	newMonster.atk = 2;
+	newMonster.hp = 2;
+	newMonster.atk = 1;
 	newMonster.ani = ANIMATION->addNoneKeyAnimation("해골", 0, 15, 4, false, true);
 	newMonster.leftani = ANIMATION->addNoneKeyAnimation("해골", 32, 47, 4, false, true);
 	newMonster.shadowani = ANIMATION->addNoneKeyAnimation("해골", 16, 31, 4, false, true);
 	newMonster.shadowani = ANIMATION->addNoneKeyAnimation("해골", 48, 63, 4, false, true);
+	newMonster._atkup = IMAGE->findImage("상하공격");
+	newMonster._atkleft = IMAGE->findImage("좌우공격");
+	newMonster.A_atkdown = ANIMATION->addNoneKeyAnimation("상하공격", 0, 4, 5, false, true);
+	newMonster.A_atkup = ANIMATION->addNoneKeyAnimation("상하공격", 9, 5, 5, false, true);
+	newMonster.A_atkright = ANIMATION->addNoneKeyAnimation("좌우공격", 0, 4, 5, false, true);
+	newMonster.A_atkleft = ANIMATION->addNoneKeyAnimation("좌우공격", 9, 5, 5, false, true);
 	newMonster.canBreakWall = false;
 	newMonster.isDetecting = false;
 	newMonster.isDead = false;
@@ -667,10 +674,11 @@ void white_skeleton::addMonster(float x, float y)
 	newMonster.isMove = false;
 	newMonster.AniLeft = true;
 	newMonster.limit = TILE_SIZE_Y;
-	newMonster.speed = 4;
+	newMonster.speed = WINSIZEX / 64 * 3*60;
+	newMonster.movecount = 0;
 	newMonster.isOnceMove = false;
 	newMonster.monsterState = MONSTERSTATE::STOP;
-	newMonster.monsterMoveState = MONSTERMOVESTATE::UP;
+	newMonster.monsterMoveState = MONSTERMOVESTATE::LEFT;
 	_vMonster.push_back(newMonster);
 }
 
@@ -678,10 +686,59 @@ void white_skeleton::stateCheck()
 {
 }
 
-void white_skeleton::moveMonster()
+void white_skeleton::moveMonster(rhythmUI* _rtm)
 {
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
+	{
+		bool movecheck = false;
+		setdirection();
+		if (_rtm->checkstep())
+		{
+			movecheck = true;
+		}
+		if (movecheck)
+		{
+			_viMonster->movecount++;
+			 movecheck = false;
+		}
+		if (_viMonster->movecount == 6)
+		{
+			if (abs(_viMonster->posx - PLAYER->getPlayerAddress().posx) < 1 || abs(_viMonster->posy - PLAYER->getPlayerAddress().posy) < 4)
+			{
+					float deltaTime = TIME->getElapsedTime();
+					float delta = _viMonster->speed * deltaTime;
+				switch (_viMonster->monsterMoveState)
+				{
+				case MONSTERMOVESTATE::LEFT:
+					_viMonster->x -= delta;
+					_viMonster->movecount = 0;
+					break;
+				case MONSTERMOVESTATE::RIGHT:
+					_viMonster->x += delta;
+					_viMonster->movecount = 0;
+					break;
+				case MONSTERMOVESTATE::UP:
+					_viMonster->y -= delta;
+					_viMonster->movecount = 0;
+					break;
+				case MONSTERMOVESTATE::DOWN:
+					_viMonster->y += delta;
+					_viMonster->movecount = 0;
+					break;
+				default:
+					break;
+				}
+			}
+			//else
+			{
+			//	_viMonster->monsterMoveState = MONSTERMOVESTATE::NONE;
+			}
+		
+		}
+	}
 }
 
 void white_skeleton::updateRect(vector<tagMonster>::iterator iter)
 {
+	iter->rc = RectMake(iter->x, iter->y, iter->img->getFrameWidth(), iter->img->getFrameHeight());
 }

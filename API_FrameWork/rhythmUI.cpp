@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "rhythmUI.h"
 #include "wallManager.h"
+#include "monsterManager.h"
 rhythmUI::rhythmUI()
 {
 }
@@ -16,7 +17,7 @@ HRESULT rhythmUI::init()
 	IMAGE->addImage("적색바", "images/UI/TEMP_beat_marker_red.bmp", 12, 64, true);
 	_heartImage = IMAGE->addFrameImage("심장", "images/UI/TEMP_beat_heart.bmp", 82 * 2, 52 * 2, 2, 1, true);
 	_heartAni = ANIMATION->addNoneKeyAnimation("심장",1,0,4, false, true);
-	_check = 0;//1.2;
+	_check = 1.2;//1.2;
 	return S_OK;
 }
 
@@ -51,13 +52,28 @@ void rhythmUI::UIrender()
 	}
 	if (_isDebug)
 	{
+		static bool prevCol = false;
+		bool isCol = false;
 		for (_vibeat = _vbeat.begin(); _vibeat != _vbeat.end(); _vibeat++)
 		{
 			if (_vibeat->iscol == true)
 			{
 				ZORDER->UIRectangleColor(rc, 9,MINT);
+				isCol = true;
+
+				break;
 			}
 		}
+
+		if (isCol && !prevCol)
+		{
+			char str[128] = { };
+			sprintf_s(str, "worldTime : %f\n", TIME->getWorldTime());
+			OutputDebugString(str);
+		}
+
+		prevCol = isCol;
+
 	}
 }
 
@@ -72,9 +88,9 @@ void rhythmUI::spawnBeat(int x, int y)
 	newbeat._bluebeatImg = IMAGE->findImage("청색바");
 	newbeat._greenbeatImg = IMAGE->findImage("녹색바");
 	newbeat._redbeatImg = IMAGE->findImage("적색바");
-	newbeat.speed = 8;
+	newbeat.speed = (WINSIZEX * 0.5f) / 1.9f;
 	newbeat.iscol = false;
-	newbeat.count = 0.25;
+	newbeat.count = 0.15;
 	newbeat.x = WINSIZEX/2 - x;
 	newbeat.y = WINSIZEY - 74;
 	newbeat.rc = RectMake(newbeat.x, newbeat.y, newbeat._bluebeatImg->getWidth(), newbeat._bluebeatImg->getHeight());
@@ -87,9 +103,9 @@ void rhythmUI::spawnBeat(int x, int y)
 	newbeat._bluebeatImg = IMAGE->findImage("청색바");
 	newbeat._greenbeatImg = IMAGE->findImage("녹색바");
 	newbeat._redbeatImg = IMAGE->findImage("적색바");
-	newbeat.speed = -8;
+	newbeat.speed = -(WINSIZEX * 0.5f) / 1.9f;
 	newbeat.iscol = false;
-	newbeat.count = 0.3;
+	newbeat.count = 0.15;
 	newbeat.x = WINSIZEX / 2 + x;
 	newbeat.y = WINSIZEY - 74;
 	newbeat.rc = RectMake(newbeat.x, newbeat.y, newbeat._bluebeatImg->getWidth(), newbeat._bluebeatImg->getHeight());
@@ -98,22 +114,24 @@ void rhythmUI::spawnBeat(int x, int y)
 
 void rhythmUI::moveBeat()
 {
-	for (_vibeat = _vbeat.begin(); _vibeat != _vbeat.end(); )
+	float deltaTime = TIME->getElapsedTime();
+	for (_vibeat = _vbeat.begin(); _vibeat != _vbeat.end(); ++_vibeat)
 	{
-		_vibeat->x += cosf(0) * _vibeat->speed;
-		_vibeat->y -= sinf(0) * _vibeat->speed;
+		float delta = _vibeat->speed * deltaTime;
+		_vibeat->x += delta;
 
 		_vibeat->rc = RectMakeCenter(_vibeat->x+5, _vibeat->y+30,
 			_vibeat->_bluebeatImg->getWidth(),
 			_vibeat->_bluebeatImg->getHeight());
-		if (_vibeat->x == WINSIZEX / 2 + 32)
-		{
-			_vibeat = _vbeat.erase(_vibeat);
-		}
-		else
-		{
-			++_vibeat;
-		}
+
+		//if (_vibeat->x == WINSIZEX / 2 + 32)
+		//{
+		//	_vibeat = _vbeat.erase(_vibeat);
+		//}
+		//else
+		//{
+		//	++_vibeat;
+		//}
 	}
 }
 
@@ -121,10 +139,20 @@ void rhythmUI::moveBeat()
 
 void rhythmUI::step()
 {
-	for (_vibeat = _vbeat.begin(); _vibeat != _vbeat.end();++_vibeat)
+
+	for (_vibeat = _vbeat.begin(); _vibeat != _vbeat.end();)
 	{
 		_vibeat->count +=  TIME->getElapsedTime();
-		_vibeat->iscol = (_check < _vibeat->count);
+		_vibeat->iscol = (_check < _vibeat->count) && (_check + 0.25f > _vibeat->count);
+
+		if ((1.9f + 0.1f < _vibeat->count))
+		{
+			_vibeat = _vbeat.erase(_vibeat);
+		}
+		else
+		{
+			++_vibeat;
+		}
 	}
 }
 

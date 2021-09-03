@@ -2,6 +2,7 @@
 #include "monster.h"
 #include"wallManager.h"
 #include"monsterManager.h"
+#include"rhythmUI.h"
 monster::monster()
 {
 	IMAGE->addFrameImage("аб©Л╟Ь╟щ", "images/monster/monatk1.bmp", 135 * 2, 46 * 2, 5, 2, true);
@@ -111,6 +112,41 @@ void monster::isCanMove()
 
 }
 
+void monster::isCanMove2()
+{
+	int tempX = _viMonster->posx;
+	int tempY = _viMonster->posy;
+	switch (_viMonster->monsterMoveState)
+	{
+	case MONSTERMOVESTATE::LEFT:
+		tempX -= 1;
+		break;
+	case MONSTERMOVESTATE::UP:
+		tempY -= 1;
+		break;
+	case MONSTERMOVESTATE::RIGHT:
+		tempX += 1;
+		break;
+	case MONSTERMOVESTATE::DOWN:
+		tempY += 1;
+		break;
+	default:
+		break;
+	}
+
+	if (findPlayer(tempX, tempY) == false)
+	{
+		if (monTomon(tempX, tempY) == false)
+		{
+			if (_wm->getDungeon(tempX, tempY) != 0)
+			{
+				_viMonster->isMove = true;
+			}
+		}
+	}
+
+}
+
 
 
 bool monster::findPlayer(int x, int y)
@@ -139,7 +175,8 @@ bool monster::monTomon(int x, int y)
 {
 	if (findMonster(_mm->getGreenSlime(), x, y) ||
 		findMonster(_mm->getBlueSlime(), x, y) ||
-		findMonster(_mm->getOrangeSlime(), x, y)
+		findMonster(_mm->getOrangeSlime(), x, y) ||
+		findMonster(_mm->getWhiteskeleton(),x,y)
 		)
 	{
 		return true;
@@ -160,6 +197,59 @@ void monster::getDamage()
 	{
 		_viMonster->hp -= PLAYER->getPlayerAddress().atk;
 	}
+}
+
+void monster::setdirection()
+{
+	
+		_viMonster->posx = _viMonster->x / 48;
+		_viMonster->posy = _viMonster->y / 48;
+		int tempX = _viMonster->posx;
+		int tempY = _viMonster->posy;
+		switch (_viMonster->monsterMoveState)
+		{
+		case MONSTERMOVESTATE::LEFT:
+			tempX -= 1;
+			if (_viMonster->posx <= PLAYER->getPlayerAddress().posx && _viMonster->isMove == true)
+			{
+				if (_viMonster->posy < PLAYER->getPlayerAddress().posy)
+					_viMonster->monsterMoveState = MONSTERMOVESTATE::DOWN;
+				else if (_viMonster->posy > PLAYER->getPlayerAddress().posy)
+					_viMonster->monsterMoveState = MONSTERMOVESTATE::UP;
+			}
+			break;
+		case MONSTERMOVESTATE::RIGHT:
+			tempX += 1;
+			if (_viMonster->posx >= PLAYER->getPlayerAddress().posx && _viMonster->isMove == true)
+			{
+				if (_viMonster->posy < PLAYER->getPlayerAddress().posy)
+					_viMonster->monsterMoveState = MONSTERMOVESTATE::DOWN;
+				else if (_viMonster->posy > PLAYER->getPlayerAddress().posy)
+					_viMonster->monsterMoveState = MONSTERMOVESTATE::UP;
+			}
+			break;
+		case MONSTERMOVESTATE::UP:
+			tempY -= 1;
+			if (_viMonster->posy <= PLAYER->getPlayerAddress().posy || _viMonster->isMove == false)
+			{
+				if (_viMonster->posx > PLAYER->getPlayerAddress().posx)
+					_viMonster->monsterMoveState = MONSTERMOVESTATE::LEFT;
+				else if (_viMonster->posx < PLAYER->getPlayerAddress().posx)
+					_viMonster->monsterMoveState = MONSTERMOVESTATE::RIGHT;
+			}
+			break;
+		case MONSTERMOVESTATE::DOWN:
+			tempY += 1;
+			if (_viMonster->posy >= PLAYER->getPlayerAddress().posy || _viMonster->isMove == false)
+			{
+				if (_viMonster->posx > PLAYER->getPlayerAddress().posx)
+					_viMonster->monsterMoveState = MONSTERMOVESTATE::LEFT;
+				else if (_viMonster->posx < PLAYER->getPlayerAddress().posx)
+					_viMonster->monsterMoveState = MONSTERMOVESTATE::RIGHT;
+			}
+			break;
+		}
+	
 }
 
 void monster::checkInvincibility()

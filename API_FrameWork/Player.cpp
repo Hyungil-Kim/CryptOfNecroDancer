@@ -271,23 +271,33 @@ void Player::giveDamage(int x, int y)
 
 	if (findMonster(_mm->getGreenSlime(), x, y))
 	{
-		for(int i =0 ; i< _mm->getGreenSlime()->getVMonster().size();++i)
+		for (int i = 0; i < _mm->getGreenSlime()->getVMonster().size(); ++i )
 		{
-			_mm->getGreenSlime()->getVMonster()[i].hp -= _player.atk;
+			if (_mm->getGreenSlime()->getVMonster()[i].posx == x && _mm->getGreenSlime()->getVMonster()[i].posy == y)
+			{
+				_mm->getGreenSlime()->getVMonster()[i].hp -= _player.atk;
+			}
+			
 		}
 	}
 	if (findMonster(_mm->getBlueSlime(), x, y))
 	{
 		for (int i = 0; i < _mm->getBlueSlime()->getVMonster().size(); ++i)
 		{
-			_mm->getBlueSlime()->getVMonster()[i].hp -= _player.atk;
+			if (_mm->getBlueSlime()->getVMonster()[i].posx == x && _mm->getBlueSlime()->getVMonster()[i].posy == y)
+			{
+				_mm->getBlueSlime()->getVMonster()[i].hp -= _player.atk;
+			}
 		}
 	}
 	if (findMonster(_mm->getOrangeSlime(), x, y))
 	{
 		for (int i = 0; i < _mm->getOrangeSlime()->getVMonster().size(); ++i)
 		{
-			_mm->getOrangeSlime()->getVMonster()[i].hp -= _player.atk;
+			if (_mm->getOrangeSlime()->getVMonster()[i].posx == x && _mm->getOrangeSlime()->getVMonster()[i].posy == y)
+			{
+				_mm->getOrangeSlime()->getVMonster()[i].hp -= _player.atk;
+			}
 		}
 	}
 	

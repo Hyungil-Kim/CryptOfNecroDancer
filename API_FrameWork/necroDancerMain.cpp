@@ -84,6 +84,7 @@ void necroDancerMain::gameinit()
 	PLAYER->setrtmMemoryLink(_rUI);
 	_rUI->setwallManagerMemoryLink(_wm);
 	PLAYER->setmonsterMemoryLink(_mon);
-	
+	_rUI->setMonsterManagerMemoryLink(_mm);
+	_mm->setrtmMemoryLink(_rUI);
 	
 }

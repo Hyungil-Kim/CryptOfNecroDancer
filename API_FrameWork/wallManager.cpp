@@ -169,16 +169,23 @@ void wallManager::spawnMon()
 		switch (randdomNum)
 		{
 			case 0:
-			_mm->getBlueSlime()->addMonster(i, k);
+				_mm->getWhiteskeleton()->addMonster(i, k);
+				//			_mm->getBlueSlime()->addMonster(i, k);
 			eraseSPoint(random);
 				break;
-			case 1:
-			_mm->getGreenSlime()->addMonster(i, k);
+			case 1:	
+				_mm->getWhiteskeleton()->addMonster(i, k);
+				//		_mm->getGreenSlime()->addMonster(i, k);
 			eraseSPoint(random);
 				break;
-			case 2:
-			_mm->getOrangeSlime()->addMonster(i, k);
+			case 2:	
+				_mm->getWhiteskeleton()->addMonster(i, k);
+//			_mm->getOrangeSlime()->addMonster(i, k);
 			eraseSPoint(random);
+				break;
+			case 3:
+				_mm->getWhiteskeleton()->addMonster(i, k);
+				eraseSPoint(random);
 				break;
 		default:
 			break;

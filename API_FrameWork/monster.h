@@ -4,7 +4,7 @@
 
 class Player;
 class wallManager;
-
+class rhythmUI;
 enum class MONSTERSTATE {
 	MOVE,
 	STOP,
@@ -61,13 +61,14 @@ struct tagMonster
 	bool isMove = false;
 	bool isOnceMove = false;
 	bool AniLeft = false;
+	
 	bool atkup = false;
 	bool atkdown = false;
 	bool atkleft = false;
 	bool atkright = false;
 	bool isGraceperiod = false;			
 	int gracePeriodCount = 0;
-
+	int movecount = 0;
 	MONSTERSTATE monsterState;
 	MONSTERMOVESTATE monsterMoveState;
 };
@@ -80,6 +81,8 @@ protected:
 	bool _isDebug;
 	wallManager* _wm;
 	monsterManager* _mm;
+	rhythmUI* _rtm;
+	
 public:
 	monster();
 	~monster();
@@ -94,16 +97,19 @@ public:
 	virtual void stateCheck();
 	virtual void moveMonster();
 	virtual void isCanMove();
+	virtual void isCanMove2();
 	
 	virtual bool findPlayer(int x , int y);
 	virtual bool findMonster(monster* monster, int x, int y);
 	virtual bool monTomon(int x, int y);
 	virtual void attack();
 	virtual void getDamage();
+	virtual void setdirection();
 	virtual void checkInvincibility();
 	virtual void deathcheck();
 	virtual void setmonsterManagerMemoryLink(monsterManager* monsterManager) { _mm = monsterManager; }
 	virtual void setwallManagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
+	virtual void setrtmMemoryLink(rhythmUI* rhythmUI) { _rtm = rhythmUI; }
 	vector<tagMonster>& getVMonster() { return _vMonster; }
 	vector<tagMonster>::iterator& getVIMonster() { return _viMonster; }
 	void setIsDebug(bool isDebug) { _isDebug = isDebug; }
