@@ -48,7 +48,7 @@ using namespace std;
 #include"Player.h"
 #include"tileSize.h"
 #include "enum.h"
-
+#include"PlayerUI.h"
 
 //=======================//
 //		Manager			//
@@ -68,7 +68,7 @@ using namespace std;
 #define BUTTON			Cbutton::getSingleton()
 #define CAMERA			camera::getSingleton()
 #define PLAYER			Player::getSingleton()
-	
+#define PLAYERUI		PlayerUI::getSingleton()
 //===================//
 //	매크로 설정부분	//
 //=================//

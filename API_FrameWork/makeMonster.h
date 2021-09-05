@@ -66,7 +66,7 @@ public:
 
 	HRESULT init();
 	void release();
-	void update(Player* cp,rhythmUI* _rtm);//플레이어 위치 참고하기위해 
+	void update(rhythmUI* _rtm);//플레이어 위치 참고하기위해 
 	void render();
 
 	virtual void addMonster(float x, float y);

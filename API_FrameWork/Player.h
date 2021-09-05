@@ -65,6 +65,7 @@ struct tagPlayer
 	bool hitIceTile =false ;
 	bool isCurrentRight;
 	bool ishit = false;
+	int maxhp;
 	int hp;
 	int atk;
 	int def;

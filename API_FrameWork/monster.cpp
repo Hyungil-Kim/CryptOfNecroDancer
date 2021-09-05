@@ -11,6 +11,9 @@ monster::monster()
 	ANIMATION->addNoneKeyAnimation("상하공격", 9, 5, 3, false, false);
 	ANIMATION->addNoneKeyAnimation("좌우공격", 0, 4, 3, false, false);
 	ANIMATION->addNoneKeyAnimation("좌우공격", 5, 9, 3, false, false);
+	IMAGE->addImage("몬스터빈하트", "images/UI/m_heart_empty.bmp", 24, 22, true);
+	IMAGE->addImage("몬스터하트", "images/UI/m_heart.bmp", 24, 22, true);
+	IMAGE->addImage("몬스터절반하트", "images/UI/m_heart_half.bmp", 24, 22, true);
 }
 
 monster::~monster()
@@ -112,40 +115,6 @@ void monster::isCanMove()
 
 }
 
-void monster::isCanMove2()
-{
-	int tempX = _viMonster->posx;
-	int tempY = _viMonster->posy;
-	switch (_viMonster->monsterMoveState)
-	{
-	case MONSTERMOVESTATE::LEFT:
-		tempX -= 1;
-		break;
-	case MONSTERMOVESTATE::UP:
-		tempY -= 1;
-		break;
-	case MONSTERMOVESTATE::RIGHT:
-		tempX += 1;
-		break;
-	case MONSTERMOVESTATE::DOWN:
-		tempY += 1;
-		break;
-	default:
-		break;
-	}
-
-	if (findPlayer(tempX, tempY) == false)
-	{
-		if (monTomon(tempX, tempY) == false)
-		{
-			if (_wm->getDungeon(tempX, tempY) != 0)
-			{
-				_viMonster->isMove = true;
-			}
-		}
-	}
-
-}
 
 
 
@@ -199,58 +168,7 @@ void monster::getDamage()
 	}
 }
 
-void monster::setdirection()
-{
-	
-		_viMonster->posx = _viMonster->x / 48;
-		_viMonster->posy = _viMonster->y / 48;
-		int tempX = _viMonster->posx;
-		int tempY = _viMonster->posy;
-		switch (_viMonster->monsterMoveState)
-		{
-		case MONSTERMOVESTATE::LEFT:
-			tempX -= 1;
-			if (_viMonster->posx <= PLAYER->getPlayerAddress().posx && _viMonster->isMove == true)
-			{
-				if (_viMonster->posy < PLAYER->getPlayerAddress().posy)
-					_viMonster->monsterMoveState = MONSTERMOVESTATE::DOWN;
-				else if (_viMonster->posy > PLAYER->getPlayerAddress().posy)
-					_viMonster->monsterMoveState = MONSTERMOVESTATE::UP;
-			}
-			break;
-		case MONSTERMOVESTATE::RIGHT:
-			tempX += 1;
-			if (_viMonster->posx >= PLAYER->getPlayerAddress().posx && _viMonster->isMove == true)
-			{
-				if (_viMonster->posy < PLAYER->getPlayerAddress().posy)
-					_viMonster->monsterMoveState = MONSTERMOVESTATE::DOWN;
-				else if (_viMonster->posy > PLAYER->getPlayerAddress().posy)
-					_viMonster->monsterMoveState = MONSTERMOVESTATE::UP;
-			}
-			break;
-		case MONSTERMOVESTATE::UP:
-			tempY -= 1;
-			if (_viMonster->posy <= PLAYER->getPlayerAddress().posy || _viMonster->isMove == false)
-			{
-				if (_viMonster->posx > PLAYER->getPlayerAddress().posx)
-					_viMonster->monsterMoveState = MONSTERMOVESTATE::LEFT;
-				else if (_viMonster->posx < PLAYER->getPlayerAddress().posx)
-					_viMonster->monsterMoveState = MONSTERMOVESTATE::RIGHT;
-			}
-			break;
-		case MONSTERMOVESTATE::DOWN:
-			tempY += 1;
-			if (_viMonster->posy >= PLAYER->getPlayerAddress().posy || _viMonster->isMove == false)
-			{
-				if (_viMonster->posx > PLAYER->getPlayerAddress().posx)
-					_viMonster->monsterMoveState = MONSTERMOVESTATE::LEFT;
-				else if (_viMonster->posx < PLAYER->getPlayerAddress().posx)
-					_viMonster->monsterMoveState = MONSTERMOVESTATE::RIGHT;
-			}
-			break;
-		}
-	
-}
+
 
 void monster::checkInvincibility()
 {
@@ -271,4 +189,137 @@ void monster::deathcheck()
 		_viMonster->monsterState = MONSTERSTATE::DEAD;
 	}
 
+}
+
+void monster::showhp()
+{
+	for (int i = 0; i < _viMonster->maxhp / 2; i++)
+	{
+		int k;
+		if (i / 5 < 1) k = 0;
+		else  k = 1;
+		{
+			ZORDER->ZorderRender(_viMonster->m_emptyheart, 7, 5, _viMonster->x-12 + 24*i,_viMonster->y -12);
+		}
+	}
+	for (int i = 0; i < _viMonster->hp / 2; i++)
+	{
+
+		int k;
+		if (i / 5 < 1) k = 0;
+		else  k = 1;
+		{
+			ZORDER->ZorderRender(_viMonster->m_heart, 8, 5, _viMonster->x - 12 + 24 * i, _viMonster->y - 12);
+		}
+
+		if (_viMonster->hp % 2 != 0)
+		{
+			int t = _viMonster->hp / 2;
+			int k;
+			if (i / 4 < 1) k = 0;
+			else  k = 1;
+			{
+				ZORDER->ZorderRender(_viMonster->m_halfheart, 8, 0, _viMonster->x-12 + 24*i,_viMonster->y -12);
+			}
+		}
+	}
+}
+
+void monster::hpinit()
+{
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
+	{
+		monstermaxhp = _viMonster->maxhp;
+		monsterhp = _viMonster->hp;
+	}
+
+}
+
+
+void monster::setdirection()
+{
+	int tempX = _viMonster->posx;
+	int tempY = _viMonster->posy;
+	switch (_viMonster->monsterMoveState)
+	{
+	case MONSTERMOVESTATE::LEFT:
+		tempX -= 1;
+		break;
+	case MONSTERMOVESTATE::UP:
+		tempY -= 1;
+		break;
+	case MONSTERMOVESTATE::RIGHT:
+		tempX += 1;
+		break;
+	case MONSTERMOVESTATE::DOWN:
+		tempY += 1;
+		break;
+	default:
+		break;
+	}
+	switch (_viMonster->monsterMoveState)
+	{
+	case MONSTERMOVESTATE::LEFT:
+		if (_viMonster->posx <= PLAYER->getPlayerAddress().posx || _wm->getDungeon(tempX, tempY) == 0 || monTomon(tempX,tempY) == true)
+		{
+			if (_viMonster->posy < PLAYER->getPlayerAddress().posy)
+				_viMonster->monsterMoveState = MONSTERMOVESTATE::DOWN;
+			else if (_viMonster->posy > PLAYER->getPlayerAddress().posy)
+				_viMonster->monsterMoveState = MONSTERMOVESTATE::UP;
+		}
+		else if (findPlayer(tempX, tempY) == true)
+		{
+			_viMonster->monsterState = MONSTERSTATE::ATTACK;
+			_viMonster->atkleft = true;
+		}
+		_viMonster->monsterState = MONSTERSTATE::MOVE;
+		break;
+	case MONSTERMOVESTATE::RIGHT:
+		if (_viMonster->posx >= PLAYER->getPlayerAddress().posx || _wm->getDungeon(tempX, tempY) == 0 || monTomon(tempX, tempY) == true)
+		{
+			if (_viMonster->posy < PLAYER->getPlayerAddress().posy)
+				_viMonster->monsterMoveState = MONSTERMOVESTATE::DOWN;
+			else if (_viMonster->posy > PLAYER->getPlayerAddress().posy)
+				_viMonster->monsterMoveState = MONSTERMOVESTATE::UP;
+		}
+		else if (findPlayer(tempX, tempY) == true)
+		{
+			_viMonster->monsterState = MONSTERSTATE::ATTACK;
+			_viMonster->atkright = true;
+		}
+		_viMonster->monsterState = MONSTERSTATE::MOVE;
+		break;
+	case MONSTERMOVESTATE::DOWN:
+		if (_viMonster->posy >= PLAYER->getPlayerAddress().posy || _wm->getDungeon(tempX, tempY) == 0 || monTomon(tempX, tempY) == true)
+		{
+			if (_viMonster->posx < PLAYER->getPlayerAddress().posx)
+				_viMonster->monsterMoveState = MONSTERMOVESTATE::RIGHT;
+			else if (_viMonster->posx > PLAYER->getPlayerAddress().posx)
+				_viMonster->monsterMoveState = MONSTERMOVESTATE::LEFT;
+		}
+		else if (findPlayer(tempX, tempY) == true)
+		{
+			_viMonster->monsterState = MONSTERSTATE::ATTACK;
+			_viMonster->atkdown = true;
+		}
+		_viMonster->monsterState = MONSTERSTATE::MOVE;
+		break;
+	case MONSTERMOVESTATE::UP:
+		if (_viMonster->posy <= PLAYER->getPlayerAddress().posy || _wm->getDungeon(tempX, tempY) == 0 || monTomon(tempX, tempY) == true)
+		{
+			if (_viMonster->posx < PLAYER->getPlayerAddress().posx)
+				_viMonster->monsterMoveState = MONSTERMOVESTATE::RIGHT;
+			else if (_viMonster->posx > PLAYER->getPlayerAddress().posx)
+				_viMonster->monsterMoveState = MONSTERMOVESTATE::LEFT;
+		}
+		else if (findPlayer(tempX, tempY) == true)
+		{
+			_viMonster->monsterState = MONSTERSTATE::ATTACK;
+			_viMonster->atkup = true;
+		}
+		_viMonster->monsterState = MONSTERSTATE::MOVE;
+		break;
+	default:
+		break;
+	}
 }

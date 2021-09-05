@@ -28,6 +28,7 @@ public:
 	 void update();
 	 void render(/*HDC hdc*/);
 	 void gameinit();
+	 void initForSound();
 	void setIsDebug(bool isDebug) { 
 		_isDebug = isDebug; 
 		//PLAYER->setIsDebug(_isDebug);

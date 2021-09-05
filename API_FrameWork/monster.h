@@ -38,10 +38,15 @@ struct tagMonster
 	animation* A_atkright;
 	animation* A_atkdown;
 
+	image* m_heart;
+	image* m_halfheart;
+	image* m_emptyheart;
+
 	RECT rc;
 	int x, y;
 	int posx, posy;
 
+	int maxhp;
 	int hp;
 	int atk;
 	int speed;
@@ -82,7 +87,10 @@ protected:
 	wallManager* _wm;
 	monsterManager* _mm;
 	rhythmUI* _rtm;
-	
+
+
+	int monstermaxhp;
+	int monsterhp;
 public:
 	monster();
 	~monster();
@@ -97,7 +105,7 @@ public:
 	virtual void stateCheck();
 	virtual void moveMonster();
 	virtual void isCanMove();
-	virtual void isCanMove2();
+
 	
 	virtual bool findPlayer(int x , int y);
 	virtual bool findMonster(monster* monster, int x, int y);
@@ -110,6 +118,9 @@ public:
 	virtual void setmonsterManagerMemoryLink(monsterManager* monsterManager) { _mm = monsterManager; }
 	virtual void setwallManagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
 	virtual void setrtmMemoryLink(rhythmUI* rhythmUI) { _rtm = rhythmUI; }
+	virtual void showhp();
+	virtual void hpinit();
+	
 	vector<tagMonster>& getVMonster() { return _vMonster; }
 	vector<tagMonster>::iterator& getVIMonster() { return _viMonster; }
 	void setIsDebug(bool isDebug) { _isDebug = isDebug; }

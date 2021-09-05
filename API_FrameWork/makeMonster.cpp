@@ -59,6 +59,9 @@ void green_slime::render()
 {
 	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
 	{
+		if (_viMonster->hp != _viMonster->maxhp)
+		showhp();
+		
 		switch (_viMonster->monsterState)
 		{
 		case MONSTERSTATE::MOVE:
@@ -86,10 +89,14 @@ void green_slime::addMonster(float x, float y)
 	newMonster.posx = x / 48;
 	newMonster.posy = y / 48;
 	newMonster.rc = RectMake(x, y, newMonster.img->getFrameWidth(), newMonster.img->getFrameHeight());
+	newMonster.maxhp = 2;
 	newMonster.hp = 2;
 	newMonster.atk = 2;
 	newMonster.ani = ANIMATION->addNoneKeyAnimation("그린슬라임", 0, 3, 5, false, true);
 	newMonster.shadowani = ANIMATION->addNoneKeyAnimation("그린슬라임", 4, 7, 5, false, true);
+	newMonster.m_emptyheart = IMAGE->findImage("몬스터빈하트");
+	newMonster.m_heart = IMAGE->findImage("몬스터하트");
+	newMonster.m_halfheart = IMAGE->findImage("몬스터절반하트");
 	newMonster.canBreakWall = false;
 	newMonster.isDetecting = false;
 	newMonster.isDead = false;
@@ -169,6 +176,8 @@ void blue_slime::render()
 {
 	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
 	{
+		if (_viMonster->hp != _viMonster->maxhp)
+		showhp();
 		switch (_viMonster->monsterState)
 		{
 		case MONSTERSTATE::ATTACK:
@@ -212,6 +221,7 @@ void blue_slime::addMonster(float x, float y)
 	newMonster.posx = x / 48;
 	newMonster.posy = y / 48;
 	newMonster.rc = RectMake(x, y, newMonster.img->getFrameWidth(), newMonster.img->getFrameHeight());
+	newMonster.maxhp = 4;
 	newMonster.hp = 4;
 	newMonster.atk = 2;
 	newMonster.ani = ANIMATION->addNoneKeyAnimation("블루슬라임", 0, 7, 4, false, true);
@@ -219,6 +229,9 @@ void blue_slime::addMonster(float x, float y)
 	newMonster._atkup = IMAGE->findImage("상하공격");
 	newMonster.A_atkdown = ANIMATION->addNoneKeyAnimation("상하공격", 0, 4, 5, false, true);
 	newMonster.A_atkup = ANIMATION->addNoneKeyAnimation("상하공격", 9, 5, 5, false, true);
+	newMonster.m_emptyheart = IMAGE->findImage("몬스터빈하트");
+	newMonster.m_heart = IMAGE->findImage("몬스터하트");
+	newMonster.m_halfheart = IMAGE->findImage("몬스터절반하트");
 	newMonster.canBreakWall = false;
 	newMonster.isDetecting = false;
 	newMonster.isDead = false;
@@ -375,6 +388,8 @@ void orange_slime::render()
 {
 	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
 	{
+		if (_viMonster->hp != _viMonster->maxhp)
+		showhp();
 		switch (_viMonster->monsterState)
 		{
 		case MONSTERSTATE::ATTACK:
@@ -425,6 +440,7 @@ void orange_slime::addMonster(float x, float y)
 	newMonster.posx = x / 48;
 	newMonster.posy = y / 48;
 	newMonster.rc = RectMake(x, y, newMonster.img->getFrameWidth(), newMonster.img->getFrameHeight());
+	newMonster.maxhp = 4;
 	newMonster.hp = 4;
 	newMonster.atk = 2;
 	newMonster.ani = ANIMATION->addNoneKeyAnimation("주황슬라임", 0, 3, 4, false, true);
@@ -437,6 +453,9 @@ void orange_slime::addMonster(float x, float y)
 	newMonster.A_atkup = ANIMATION->addNoneKeyAnimation("상하공격", 9, 5, 5, false, true);
 	newMonster.A_atkright = ANIMATION->addNoneKeyAnimation("좌우공격", 0, 4, 5, false, true);
 	newMonster.A_atkleft = ANIMATION->addNoneKeyAnimation("좌우공격", 9, 5, 5, false, true);
+	newMonster.m_emptyheart = IMAGE->findImage("몬스터빈하트");
+	newMonster.m_heart = IMAGE->findImage("몬스터하트");
+	newMonster.m_halfheart = IMAGE->findImage("몬스터절반하트");
 	newMonster.canBreakWall = false;
 	newMonster.isDetecting = false;
 	newMonster.isDead = false;
@@ -611,15 +630,21 @@ void white_skeleton::release()
 {
 }
 
-void white_skeleton::update(Player* cp, rhythmUI* _rtm)
+void white_skeleton::update(rhythmUI* _rtm)
 {
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
+	{
 	moveMonster(_rtm);
+		
+	}
 }
 
 void white_skeleton::render()
 {
 	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
 	{
+		if(_viMonster->hp != _viMonster->maxhp)
+		showhp();
 		switch (_viMonster->monsterState)
 		{
 		case MONSTERSTATE::MOVE:
@@ -654,6 +679,7 @@ void white_skeleton::addMonster(float x, float y)
 	newMonster.posx = x / 48;
 	newMonster.posy = y / 48;
 	newMonster.rc = RectMake(x, y, newMonster.img->getFrameWidth(), newMonster.img->getFrameHeight());
+	newMonster.maxhp = 2;
 	newMonster.hp = 2;
 	newMonster.atk = 1;
 	newMonster.ani = ANIMATION->addNoneKeyAnimation("해골", 0, 15, 4, false, true);
@@ -666,6 +692,9 @@ void white_skeleton::addMonster(float x, float y)
 	newMonster.A_atkup = ANIMATION->addNoneKeyAnimation("상하공격", 9, 5, 5, false, true);
 	newMonster.A_atkright = ANIMATION->addNoneKeyAnimation("좌우공격", 0, 4, 5, false, true);
 	newMonster.A_atkleft = ANIMATION->addNoneKeyAnimation("좌우공격", 9, 5, 5, false, true);
+	newMonster.m_emptyheart = IMAGE->findImage("몬스터빈하트");
+	newMonster.m_heart = IMAGE->findImage("몬스터하트");
+	newMonster.m_halfheart = IMAGE->findImage("몬스터절반하트");
 	newMonster.canBreakWall = false;
 	newMonster.isDetecting = false;
 	newMonster.isDead = false;
@@ -674,7 +703,7 @@ void white_skeleton::addMonster(float x, float y)
 	newMonster.isMove = false;
 	newMonster.AniLeft = true;
 	newMonster.limit = TILE_SIZE_Y;
-	newMonster.speed = WINSIZEX / 64 * 3*60;
+	newMonster.speed = 48*2;
 	newMonster.movecount = 0;
 	newMonster.isOnceMove = false;
 	newMonster.monsterState = MONSTERSTATE::STOP;
@@ -688,54 +717,40 @@ void white_skeleton::stateCheck()
 
 void white_skeleton::moveMonster(rhythmUI* _rtm)
 {
-	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
-	{
-		bool movecheck = false;
-		setdirection();
-		if (_rtm->checkstep())
-		{
-			movecheck = true;
-		}
-		if (movecheck)
-		{
-			_viMonster->movecount++;
-			 movecheck = false;
-		}
-		if (_viMonster->movecount == 6)
-		{
-			if (abs(_viMonster->posx - PLAYER->getPlayerAddress().posx) < 1 || abs(_viMonster->posy - PLAYER->getPlayerAddress().posy) < 4)
+	setdirection();
+			//if (abs(_viMonster->posx - PLAYER->getPlayerAddress().posx) < 4 || abs(_viMonster->posy - PLAYER->getPlayerAddress().posy) < 4)
 			{
-					float deltaTime = TIME->getElapsedTime();
-					float delta = _viMonster->speed * deltaTime;
+				float deltaTime = TIME->getElapsedTime();
+				float delta = 48 / 16;//_viMonster->speed * deltaTime;
 				switch (_viMonster->monsterMoveState)
 				{
 				case MONSTERMOVESTATE::LEFT:
 					_viMonster->x -= delta;
 					_viMonster->movecount = 0;
+					_viMonster->posx = _viMonster->x / 48;
 					break;
 				case MONSTERMOVESTATE::RIGHT:
 					_viMonster->x += delta;
 					_viMonster->movecount = 0;
+					_viMonster->posx = _viMonster->x / 48;
+					_viMonster->posy = _viMonster->y / 48;
 					break;
 				case MONSTERMOVESTATE::UP:
 					_viMonster->y -= delta;
 					_viMonster->movecount = 0;
+					_viMonster->posx = _viMonster->x / 48;
+					_viMonster->posy = _viMonster->y / 48;
 					break;
 				case MONSTERMOVESTATE::DOWN:
 					_viMonster->y += delta;
 					_viMonster->movecount = 0;
+					_viMonster->posx = _viMonster->x / 48;
+					_viMonster->posy = _viMonster->y / 48;
 					break;
 				default:
 					break;
 				}
 			}
-			//else
-			{
-			//	_viMonster->monsterMoveState = MONSTERMOVESTATE::NONE;
-			}
-		
-		}
-	}
 }
 
 void white_skeleton::updateRect(vector<tagMonster>::iterator iter)

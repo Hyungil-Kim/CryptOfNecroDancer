@@ -88,7 +88,7 @@ void rhythmUI::spawnBeat(int x, int y)
 	newbeat._bluebeatImg = IMAGE->findImage("청색바");
 	newbeat._greenbeatImg = IMAGE->findImage("녹색바");
 	newbeat._redbeatImg = IMAGE->findImage("적색바");
-	newbeat.speed = (WINSIZEX * 0.5f) / 1.9f;
+	newbeat.speed = (WINSIZEX * 0.5f) / 1.9167f;
 	newbeat.iscol = false;
 	newbeat.count = 0.15;
 	newbeat.x = WINSIZEX/2 - x;
@@ -103,7 +103,7 @@ void rhythmUI::spawnBeat(int x, int y)
 	newbeat._bluebeatImg = IMAGE->findImage("청색바");
 	newbeat._greenbeatImg = IMAGE->findImage("녹색바");
 	newbeat._redbeatImg = IMAGE->findImage("적색바");
-	newbeat.speed = -(WINSIZEX * 0.5f) / 1.9f;
+	newbeat.speed = -(WINSIZEX * 0.5f) / 1.9167f;
 	newbeat.iscol = false;
 	newbeat.count = 0.15;
 	newbeat.x = WINSIZEX / 2 + x;
@@ -145,7 +145,7 @@ void rhythmUI::step()
 		_vibeat->count +=  TIME->getElapsedTime();
 		_vibeat->iscol = (_check < _vibeat->count) && (_check + 0.25f > _vibeat->count);
 
-		if ((1.9f + 0.1f < _vibeat->count))
+		if ((1.9167f +0.1f  < _vibeat->count))
 		{
 			_vibeat = _vbeat.erase(_vibeat);
 		}

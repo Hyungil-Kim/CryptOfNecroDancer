@@ -219,6 +219,9 @@
     <ClInclude Include="monster.h">
       <Filter>CryptOfNecroDancer\몬스터</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerUI.h">
+      <Filter>CryptOfNecroDancer\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -327,6 +330,9 @@
       <Filter>CryptOfNecroDancer\map\object</Filter>
     </ClCompile>
     <ClCompile Include="rhythmUI.cpp">
+      <Filter>CryptOfNecroDancer\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerUI.cpp">
       <Filter>CryptOfNecroDancer\UI</Filter>
     </ClCompile>
   </ItemGroup>

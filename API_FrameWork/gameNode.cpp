@@ -82,7 +82,8 @@ void gameNode::release()
 		//플레이어 데이터 해제
 		PLAYER->release();
 		PLAYER->releaseSingleton();
-
+		PLAYERUI->release();
+		PLAYERUI->releaseSingleton();
 		
 
 	}

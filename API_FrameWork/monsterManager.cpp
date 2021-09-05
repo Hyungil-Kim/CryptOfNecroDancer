@@ -48,7 +48,7 @@ void monsterManager::update()
 	_green_slime->update(_py);
 	_blue_slime->update(_py);
 	_orange_slime->update(_py);
-	_white_skeleton->update(_py,_rtm);
+	_white_skeleton->update(_rtm);
 }
 
 void monsterManager::render()

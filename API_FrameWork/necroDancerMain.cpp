@@ -23,6 +23,7 @@ void necroDancerMain::release()
 	_mm->release();
 	_wm->release();
 	PLAYER->release();
+	PLAYERUI->release();
 	_rUI->release();
 	_mon->release();
 	SAFE_DELETE(_mm);
@@ -40,6 +41,7 @@ void necroDancerMain::update()
 	CAMERA->movePivot(PLAYER->getPlayerAddress().x,PLAYER->getPlayerAddress().y);
 	CAMERA->update();
 	PLAYER->update();
+	PLAYERUI->update();
 	_mon->update(PLAYER);
 	
 }
@@ -50,6 +52,7 @@ void necroDancerMain::render()
 	map->render();
 	_wm->render();
 	_rUI->render();
+	PLAYERUI->render(getMemDC());
 	PLAYER->render(getMapDC());
 	_mon->render();
 	ZORDER->ZorderTotalRender(getMapDC());
@@ -69,7 +72,7 @@ void necroDancerMain::gameinit()
 	_wm = new wallManager;
 	_mon = new monster;
 	_rUI = new rhythmUI;
-
+	initForSound();
 	PLAYER->init();
 	_rUI->init();
 	CAMERA->init(PLAYER->getPlayerAddress().x, PLAYER->getPlayerAddress().y, MAP_SIZE_X, MAP_SIZE_Y, 0, 0, WINSIZEX / 2, WINSIZEY / 2, CAMERASIZEX, CAMERASIZEY);
@@ -86,5 +89,15 @@ void necroDancerMain::gameinit()
 	PLAYER->setmonsterMemoryLink(_mon);
 	_rUI->setMonsterManagerMemoryLink(_mm);
 	_mm->setrtmMemoryLink(_rUI);
+	PLAYERUI->init();
 	
+}
+
+void necroDancerMain::initForSound()
+{
+	SOUND->addSound("1스테이지","sound/zone1_1.ogg", true, true);
+	SOUND->addSound("오프닝", "sound/lobby.ogg", true, true);
+	SOUND->addSound("보스전", "sound/boss_1.ogg", true, true);
+	SOUND->addSound("엔딩", "sound/ending.ogg", true, false);
+	SOUND->play("1스테이지", 0.05);
 }

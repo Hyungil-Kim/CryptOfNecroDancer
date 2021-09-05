@@ -6,6 +6,7 @@
 #include "rhythmUI.h"
 HRESULT Player::init()
 {
+	_player.maxhp = 12;
 	_player.hp = 12;
 	_player.atk = 2;
 	_player.def = 0;
