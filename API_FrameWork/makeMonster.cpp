@@ -280,7 +280,7 @@ void blue_slime::moveMonster()
 
 				}
 			}
-			else
+			else if(_viMonster->atkup == true)
 			{
 				_viMonster->monsterState = MONSTERSTATE::ATTACK;
 				_viMonster->atkdown = false;
@@ -311,7 +311,7 @@ void blue_slime::moveMonster()
 					_viMonster->candown = false;
 				}
 			}
-			else
+			else if (_viMonster->atkdown == true)
 			{
 				_viMonster->monsterState = MONSTERSTATE::ATTACK;
 				_viMonster->atkup = false;
@@ -499,7 +499,7 @@ void orange_slime::moveMonster()
 					_viMonster->monsterMoveState = MONSTERMOVESTATE::LEFT;
 				}
 			}
-			else
+			else if (_viMonster->atkup == true)
 			{
 				_viMonster->monsterState = MONSTERSTATE::ATTACK;
 				_viMonster->atkdown = false;
@@ -529,7 +529,7 @@ void orange_slime::moveMonster()
 					_viMonster->monsterMoveState = MONSTERMOVESTATE::DOWN;
 				}
 			}
-			else
+			else if (_viMonster->atkleft == true)
 			{
 				_viMonster->monsterState = MONSTERSTATE::ATTACK;
 				_viMonster->atkup = false;
@@ -558,7 +558,7 @@ void orange_slime::moveMonster()
 					_viMonster->monsterMoveState = MONSTERMOVESTATE::RIGHT;
 				}
 			}
-			else
+			else if (_viMonster->atkdown == true)
 			{
 				_viMonster->monsterState = MONSTERSTATE::ATTACK;
 				_viMonster->atkup = false;
@@ -588,7 +588,7 @@ void orange_slime::moveMonster()
 					_viMonster->monsterMoveState = MONSTERMOVESTATE::UP;
 				}
 			}
-			else
+			else if (_viMonster->atkright == true)
 			{
 				_viMonster->monsterState = MONSTERSTATE::ATTACK;
 				_viMonster->atkup = false;

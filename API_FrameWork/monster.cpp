@@ -105,7 +105,7 @@ void monster::isCanMove()
 			}
 		}
 	}
-	else
+	else if (findPlayer(tempX, tempY) == true)
 	{
 		_viMonster->atkdown = true;
 		_viMonster->atkup = true;

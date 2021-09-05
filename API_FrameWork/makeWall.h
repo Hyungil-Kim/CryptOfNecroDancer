@@ -34,3 +34,20 @@ public:
 	virtual void updateRect(vector<tagWall>::iterator iter);
 };
 
+class makeUnBrokeWall :public CWall
+{
+	image* unBrokeWall;
+
+public:
+	makeUnBrokeWall();
+	~makeUnBrokeWall();
+
+	HRESULT init();
+	void release();
+	void update();//플레이어 위치 참고하기위해 
+	void render();
+	virtual void eraseWall(int x, int y);
+	virtual void addWall(float x, float y);
+	virtual void updateRect(vector<tagWall>::iterator iter);
+};
+

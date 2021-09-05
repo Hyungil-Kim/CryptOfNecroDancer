@@ -145,7 +145,7 @@ void rhythmUI::step()
 		_vibeat->count +=  TIME->getElapsedTime();
 		_vibeat->iscol = (_check < _vibeat->count) && (_check + 0.25f > _vibeat->count);
 
-		if ((1.9167f +0.1f  < _vibeat->count))
+		if ((1.9167f +0.05f  < _vibeat->count))
 		{
 			_vibeat = _vbeat.erase(_vibeat);
 		}

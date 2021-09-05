@@ -20,15 +20,21 @@ private:
 	monsterManager* _mm;
 	makeSoftWall* _makeSoftWall;
 	makeHardWall* _makeHardWall;
+	image* _nextDoorOn;
+	image* _nextDoorOff;
 	monster* _mon;
 	rhythmUI* _rtm;
 	CMap* _cmap;
 	int Dungeon[TILE_NUM_X][TILE_NUM_Y] = {};
 	float monsterNum;
+	int doorNum = 1;
 	int startNum;
+	int doorX, doorY;
+	bool makeDoor = false;
 	int level;
 	int randdomNum;
 	bool spawnTime;
+	bool doorOpen = false;
 	float timing;
 	vector<SpawnPoint> _vSpawn;
 	vector<SpawnPoint>::iterator _viSpawn;
@@ -48,7 +54,9 @@ public:
 	void showDungeon();
 	void spawnMon();
 	void eraseSPoint(int arrNum);
+	void spawnNextStageDoor();
 	
+
 	float getcount() { return count; }
 	int getDungeon(int i , int k) { return Dungeon[i][k]; }
 	void setDungeon(int i, int k, int t) { Dungeon[i][k] = t; }

@@ -121,3 +121,64 @@ void makeHardWall::addWall(float x, float y)
 void makeHardWall::updateRect(vector<tagWall>::iterator iter)
 {
 }
+
+makeUnBrokeWall::makeUnBrokeWall()
+{
+	unBrokeWall = IMAGE->addFrameImage("검은벽", "images/tile/TEMP_wall_unbreakable.bmp", 48, 48 + 30, 1, 1, true);
+
+}
+
+makeUnBrokeWall::~makeUnBrokeWall()
+{
+}
+
+HRESULT makeUnBrokeWall::init()
+{
+	return S_OK;
+}
+
+void makeUnBrokeWall::release()
+{
+}
+
+void makeUnBrokeWall::update()
+{
+}
+
+void makeUnBrokeWall::render()
+{
+	for (_viWall = _vWall.begin(); _viWall != _vWall.end(); _viWall++)
+	{
+		if (_isDebug) {
+			ZORDER->ZorderRectangle(_viWall->rc, 4);
+		}
+		ZORDER->ZorderFrameRender(unBrokeWall, 3, _viWall->rc.bottom, _viWall->x, _viWall->y);
+	}
+}
+
+void makeUnBrokeWall::eraseWall(int x, int y)
+{
+	for (_viWall = _vWall.begin(); _viWall != _vWall.end(); _viWall++)
+	{
+		if (x == _viWall->x && y == _viWall->y)
+		{
+			_vWall.erase(_viWall);
+		}
+	}
+}
+
+void makeUnBrokeWall::addWall(float x, float y)
+{
+	tagWall newWall;
+	newWall.img = IMAGE->findImage("검은벽");
+	newWall.x = x;
+	newWall.y = y;
+	newWall._wallType = WALL_TYPE::BLACK_WALL;
+	newWall.rc = RectMake(x, y, newWall.img->getFrameWidth(), newWall.img->getFrameHeight());
+	newWall.hard = 100;
+	_vWall.push_back(newWall);
+}
+
+void makeUnBrokeWall::updateRect(vector<tagWall>::iterator iter)
+{
+}

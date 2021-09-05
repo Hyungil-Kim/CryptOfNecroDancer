@@ -4,7 +4,8 @@
 #include"wallManager.h"
 #include"rhythmUI.h"
 #include "CMap.h"
-
+#include "mapManager.h"
+#include "Title.h"
 
 class necroDancerMain : public gameNode
 {
@@ -14,11 +15,18 @@ private:
 	wallManager* _wm;
 	CMap* map;
 	monster* _mon;
-
+	mapManager* _mapm;
 private:
+	enum class SCENESTATE
+	{
+		START,
+		GAME,
+		ENDING
+	};
+private:
+	Title* _title;
 	bool _isDebug;
-
-
+	SCENESTATE _sceneState;
 public:
 	necroDancerMain();
 	~necroDancerMain();

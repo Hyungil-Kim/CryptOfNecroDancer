@@ -85,6 +85,9 @@
     <Filter Include="CryptOfNecroDancer\UI">
       <UniqueIdentifier>{51f6d0eb-78eb-4139-b692-39ecc522fdb2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CryptOfNecroDancer\map\Title">
+      <UniqueIdentifier>{09d1fbc9-9818-4750-86bb-ab4ff99eb7ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -222,6 +225,15 @@
     <ClInclude Include="PlayerUI.h">
       <Filter>CryptOfNecroDancer\UI</Filter>
     </ClInclude>
+    <ClInclude Include="mapManager.h">
+      <Filter>CryptOfNecroDancer\gameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="bossMap.h">
+      <Filter>CryptOfNecroDancer\map</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h">
+      <Filter>CryptOfNecroDancer\map\Title</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -334,6 +346,15 @@
     </ClCompile>
     <ClCompile Include="PlayerUI.cpp">
       <Filter>CryptOfNecroDancer\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="mapManager.cpp">
+      <Filter>CryptOfNecroDancer\gameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="bossMap.cpp">
+      <Filter>CryptOfNecroDancer\map</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>CryptOfNecroDancer\map\Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

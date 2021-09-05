@@ -5,6 +5,8 @@
 #include"rhythmUI.h"
 wallManager::wallManager()
 {
+	_nextDoorOn = IMAGE->addImage("¿­¸°¹®", "images/tile/stair.bmp", 48, 48,true);
+	_nextDoorOff = IMAGE->addImage("´ÝÈù¹®", "images/tile/stairs_locked_miniboss.bmp", 48, 48,true);
 }
 
 wallManager::~wallManager()
@@ -19,9 +21,13 @@ HRESULT wallManager::init()
 	spawnTime = true;
 	level = 1;
 	startNum = 0;
+	doorX = 0;
+	doorY = 0;
+	makeDoor = false;
+	doorOpen = false;
 	count = 0.0f;
 	timing = 0.0f;
-	monsterNum = 10 + level * 2.5;
+	monsterNum = 12 + level * 2.5;
 	count = 0;
 	for (int i = 0; i < TILE_NUM_X; i++)
 	{
@@ -60,6 +66,11 @@ void wallManager::update()
 			spawnMon();
 			startNum++;
 		}
+		if (doorNum == 1)
+		{
+			spawnNextStageDoor();
+			--doorNum;
+		}
 	}
 	if (count > 1.9167f/4)
 	{
@@ -72,6 +83,19 @@ void wallManager::render()
 {
 	_makeSoftWall->render();
 	_makeHardWall->render();
+
+	if (makeDoor == true)
+	{
+		if (doorOpen == true)
+		{
+			ZORDER->ZorderRender(_nextDoorOn, 4, 0, doorX, doorY);
+		}
+		else
+		{
+			ZORDER->ZorderRender(_nextDoorOff, 4, 0, doorX, doorY);
+		}
+	}
+	
 }
 
 DLocation wallManager::divideDungeon(int depth, int r1, int c1, int r2, int c2)
@@ -170,7 +194,7 @@ void wallManager::spawnMon()
 		{
 			case 0:
 			//	_mm->getWhiteskeleton()->addMonster(i, k);
-						_mm->getBlueSlime()->addMonster(i, k);
+			_mm->getBlueSlime()->addMonster(i, k);
 			eraseSPoint(random);
 				break;
 			case 1:	
@@ -191,10 +215,24 @@ void wallManager::spawnMon()
 			break;
 		}
 		break;
+
 	}
 }
 
 void wallManager::eraseSPoint(int arrNum)
 {
 	_vSpawn.erase(_vSpawn.begin() + arrNum);
+}
+
+void wallManager::spawnNextStageDoor()
+{
+	for (int j = 0; j < _vSpawn.size(); j++)
+	{
+		int i = _vSpawn[_vSpawn.size() - 3].x;
+		int k = _vSpawn[_vSpawn.size() - 3].y;
+
+		doorX = i;
+		doorY = k;
+		makeDoor = true;
+	}
 }
