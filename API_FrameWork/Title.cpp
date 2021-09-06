@@ -27,7 +27,7 @@ void Title::update()
 {
 	if (InputManager->isOnceKeyDown(VK_SPACE))
 	{
-		SCENE->changeScene("1Ãþ");
+		SCENE->changeScene("º¸½º¹æ");
 		_isDone = true;
 	}
 }

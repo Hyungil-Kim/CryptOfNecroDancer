@@ -94,6 +94,7 @@ class wallManager;
 class monsterManager;
 class monster;
 class realwallManager;
+class mapManager;
 class Player :public Singleton<Player>
 {
 private:
@@ -135,6 +136,7 @@ private:
 	rhythmUI* _rtm;
 	monsterManager* _mm;
 	realwallManager* _rwm;
+	mapManager* _map;
 public:
 	 HRESULT init();
 	 void release();

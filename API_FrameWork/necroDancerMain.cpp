@@ -15,6 +15,11 @@ HRESULT necroDancerMain::init()
 {
 	gameinit();
 	_title = dynamic_cast<Title*>(SCENE->addScene("타이틀", new Title, false));
+	_boss  =  dynamic_cast<bossMap*>(SCENE->addScene("보스방", new bossMap, false));
+	_boss->setMonsterManagerMemoryLink(_mm);
+	_boss->setrealWallManagerMemoryLink(_rwm);
+	_boss->setrtmMemoryLink(_rUI);
+
 	_sceneState = SCENESTATE::START;
 	SCENE->changeScene("타이틀");
 		SOUND->play("오프닝", 0.5);
@@ -30,7 +35,7 @@ void necroDancerMain::release()
 		break;
 	case necroDancerMain::SCENESTATE::GAME:
 	_mm->release();
-	_wm->release();
+
 	_rUI->release();
 	_mon->release();
 	_rwm->release();
@@ -64,7 +69,7 @@ void necroDancerMain::update()
 	_mm->update();
 	_rUI->update();
 	_rwm->update();
-	_wm->update();
+
 	map->update();
 	_map->update();
 	CAMERA->movePivot(PLAYER->getPlayerAddress().x,PLAYER->getPlayerAddress().y);
@@ -91,7 +96,6 @@ void necroDancerMain::render()
 	_mm->render();
 	map->render();
 	_rwm->render();
-	_wm->render();
 	_rUI->render();
 	_map->render();
 	PLAYERUI->render(getMemDC());
@@ -118,35 +122,28 @@ void necroDancerMain::gameinit()
 {
 	_mm = new monsterManager;
 	_rwm = new realwallManager;
-	_wm = new wallManager;
 	_mon = new monster;
 	_rUI = new rhythmUI;
-	//map = new CMap;
 	_map = new mapManager;
 	initForSound();
 
-	_map->init();
 	PLAYER->init();
 	_rUI->init();
 	CAMERA->init(PLAYER->getPlayerAddress().x, PLAYER->getPlayerAddress().y, MAP_SIZE_X, MAP_SIZE_Y, 0, 0, WINSIZEX / 2, WINSIZEY / 2, CAMERASIZEX, CAMERASIZEY);
 	_rwm->init();
-	_wm->setrealWallManagerMemoryLink(_rwm);
-	PLAYER->setmonsterManagerMemoryLink(_mm);
 	_mon->init();
-	_mm->setWallMemoryLink(_wm);
-	_wm->init();
-	_rwm->setWallManagerMemoryLink(_wm);
-	PLAYER->setWallmanagerMemoryLink(_wm);
-	PLAYER->setRealWallManagerMemoryLink(_rwm);
 	_mm->init();
-	_wm->setMonsterManagerMemoryLink(_mm);
-	_wm->setrtmMemoryLink(_rUI);
+	PLAYERUI->init();
+	_map->init();
+	_map->setMonsterManagerMemoryLink(_mm);
+	_map->setrealWallManagerMemoryLink(_rwm);
+	_map->setrhythmMemoryLink(_rUI);
+	PLAYER->setmonsterManagerMemoryLink(_mm);
+	PLAYER->setRealWallManagerMemoryLink(_rwm);
 	PLAYER->setrtmMemoryLink(_rUI);
-	_rUI->setwallManagerMemoryLink(_wm);
 	PLAYER->setmonsterMemoryLink(_mon);
 	_rUI->setMonsterManagerMemoryLink(_mm);
 	_mm->setrtmMemoryLink(_rUI);
-	PLAYERUI->init();
 
 }
 

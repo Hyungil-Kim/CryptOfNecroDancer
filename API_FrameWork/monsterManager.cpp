@@ -23,6 +23,7 @@ HRESULT monsterManager::init()
 	_blue_slime->setwallManagerMemoryLink(_wm);
 	_orange_slime->setwallManagerMemoryLink(_wm);
 	_white_skeleton->setwallManagerMemoryLink(_wm);
+
 	_green_slime->setmonsterManagerMemoryLink(this);
 	_blue_slime->setmonsterManagerMemoryLink(this);
 	_orange_slime->setmonsterManagerMemoryLink(this);

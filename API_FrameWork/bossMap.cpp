@@ -121,7 +121,7 @@ void bossMap::showDungeon()
 		for (int k = 0; k < 15; k++) {
 			if (Dungeon[i][k] == 0 )
 			{
-				_makeUnBrokeWall->addWall(i * 48, k * 48);
+				//_makeUnBrokeWall->addWall(i * 48, k * 48);
 			}
 
 		}

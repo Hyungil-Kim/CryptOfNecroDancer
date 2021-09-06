@@ -2,6 +2,7 @@
 #include "CWall.h"
 #include"wallManager.h"
 #include"realwallManager.h"
+#include"mapManager.h"
 CWall::CWall()
 {
 

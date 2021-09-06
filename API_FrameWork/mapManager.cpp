@@ -13,14 +13,13 @@ mapManager::~mapManager()
 
 HRESULT mapManager::init()
 {
-	_wm = dynamic_cast<wallManager*>(SCENE->addScene("1Ãþ", new wallManager));
+
+
+	_wm = dynamic_cast<wallManager*>(SCENE->addScene("1Ãþ", new wallManager,false));
 	_wm->setMonsterManagerMemoryLink(_mm);
 	_wm->setrealWallManagerMemoryLink(_rwm);
 	_wm->setrtmMemoryLink(_rtm);
-	_bossmap = dynamic_cast<bossMap*>(SCENE->addScene("º¸½º¹æ", new bossMap));
-	_bossmap->setMonsterManagerMemoryLink(_mm);
-	_bossmap->setrealWallManagerMemoryLink(_rwm);
-	_bossmap->setrtmMemoryLink(_rtm);
+
 	
 
 	return S_OK;
@@ -28,12 +27,15 @@ HRESULT mapManager::init()
 
 void mapManager::release()
 {
+	SCENE->release();
 }
 
 void mapManager::update()
 {
+	SCENE->update();
 }
 
 void mapManager::render()
 {
+	SCENE->render();
 }

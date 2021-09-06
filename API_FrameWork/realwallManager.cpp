@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "realwallManager.h"
 #include "CWall.h"
+#include "mapManager.h"
 realwallManager::realwallManager()
 {
 }
@@ -16,6 +17,15 @@ HRESULT realwallManager::init()
 	_uwall = new makeUnBrokeWall;
 
 
+	_swall->setmapManager(_map);
+	_hwall->setmapManager(_map);
+	_uwall->setmapManager(_map);
+
+	_swall->setWallManagerMemoryLink(_wm);
+
+	_swall->setrealWallManagerMemoryLink(this);
+	_hwall->setrealWallManagerMemoryLink(this);
+	_uwall->setrealWallManagerMemoryLink(this);
 	
 	return S_OK;
 }

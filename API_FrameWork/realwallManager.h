@@ -3,6 +3,7 @@
 #include "makeWall.h"
 class wallManager;
 class CWall;
+class mapManager;
 class realwallManager : public gameNode
 {
 	wallManager* _wm;
@@ -10,6 +11,7 @@ class realwallManager : public gameNode
 	makeHardWall* _hwall;
 	makeUnBrokeWall* _uwall;
 	CWall* _cwall;
+	mapManager* _map;
 
 public:
 
@@ -29,5 +31,6 @@ public:
 
 	void setWallManagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
 	void setCWallMemoryLink(CWall* CWall) { _cwall = CWall; }
+	void setmapManagerMemoryLink(mapManager* mapManager) { _map = mapManager; }
 };
 

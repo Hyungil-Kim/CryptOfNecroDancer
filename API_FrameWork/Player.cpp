@@ -1,10 +1,12 @@
 #include "framework.h"
 #include "Player.h"
-#include "wallManager.h"
 #include "monster.h"
+#include "wallManager.h"
 #include "monsterManager.h"
 #include "realwallManager.h"
 #include "rhythmUI.h"
+#include "mapManager.h"
+#include "bossMap.h"
 HRESULT Player::init()
 {
 	_player.maxhp = 12;
@@ -236,7 +238,7 @@ void Player::changeAttackRange()
 void Player::spawn()
 {
 
-	for (int i = 0; i < _wm->getVSpawnPoint().size(); i++)
+	for (int i = 0; i < _map->getWallManager()->getVSpawnPoint().size(); i++)
 	{
 		_player.x = _wm->getVSpawnPoint()[0].x;
 		_player.y = _wm->getVSpawnPoint()[0].y;

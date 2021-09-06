@@ -1,10 +1,11 @@
 #pragma once
 #include"gameNode.h"
-#include "bossMap.h"
-#include "wallManager.h"
+
 class rhythmUI;
 class monsterManager;
 class realwallManager;
+class wallManager;
+class bossMap;
 class mapManager :public gameNode
 {
 	bossMap* _bossmap;
