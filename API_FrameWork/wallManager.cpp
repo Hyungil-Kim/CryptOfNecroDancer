@@ -3,6 +3,8 @@
 #include "monsterManager.h"
 #include"monster.h"
 #include"rhythmUI.h"
+#include "CWall.h"
+#include "realwallManager.h"
 wallManager::wallManager()
 {
 	_nextDoorOn = IMAGE->addImage("열린문", "images/tile/stair.bmp", 48, 48,true);
@@ -15,9 +17,6 @@ wallManager::~wallManager()
 
 HRESULT wallManager::init()
 {
-	_makeSoftWall = new makeSoftWall;
-	_makeHardWall = new makeHardWall;
-	_rtm = new rhythmUI;
 	spawnTime = true;
 	level = 1;
 	startNum = 0;
@@ -29,6 +28,9 @@ HRESULT wallManager::init()
 	timing = 0.0f;
 	monsterNum = 12 + level * 2.5;
 	count = 0;
+	soundOn = false;
+
+
 	for (int i = 0; i < TILE_NUM_X; i++)
 	{
 		for (int k = 0; k < TILE_NUM_Y; k++)
@@ -40,25 +42,24 @@ HRESULT wallManager::init()
 	makeDungeon();
 	showDungeon();
 
+	
 	return S_OK;
 }
 
 void wallManager::release()
 {
-	_makeSoftWall->release();
-	_makeHardWall->release();
-
-
-	SAFE_DELETE(_makeSoftWall);
 }
 
 void wallManager::update()
 {
-	
+	if (soundOn == false)
+	{
+		SOUND->stop("오프닝");
+		SOUND->play("1스테이지", 0.5);
+		soundOn = true;
+	}
 	count += TIME->getElapsedTime();
 	timing += TIME->getElapsedTime();
-	_makeSoftWall->update();
-	_makeHardWall->update();
 	if (spawnTime == true)
 	{
 		if (monsterNum > startNum)
@@ -72,7 +73,7 @@ void wallManager::update()
 			--doorNum;
 		}
 	}
-	if (count > 1.9167f/4)
+	if (count > (1.9167f + 0.05f)/4)
 	{
 		_rtm->spawnBeat(480, 0);
 		count = 0.0f;	
@@ -81,8 +82,6 @@ void wallManager::update()
 
 void wallManager::render()
 {
-	_makeSoftWall->render();
-	_makeHardWall->render();
 
 	if (makeDoor == true)
 	{
@@ -174,7 +173,7 @@ void wallManager::showDungeon() {
 		for (int k = 0; k < TILE_NUM_Y; k++) {
 			if (Dungeon[i][k] == 0)
 			{
-				_makeSoftWall->addWall(i*48,k*48);
+				_rwm->getSoftWall()->addWall(i*48,k*48);
 				
 			}
 		}
@@ -194,12 +193,12 @@ void wallManager::spawnMon()
 		{
 			case 0:
 			//	_mm->getWhiteskeleton()->addMonster(i, k);
-			_mm->getBlueSlime()->addMonster(i, k);
+				_mm->getGreenSlime()->addMonster(i, k);
 			eraseSPoint(random);
 				break;
 			case 1:	
 				//_mm->getWhiteskeleton()->addMonster(i, k);
-						_mm->getGreenSlime()->addMonster(i, k);
+			_mm->getBlueSlime()->addMonster(i, k);
 			eraseSPoint(random);
 				break;
 			case 2:	

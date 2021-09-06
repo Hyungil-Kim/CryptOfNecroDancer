@@ -93,6 +93,7 @@ class rhythmUI;
 class wallManager;
 class monsterManager;
 class monster;
+class realwallManager;
 class Player :public Singleton<Player>
 {
 private:
@@ -133,6 +134,7 @@ private:
 	monster* _mon;
 	rhythmUI* _rtm;
 	monsterManager* _mm;
+	realwallManager* _rwm;
 public:
 	 HRESULT init();
 	 void release();
@@ -151,6 +153,7 @@ public:
 	 bool playerToMon(int x, int y);
 	 void setrtmMemoryLink(rhythmUI* rhythmUI) { _rtm = rhythmUI; }
 	 void setWallmanagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
+	 void setRealWallManagerMemoryLink(realwallManager* realwallManager) { _rwm = realwallManager; }
 	 void setmonsterMemoryLink(monster* monster) { _mon = monster; }
 	 void setmonsterManagerMemoryLink(monsterManager* monsterManager) { _mm = monsterManager; }
 	tagPlayer& getPlayerAddress() { return _player; }

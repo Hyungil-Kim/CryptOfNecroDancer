@@ -225,14 +225,17 @@
     <ClInclude Include="PlayerUI.h">
       <Filter>CryptOfNecroDancer\UI</Filter>
     </ClInclude>
-    <ClInclude Include="mapManager.h">
-      <Filter>CryptOfNecroDancer\gameManager</Filter>
-    </ClInclude>
     <ClInclude Include="bossMap.h">
       <Filter>CryptOfNecroDancer\map</Filter>
     </ClInclude>
     <ClInclude Include="Title.h">
       <Filter>CryptOfNecroDancer\map\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="realwallManager.h">
+      <Filter>CryptOfNecroDancer\gameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="mapManager.h">
+      <Filter>CryptOfNecroDancer\gameManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -347,14 +350,17 @@
     <ClCompile Include="PlayerUI.cpp">
       <Filter>CryptOfNecroDancer\UI</Filter>
     </ClCompile>
-    <ClCompile Include="mapManager.cpp">
-      <Filter>CryptOfNecroDancer\gameManager</Filter>
-    </ClCompile>
     <ClCompile Include="bossMap.cpp">
       <Filter>CryptOfNecroDancer\map</Filter>
     </ClCompile>
     <ClCompile Include="Title.cpp">
       <Filter>CryptOfNecroDancer\map\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="realwallManager.cpp">
+      <Filter>CryptOfNecroDancer\gameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="mapManager.cpp">
+      <Filter>CryptOfNecroDancer\gameManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

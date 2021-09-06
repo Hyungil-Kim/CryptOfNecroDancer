@@ -3,6 +3,7 @@
 #include "wallManager.h"
 #include "monster.h"
 #include "monsterManager.h"
+#include "realwallManager.h"
 #include "rhythmUI.h"
 HRESULT Player::init()
 {
@@ -158,7 +159,7 @@ void Player::inputCheck()
 	if (INPUT->isOnceKeyDown(VK_RIGHT))
 	{
 		_player.isInput = true;
-		if (_rtm->checkstep() == true)
+	//	if (_rtm->checkstep() == true)
 		{
 			_inputdirection.isRight = true;
 			_inputdirection.isLeft = false;
@@ -170,7 +171,7 @@ void Player::inputCheck()
 	if (INPUT->isOnceKeyDown(VK_LEFT))
 	{
 		_player.isInput = true;
-		if (_rtm->checkstep() == true)
+	//	if (_rtm->checkstep() == true)
 		{
 			_inputdirection.isLeft = true;
 			_inputdirection.isRight = false;
@@ -183,7 +184,7 @@ void Player::inputCheck()
 	if (INPUT->isOnceKeyDown(VK_UP))
 	{
 		_player.isInput = true;
-		if (_rtm->checkstep() == true)
+	//	if (_rtm->checkstep() == true)
 		{
 			_inputdirection.isUp = true;
 		}
@@ -194,7 +195,7 @@ void Player::inputCheck()
 	if (INPUT->isOnceKeyDown(VK_DOWN))
 	{
 		_player.isInput = true;
-		if (_rtm->checkstep() == true)
+	//	if (_rtm->checkstep() == true)
 		{
 			_inputdirection.isDown = true;
 		}
@@ -398,19 +399,19 @@ void Player::playerMove()
 		{
 		case LEFT:
 			_wm->setDungeon(tempX, tempY, 1);
-			_wm->getsoftWall()->eraseWall(tempX, tempY);
+			_rwm->getSoftWall()->eraseWall(tempX, tempY);
 			break;
 		case UP:
 			_wm->setDungeon(tempX, tempY, 1);
-			_wm->getsoftWall()->eraseWall(tempX, tempY);
+			_rwm->getSoftWall()->eraseWall(tempX, tempY);
 			break;
 		case RIGHT:
 			_wm->setDungeon(tempX, tempY, 1);
-			_wm->getsoftWall()->eraseWall(tempX, tempY);
+			_rwm->getSoftWall()->eraseWall(tempX, tempY);
 			break;
 		case DOWN:
 			_wm->setDungeon(tempX, tempY, 1);
-			_wm->getsoftWall()->eraseWall(tempX, tempY);
+			_rwm->getSoftWall()->eraseWall(tempX, tempY);
 			break;
 		default:
 			break;

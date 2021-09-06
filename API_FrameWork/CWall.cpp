@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "CWall.h"
-
+#include"wallManager.h"
+#include"realwallManager.h"
 CWall::CWall()
 {
 

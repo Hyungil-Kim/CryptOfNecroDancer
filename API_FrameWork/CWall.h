@@ -17,12 +17,14 @@ struct tagWall
 
 
 };
+class wallManager;
+class realwallManager;
 class CWall: public CObstacle
 {
 	protected:
 		vector<tagWall> _vWall;
 		vector<tagWall>::iterator _viWall;
-
+		wallManager* _wm;
 		bool _isDebug;
 	public:
 		CWall();
@@ -36,7 +38,8 @@ class CWall: public CObstacle
 		virtual void addWall(float x, float y);
 	
 
-
+		virtual void setWallManagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
+		virtual void setrealWallManagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
 		vector<tagWall>& getVWall() { return _vWall; }
 		vector<tagWall>::iterator& getVIWall() { return _viWall; }
 		void setIsDebug(bool isDebug) { _isDebug = isDebug; }

@@ -1,6 +1,6 @@
 #pragma once
 #include "gameNode.h"
-#include "makeWall.h"
+
 #include "CMap.h"
 
 typedef struct DLocation {
@@ -14,17 +14,19 @@ struct SpawnPoint {
 class rhythmUI;
 class monsterManager;
 class monster;
+class realwallManager;
+class CWall;
 class wallManager : public gameNode
 {
 private:
 	monsterManager* _mm;
-	makeSoftWall* _makeSoftWall;
-	makeHardWall* _makeHardWall;
+	realwallManager* _rwm;
 	image* _nextDoorOn;
 	image* _nextDoorOff;
 	monster* _mon;
 	rhythmUI* _rtm;
 	CMap* _cmap;
+	CWall* _cwall;
 	int Dungeon[TILE_NUM_X][TILE_NUM_Y] = {};
 	float monsterNum;
 	int doorNum = 1;
@@ -36,6 +38,7 @@ private:
 	bool spawnTime;
 	bool doorOpen = false;
 	float timing;
+	bool soundOn = false;
 	vector<SpawnPoint> _vSpawn;
 	vector<SpawnPoint>::iterator _viSpawn;
 
@@ -64,15 +67,15 @@ public:
 	vector<SpawnPoint>& getVSpawnPoint() { return _vSpawn; }
 	vector<SpawnPoint>::iterator& getViSpawnPoint() { return _viSpawn; }
 	DLocation divideDungeon(int depth, int r1, int c1, int r2, int c2);
-	makeSoftWall* getsoftWall() { return _makeSoftWall; }
-	makeHardWall* gethardWall() { return _makeHardWall; }
+
 
 	void setrtmMemoryLink(rhythmUI* rhythmUI) { _rtm = rhythmUI; }
 	void setMonsterManagerMemoryLink(monsterManager* monsterManager) { _mm = monsterManager; }
 	void setMonsterMemoryLink(monster* monster) { _mon = monster; }
+	void setrealWallManagerMemoryLink(realwallManager* realwallManager) { _rwm = realwallManager; }
+	void setCWallMemoryLink(CWall* CWall) { _cwall = CWall; }
 	void setIsDebug(bool isDebug) {
 		_isDebug = isDebug;
-		_makeSoftWall->setIsDebug(_isDebug);
 	 
 	}
 	

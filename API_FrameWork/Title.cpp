@@ -15,6 +15,7 @@ Title::~Title()
 
 HRESULT Title::init()
 {
+	
 	return S_OK;
 }
 

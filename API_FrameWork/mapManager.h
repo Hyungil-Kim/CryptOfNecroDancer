@@ -1,18 +1,31 @@
 #pragma once
 #include"gameNode.h"
-class wallManager;
-class bossMap;
+#include "bossMap.h"
+#include "wallManager.h"
+class rhythmUI;
+class monsterManager;
+class realwallManager;
 class mapManager :public gameNode
 {
-	wallManager* _wm;
 	bossMap* _bossmap;
-	string currentMap;
+	wallManager* _wm;
+	monsterManager* _mm;
+	realwallManager* _rwm;
+	rhythmUI* _rtm;
 public:
+
+	mapManager();
+	~mapManager();
 	virtual HRESULT init();
 	virtual void release();
 	virtual void update();
 	virtual void render(/*HDC hdc*/);
-	void setWallManagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
-	void setbossMapMemoryLink(bossMap* bossMap) { _bossmap = bossMap; }
+	
+	bossMap* getBossMap() { return _bossmap; }
+	wallManager* getWallManager() { return _wm; }
+	rhythmUI* getRhythm() { return _rtm; }
+	void setMonsterManagerMemoryLink(monsterManager* monsterManager) {_mm = monsterManager; }
+	void setrealWallManagerMemoryLink(realwallManager* realwallManager) {_rwm = realwallManager; }
+	void setrhythmMemoryLink(rhythmUI* rhythmUI) {_rtm = rhythmUI; }
 };
 

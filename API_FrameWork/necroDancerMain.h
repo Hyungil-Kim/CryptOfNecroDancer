@@ -4,9 +4,9 @@
 #include"wallManager.h"
 #include"rhythmUI.h"
 #include "CMap.h"
-#include "mapManager.h"
+#include "realwallManager.h"
 #include "Title.h"
-
+#include "bossMap.h"
 class necroDancerMain : public gameNode
 {
 private:
@@ -14,8 +14,12 @@ private:
 	rhythmUI* _rUI;
 	wallManager* _wm;
 	CMap* map;
+	makeSoftWall* _swall;
+	makeHardWall* _hwall; 
+	makeUnBrokeWall* _uwall;
 	monster* _mon;
-	mapManager* _mapm;
+	realwallManager* _rwm;
+	bossMap* _boss;
 private:
 	enum class SCENESTATE
 	{
