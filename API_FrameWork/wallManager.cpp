@@ -78,6 +78,7 @@ void wallManager::update()
 		_rtm->spawnBeat(480, 0);
 		count = 0.0f;	
 	}
+	
 }
 
 void wallManager::render()
@@ -94,7 +95,6 @@ void wallManager::render()
 			ZORDER->ZorderRender(_nextDoorOff, 4, 0, doorX, doorY);
 		}
 	}
-	
 }
 
 DLocation wallManager::divideDungeon(int depth, int r1, int c1, int r2, int c2)

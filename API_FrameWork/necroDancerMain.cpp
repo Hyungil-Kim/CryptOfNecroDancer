@@ -39,11 +39,13 @@ void necroDancerMain::release()
 	_rUI->release();
 	_mon->release();
 	_rwm->release();
+	_boss->release();
 	SAFE_DELETE(_mm);
 	SAFE_DELETE(_mon);
 	SAFE_DELETE(_rwm);
 	SAFE_DELETE(_wm);
 	SAFE_DELETE(_rUI);
+	SAFE_DELETE(_boss);
 		break;
 	case necroDancerMain::SCENESTATE::ENDING:
 		break;
@@ -70,6 +72,7 @@ void necroDancerMain::update()
 	_rwm->update();
 	_wm->update();
 	map->update();
+	_boss->update();
 	CAMERA->movePivot(PLAYER->getPlayerAddress().x,PLAYER->getPlayerAddress().y);
 	CAMERA->update();
 	PLAYER->update();
@@ -96,6 +99,7 @@ void necroDancerMain::render()
 	_rwm->render();
 	_wm->render();
 	_rUI->render();
+	_boss->render();
 	PLAYERUI->render(getMemDC());
 	PLAYER->render(getMapDC());
 	_mon->render();
@@ -118,11 +122,13 @@ void necroDancerMain::render()
 
 void necroDancerMain::gameinit()
 {
+	
 	_mm = new monsterManager;
 	_rwm = new realwallManager;
-	_wm = new wallManager;
 	_mon = new monster;
 	_rUI = new rhythmUI;
+	_wm = dynamic_cast<wallManager*>(SCENE->addScene("1Ãþ", new wallManager));
+	_boss = dynamic_cast<bossMap*>(SCENE->addScene("º¸½º¹æ", new bossMap));
 	//map = new CMap;
 	initForSound();
 
@@ -131,16 +137,19 @@ void necroDancerMain::gameinit()
 	CAMERA->init(PLAYER->getPlayerAddress().x, PLAYER->getPlayerAddress().y, MAP_SIZE_X, MAP_SIZE_Y, 0, 0, WINSIZEX / 2, WINSIZEY / 2, CAMERASIZEX, CAMERASIZEY);
 	_rwm->init();
 	_wm->setrealWallManagerMemoryLink(_rwm);
+	_boss->setrealWallManagerMemoryLink(_rwm);
 	PLAYER->setmonsterManagerMemoryLink(_mm);
 	_mon->init();
 	_mm->setWallMemoryLink(_wm);
-	_wm->init();
+	//_wm->init();
 	_rwm->setWallManagerMemoryLink(_wm);
 	PLAYER->setWallmanagerMemoryLink(_wm);
 	PLAYER->setRealWallManagerMemoryLink(_rwm);
 	_mm->init();
 	_wm->setMonsterManagerMemoryLink(_mm);
+	_boss->setMonsterManagerMemoryLink(_mm);
 	_wm->setrtmMemoryLink(_rUI);
+	_boss->setrtmMemoryLink(_rUI);
 	PLAYER->setrtmMemoryLink(_rUI);
 	_rUI->setwallManagerMemoryLink(_wm);
 	PLAYER->setmonsterMemoryLink(_mon);

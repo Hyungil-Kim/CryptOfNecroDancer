@@ -22,7 +22,7 @@ public:
 	void render();
 
 
-	makeSoftWall* getSoftWall() { return _swall; }
+ 	makeSoftWall* getSoftWall() { return _swall; }
 	makeHardWall* getHardWall() { return _hwall; }
 	makeUnBrokeWall* getUnBrokeWall() { return _uwall; }
 
