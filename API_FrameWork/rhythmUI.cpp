@@ -2,6 +2,7 @@
 #include "rhythmUI.h"
 #include "wallManager.h"
 #include "monsterManager.h"
+#include "bossMap.h"
 rhythmUI::rhythmUI()
 {
 }

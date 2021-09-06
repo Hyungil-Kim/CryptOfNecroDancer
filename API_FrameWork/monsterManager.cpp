@@ -3,6 +3,7 @@
 #include "wallManager.h"
 #include "monster.h"
 #include "rhythmUI.h"
+#include "bossMap.h"
 monsterManager::monsterManager()
 {
 

@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "realwallManager.h"
 #include "CWall.h"
+#include "bossMap.h"
 realwallManager::realwallManager()
 {
 }

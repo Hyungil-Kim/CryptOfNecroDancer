@@ -13,6 +13,7 @@ struct tagerhythm {
 };
 class monsterManager;
 class wallManager;
+class bossMap;
 class rhythmUI :public gameNode
 {
 private:
@@ -20,6 +21,7 @@ private:
 	animation* _heartAni;
 	wallManager* _wm;
 	monsterManager* _mm;
+	bossMap* _boss;
 	int spawnbeat;
 	RECT rc;
 	float _heartX;
@@ -44,6 +46,7 @@ public:
 	void setIsDebug(bool isDebug) { _isDebug = isDebug; }
 	void setwallManagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
 	void setMonsterManagerMemoryLink(monsterManager* monsterManager) { _mm = monsterManager; }
+	void setbossMapMemoryLink(bossMap* bossMap) { _boss = bossMap; }
 	vector<tagerhythm>& getVbeat() { return _vbeat; }
 	vector<tagerhythm>::iterator& getVIbeat() { return _vibeat; }
 };

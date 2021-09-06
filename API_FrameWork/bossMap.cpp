@@ -27,6 +27,7 @@ HRESULT bossMap::init()
 	doorOpen = false;
 	timing = 0.0f;
 	monsterNum = 1;
+	startNum = 0;
 	soundOn = false;
 
 	for (int i = 0; i < TILE_NUM_X; i++)
@@ -97,9 +98,9 @@ void bossMap::render()
 
 void bossMap::makeDungeon()
 {
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 30; i++)
 	{
-		for (int k = 0; k < 15; k++)
+		for (int k = 0; k < 20; k++)
 		{
 			if (k == 3)
 			{
@@ -111,34 +112,47 @@ void bossMap::makeDungeon()
 			}
 		}
 	}
+	for (int i = 0; i < 20; i++)
+	{
+		for (int k = 0; k < 20; k++)
+		{
+			if (i == 0 || i == 19)
+			{
+				Dungeon[i][k] = 0;
 
+			}
+			if (k == 0 || k == 19)
+			{
+				Dungeon[i][k] = 0;
+			}
+		}
+	}
 }
 
 
 void bossMap::showDungeon()
 {
 	for (int i = 0; i < 20; i++) {
-		for (int k = 0; k < 15; k++) {
+		for (int k = 0; k < 20; k++) {
 			if (Dungeon[i][k] == 0 )
 			{
-				_makeUnBrokeWall->addWall(i * 48, k * 48);
+				_rwm->getUnBrokeWall()->addWall(i * 48, k * 48);
 			}
-
 		}
 	}
 }
 
 void bossMap::spawnMon()
 {
-	int i = 7;
-	int k = 4;
+	int i = 7*48;
+	int k = 4*48;
 	_mm->getBlueSlime()->addMonster(i, k);
 }
 
 void bossMap::spawnNextStageDoor()
 {
-	int i = 7;
-	int k = 1;
+	int i = 7*48;
+	int k = 1*48;
 
 	doorX = i;
 	doorY = k;

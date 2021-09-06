@@ -15,11 +15,7 @@ HRESULT necroDancerMain::init()
 {
 	gameinit();
 	_title = dynamic_cast<Title*>(SCENE->addScene("≈∏¿Ã∆≤", new Title, false));
-	//_wm = dynamic_cast<wallManager*>(SCENE->addScene("1√˛", new wallManager, false));
-	//_wm->setMonsterManagerMemoryLink(_mm);
-	//_wm->setrtmMemoryLink(_rUI);
 	
-	//_boss = dynamic_cast<bossMap*>(SCENE->addScene("∫∏Ω∫∏ ", new bossMap, false));
 	_sceneState = SCENESTATE::START;
 	SCENE->changeScene("≈∏¿Ã∆≤");
 		SOUND->play("ø¿«¡¥◊", 0.5);
@@ -73,8 +69,12 @@ void necroDancerMain::update()
 	_wm->update();
 	map->update();
 	_boss->update();
-	CAMERA->movePivot(PLAYER->getPlayerAddress().x,PLAYER->getPlayerAddress().y);
+	POINT lerp;
+	lerp.x = CAMERA->getPivotX() * (1 - 0.08) + PLAYER->getPlayerAddress().x *0.08;
+	lerp.y = CAMERA->getPivotY() * (1 - 0.08) + PLAYER->getPlayerAddress().y * 0.08;
+	CAMERA->movePivot(lerp.x, lerp.y);
 	CAMERA->update();
+	//CAMERA->movePivot(PLAYER->getPlayerAddress().x,PLAYER->getPlayerAddress().y);
 	PLAYER->update();
 	PLAYERUI->update();
 	_mon->update(PLAYER);
@@ -88,6 +88,7 @@ void necroDancerMain::update()
 
 void necroDancerMain::render()
 {
+	
 	switch (_sceneState)
 	{
 	case necroDancerMain::SCENESTATE::START:
@@ -141,9 +142,12 @@ void necroDancerMain::gameinit()
 	PLAYER->setmonsterManagerMemoryLink(_mm);
 	_mon->init();
 	_mm->setWallMemoryLink(_wm);
+	_mm->setbossMapMemoryLink(_boss);
 	//_wm->init();
 	_rwm->setWallManagerMemoryLink(_wm);
+	_rwm->setbossMapMemoryLink(_boss);
 	PLAYER->setWallmanagerMemoryLink(_wm);
+	PLAYER->setbossMapMemoryLink(_boss);
 	PLAYER->setRealWallManagerMemoryLink(_rwm);
 	_mm->init();
 	_wm->setMonsterManagerMemoryLink(_mm);
@@ -154,6 +158,7 @@ void necroDancerMain::gameinit()
 	_rUI->setwallManagerMemoryLink(_wm);
 	PLAYER->setmonsterMemoryLink(_mon);
 	_rUI->setMonsterManagerMemoryLink(_mm);
+	_rUI->setbossMapMemoryLink(_boss);
 	_mm->setrtmMemoryLink(_rUI);
 	PLAYERUI->init();
 

@@ -1,6 +1,6 @@
 #pragma once
 #include"gameNode.h"
-#include "makeWall.h"
+
 #include "CMap.h"
 class rhythmUI;
 class monsterManager;
@@ -10,9 +10,6 @@ class bossMap :public gameNode
 {
 private:
 	monsterManager* _mm;
-	makeSoftWall* _makeSoftWall;
-	makeHardWall* _makeHardWall;
-	makeUnBrokeWall* _makeUnBrokeWall;
 	realwallManager* _rwm;
 	image* _nextDoorOn;
 	image* _nextDoorOff;

@@ -5,6 +5,7 @@
 #include "monsterManager.h"
 #include "realwallManager.h"
 #include "rhythmUI.h"
+#include "bossMap.h"
 HRESULT Player::init()
 {
 	_player.maxhp = 12;

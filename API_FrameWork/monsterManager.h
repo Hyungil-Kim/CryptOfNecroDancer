@@ -5,6 +5,7 @@
 class wallManager;
 class monster;
 class rhythmUI;
+class bossMap;
 class monsterManager : public gameNode
 {
 private:
@@ -12,6 +13,7 @@ private:
 	wallManager* _wm;
 	monster* _mon;
 	rhythmUI* _rtm;
+	bossMap* _boss;
 private:
 	green_slime* _green_slime;
 	blue_slime* _blue_slime;
@@ -50,6 +52,7 @@ public:
 	virtual void setrtmMemoryLink(rhythmUI* rhythmUI) { _rtm = rhythmUI; }
 	void setWallMemoryLink(wallManager* wallManager) { _wm = wallManager; }
 	void setmonsterMemoryLink(monster* monster) { _mon = monster; }
+	void setbossMapMemoryLink(bossMap* bossMap) { _boss = bossMap; }
 	//µð¹ö±×
 	void setIsDebug(bool isDebug) {
 		_isDebug = isDebug;
