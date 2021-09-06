@@ -15,6 +15,7 @@ HRESULT realwallManager::init()
 	_hwall = new makeHardWall;
 	_uwall = new makeUnBrokeWall;
 
+
 	
 	return S_OK;
 }

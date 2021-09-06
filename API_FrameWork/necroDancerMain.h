@@ -7,6 +7,7 @@
 #include "realwallManager.h"
 #include "Title.h"
 #include "bossMap.h"
+#include "mapManager.h"
 class necroDancerMain : public gameNode
 {
 private:
@@ -20,6 +21,7 @@ private:
 	monster* _mon;
 	realwallManager* _rwm;
 	bossMap* _boss;
+	mapManager* _map;
 private:
 	enum class SCENESTATE
 	{
