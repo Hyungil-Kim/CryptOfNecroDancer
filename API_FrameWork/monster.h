@@ -74,6 +74,7 @@ struct tagMonster
 	bool isGraceperiod = false;			
 	int gracePeriodCount = 0;
 	int movecount = 0;
+	bool rtmcount = false;
 	MONSTERSTATE monsterState;
 	MONSTERMOVESTATE monsterMoveState;
 };
@@ -106,7 +107,9 @@ public:
 	virtual void moveMonster();
 	virtual void isCanMove();
 
-	
+	virtual bool findPlayer(tagPlayer& player);
+	virtual bool findMonster(monster* monster);
+	virtual bool monTomon(tagMonster& monster);
 	virtual bool findPlayer(int x , int y);
 	virtual bool findMonster(monster* monster, int x, int y);
 	virtual bool monTomon(int x, int y);

@@ -234,9 +234,6 @@
     <ClInclude Include="realwallManager.h">
       <Filter>CryptOfNecroDancer\gameManager</Filter>
     </ClInclude>
-    <ClInclude Include="mapManager.h">
-      <Filter>CryptOfNecroDancer\gameManager</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -357,9 +354,6 @@
       <Filter>CryptOfNecroDancer\map\Title</Filter>
     </ClCompile>
     <ClCompile Include="realwallManager.cpp">
-      <Filter>CryptOfNecroDancer\gameManager</Filter>
-    </ClCompile>
-    <ClCompile Include="mapManager.cpp">
       <Filter>CryptOfNecroDancer\gameManager</Filter>
     </ClCompile>
   </ItemGroup>

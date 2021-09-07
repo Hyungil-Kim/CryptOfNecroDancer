@@ -115,9 +115,45 @@ void monster::isCanMove()
 
 }
 
+bool monster::findPlayer(tagPlayer& player)
+{
+	int playerX = player.posx;
+	int playerY = player.posy;
 
-
-
+	if (playerX + 1 == _viMonster->posx && playerY == _viMonster->posy)
+		return true;
+	if (playerX - 1 == _viMonster->posx && playerY == _viMonster->posy)
+		return true;
+	if (playerX == _viMonster->posx && playerY + 1== _viMonster->posy)
+		return true;
+	if (playerX == _viMonster->posx && playerY - 1== _viMonster->posy)
+		return true;
+	return false;
+}
+bool monster::findMonster(monster* monster)
+{
+	vector<tagMonster>& vMonster = monster->getVMonster();
+	vector<tagMonster>::iterator iter = vMonster.begin();
+	for (iter; iter != vMonster.end(); ++iter)
+	{
+		for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
+		{
+			if (iter->posx + 1 == _viMonster->posx && iter->posy == _viMonster->posy)
+				return true;
+			if (iter->posx - 1 == _viMonster->posx && iter->posy == _viMonster->posy)
+				return true;
+			if (iter->posx == _viMonster->posx && iter->posy + 1 == _viMonster->posy)
+				return true;
+			if (iter->posx == _viMonster->posx && iter->posy - 1 == _viMonster->posy)
+				return true;
+		}
+	}
+	return false;
+}
+bool monster::monTomon(tagMonster& monster)
+{
+	return false;
+}
 bool monster::findPlayer(int x, int y)
 {
 	if (PLAYER->getPlayerAddress().posx ==x && PLAYER->getPlayerAddress().posy == y)
@@ -125,7 +161,6 @@ bool monster::findPlayer(int x, int y)
 	else
 		return false;
 }
-
 bool monster::findMonster(monster* monster,int x, int y)
 {
 	vector<tagMonster>& vMonster = monster->getVMonster();
@@ -139,7 +174,6 @@ bool monster::findMonster(monster* monster,int x, int y)
 	}
 	return false;
 }
-
 bool monster::monTomon(int x, int y)
 {
 	if (findMonster(_mm->getGreenSlime(), x, y) ||
@@ -152,14 +186,10 @@ bool monster::monTomon(int x, int y)
 	}
 	return false;
 }
-
-
-
 void monster::attack()
 {
 	PLAYER->getPlayerAddress().hp -= _viMonster->atk;
 }
-
 void monster::getDamage()
 {
 	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
@@ -167,9 +197,6 @@ void monster::getDamage()
 		_viMonster->hp -= PLAYER->getPlayerAddress().atk;
 	}
 }
-
-
-
 void monster::checkInvincibility()
 {
 	//무적확인함수
@@ -181,7 +208,6 @@ void monster::checkInvincibility()
 		}
 	}
 }
-
 void monster::deathcheck()
 {
 	if (_viMonster->monsterState != MONSTERSTATE::DEAD && _viMonster->hp <= 0) {
@@ -190,7 +216,6 @@ void monster::deathcheck()
 	}
 
 }
-
 void monster::showhp()
 {
 	for (int i = 0; i < _viMonster->maxhp / 2; i++)
@@ -224,7 +249,6 @@ void monster::showhp()
 		}
 	}
 }
-
 void monster::hpinit()
 {
 	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
@@ -234,12 +258,26 @@ void monster::hpinit()
 	}
 
 }
-
-
 void monster::setdirection()
 {
+	// 0. 플레이어에시 4칸 범위 안에 들어온 몬스터가 움직이기 시작하게
+	// 
+	// 1. 몬스터 플레이어 몬스터 추적
+	// 2. 바로 옆 타일에 플레이어가 있으면 공격
+	int playerX = PLAYER->getPlayerAddress().posx;
+	int playerY = PLAYER->getPlayerAddress().posy;
+
+	int dirX = playerX - _viMonster->posx;
+	int dirY = _viMonster->posy - playerY;
+
 	int tempX = _viMonster->posx;
 	int tempY = _viMonster->posy;
+
+	MONSTERMOVESTATE lr = dirX > 0 ? MONSTERMOVESTATE::RIGHT : MONSTERMOVESTATE::LEFT;
+	MONSTERMOVESTATE td = dirY > 0 ? MONSTERMOVESTATE::UP : MONSTERMOVESTATE::DOWN;
+	_viMonster->monsterMoveState = abs(dirX) > abs(dirY) ? lr : td;
+
+
 	switch (_viMonster->monsterMoveState)
 	{
 	case MONSTERMOVESTATE::LEFT:
@@ -257,69 +295,92 @@ void monster::setdirection()
 	default:
 		break;
 	}
+	if (findPlayer(PLAYER->getPlayerAddress()))
+	{
+		_viMonster->monsterState = MONSTERSTATE::ATTACK;
+
+		_viMonster->atkleft = dirX < 0;
+		_viMonster->atkright = dirX > 0;
+		_viMonster->atkdown = dirY < 0;
+		_viMonster->atkup = dirY > 0;
+		return;
+	}
+	_viMonster->monsterState = MONSTERSTATE::MOVE;
+	//if (abs(dirX) < abs(dirY))
+	//{
+	//	//상하
+	//	if (dirY < 0 || _viMonster->monsterMoveState == MONSTERMOVESTATE::DOWN )//아래
+	//	{
+	//		_viMonster->monsterMoveState = MONSTERMOVESTATE::DOWN;
+	//		if (_wm->getDungeon(tempX, tempY) == 0 || monTomon(tempX, tempY))
+	//		{
+	//		}
+	//		else
+	//		{
+	//			_viMonster->y += 48;
+	//			_viMonster->posy += 1;
+	//		}
+	//	}
+	//	else
+	//	{
+	//		if (_wm->getDungeon(tempX, tempY) == 0 || monTomon(tempX, tempY))
+	//		{
+	//		}
+	//		else
+	//		{
+	//			_viMonster->y -= 48;
+	//			_viMonster->posy -= 1;
+	//		}
+	//	}
+	//}
+	//else
+	//{
+	//	//좌우
+	//}
+	//}
 	switch (_viMonster->monsterMoveState)
 	{
 	case MONSTERMOVESTATE::LEFT:
-		if (_viMonster->posx <= PLAYER->getPlayerAddress().posx || _wm->getDungeon(tempX, tempY) == 0 || monTomon(tempX,tempY) == true)
+		if ( _wm->getDungeon(tempX, tempY) == 0 || monTomon(tempX, tempY) == true)
 		{
 			if (_viMonster->posy < PLAYER->getPlayerAddress().posy)
 				_viMonster->monsterMoveState = MONSTERMOVESTATE::DOWN;
 			else if (_viMonster->posy > PLAYER->getPlayerAddress().posy)
 				_viMonster->monsterMoveState = MONSTERMOVESTATE::UP;
 		}
-		else if (findPlayer(tempX, tempY) == true)
-		{
-			_viMonster->monsterState = MONSTERSTATE::ATTACK;
-			_viMonster->atkleft = true;
-		}
-		_viMonster->monsterState = MONSTERSTATE::MOVE;
 		break;
 	case MONSTERMOVESTATE::RIGHT:
-		if (_viMonster->posx >= PLAYER->getPlayerAddress().posx || _wm->getDungeon(tempX, tempY) == 0 || monTomon(tempX, tempY) == true)
+		if ( _wm->getDungeon(tempX, tempY) == 0 || monTomon(tempX, tempY) == true)
 		{
 			if (_viMonster->posy < PLAYER->getPlayerAddress().posy)
 				_viMonster->monsterMoveState = MONSTERMOVESTATE::DOWN;
 			else if (_viMonster->posy > PLAYER->getPlayerAddress().posy)
 				_viMonster->monsterMoveState = MONSTERMOVESTATE::UP;
+			_viMonster->monsterState = MONSTERSTATE::MOVE;
+
 		}
-		else if (findPlayer(tempX, tempY) == true)
-		{
-			_viMonster->monsterState = MONSTERSTATE::ATTACK;
-			_viMonster->atkright = true;
-		}
-		_viMonster->monsterState = MONSTERSTATE::MOVE;
 		break;
 	case MONSTERMOVESTATE::DOWN:
-		if (_viMonster->posy >= PLAYER->getPlayerAddress().posy || _wm->getDungeon(tempX, tempY) == 0 || monTomon(tempX, tempY) == true)
+		if ( _wm->getDungeon(tempX, tempY) == 0 || monTomon(tempX, tempY) == true)
 		{
 			if (_viMonster->posx < PLAYER->getPlayerAddress().posx)
 				_viMonster->monsterMoveState = MONSTERMOVESTATE::RIGHT;
 			else if (_viMonster->posx > PLAYER->getPlayerAddress().posx)
 				_viMonster->monsterMoveState = MONSTERMOVESTATE::LEFT;
+			_viMonster->monsterState = MONSTERSTATE::MOVE;
+
 		}
-		else if (findPlayer(tempX, tempY) == true)
-		{
-			_viMonster->monsterState = MONSTERSTATE::ATTACK;
-			_viMonster->atkdown = true;
-		}
-		_viMonster->monsterState = MONSTERSTATE::MOVE;
 		break;
 	case MONSTERMOVESTATE::UP:
-		if (_viMonster->posy <= PLAYER->getPlayerAddress().posy || _wm->getDungeon(tempX, tempY) == 0 || monTomon(tempX, tempY) == true)
+		if ( _wm->getDungeon(tempX, tempY) == 0 || monTomon(tempX, tempY) == true)
 		{
 			if (_viMonster->posx < PLAYER->getPlayerAddress().posx)
 				_viMonster->monsterMoveState = MONSTERMOVESTATE::RIGHT;
 			else if (_viMonster->posx > PLAYER->getPlayerAddress().posx)
 				_viMonster->monsterMoveState = MONSTERMOVESTATE::LEFT;
+			_viMonster->monsterState = MONSTERSTATE::MOVE;
+
 		}
-		else if (findPlayer(tempX, tempY) == true)
-		{
-			_viMonster->monsterState = MONSTERSTATE::ATTACK;
-			_viMonster->atkup = true;
-		}
-		_viMonster->monsterState = MONSTERSTATE::MOVE;
-		break;
-	default:
 		break;
 	}
 }

@@ -186,7 +186,7 @@ void wallManager::spawnMon()
 	{
 		int random = 0;
 		random = RND->getFromInTo(0, _vSpawn.size()-1);
-		int randdomNum = RND->getFromInTo(0, 2);
+		int randdomNum = RND->getFromInTo(0, 3);
 		int i =	_vSpawn[random].x;
 		int k =	_vSpawn[random].y;
 		switch (randdomNum)
@@ -207,8 +207,8 @@ void wallManager::spawnMon()
 			eraseSPoint(random);
 				break;
 			case 3:
-				//_mm->getWhiteskeleton()->addMonster(i, k);
-				//eraseSPoint(random);
+				_mm->getWhiteskeleton()->addMonster(i, k);
+				eraseSPoint(random);
 				break;
 		default:
 			break;

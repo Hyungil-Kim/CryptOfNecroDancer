@@ -632,11 +632,25 @@ void white_skeleton::release()
 
 void white_skeleton::update(rhythmUI* _rtm)
 {
+	/*for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end();)
+	{
+		deathcheck();
+		if (_viMonster->monsterState == MONSTERSTATE::DEAD)
+		{
+			_viMonster = _vMonster.erase(_viMonster);
+		}
+		else
+		{
+			++_viMonster;
+		}
+	}*/
 	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
 	{
-	moveMonster(_rtm);
-		
+		checkInvincibility();
 	}
+	
+	moveMonster(_rtm);
+	
 }
 
 void white_skeleton::render()
@@ -647,8 +661,24 @@ void white_skeleton::render()
 		showhp();
 		switch (_viMonster->monsterState)
 		{
-		case MONSTERSTATE::MOVE:
 		case MONSTERSTATE::ATTACK:
+			if (_viMonster->atkdown == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkup, 6, 0, _viMonster->x, _viMonster->y + 24, _viMonster->A_atkdown);
+			}
+			if (_viMonster->atkup == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkup, 6, 0, _viMonster->x, _viMonster->y - 24, _viMonster->A_atkup);
+			}
+			if (_viMonster->atkright == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkleft, 6, 0, _viMonster->x + 24, _viMonster->y, _viMonster->A_atkright);
+			}
+			if (_viMonster->atkleft == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkleft, 6, 0, _viMonster->x - 24, _viMonster->y, _viMonster->A_atkleft);
+			}
+		case MONSTERSTATE::MOVE:
 		case MONSTERSTATE::DIGGING:
 		case MONSTERSTATE::HIT:
 		case MONSTERSTATE::STOP:
@@ -717,40 +747,131 @@ void white_skeleton::stateCheck()
 
 void white_skeleton::moveMonster(rhythmUI* _rtm)
 {
-	setdirection();
-			//if (abs(_viMonster->posx - PLAYER->getPlayerAddress().posx) < 4 || abs(_viMonster->posy - PLAYER->getPlayerAddress().posy) < 4)
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
+	{
+	if (_rtm->checkstep() && _viMonster->rtmcount ==false)
+	{
+		_viMonster->movecount += 1;
+		_viMonster->rtmcount = true;
+	}
+	if (!(_rtm->checkstep()))
+	{
+		_viMonster->rtmcount = false;
+	}
+	if (_viMonster->movecount == 3)
+	{
+		int x = PLAYER->getPlayerAddress().posx;
+		int y = PLAYER->getPlayerAddress().posy;
+		if (abs(_viMonster->posx - x) < 4 && abs(_viMonster->posy - y) < 4)
+		{
+			setdirection();
+			float deltaTime = TIME->getElapsedTime();
+			float delta = 2;//_viMonster->speed * deltaTime;
+			switch (_viMonster->monsterMoveState)
 			{
-				float deltaTime = TIME->getElapsedTime();
-				float delta = 48 / 16;//_viMonster->speed * deltaTime;
-				switch (_viMonster->monsterMoveState)
+			case MONSTERMOVESTATE::LEFT:
+				if (_viMonster->atkleft)
 				{
-				case MONSTERMOVESTATE::LEFT:
-					_viMonster->x -= delta;
+					_viMonster->monsterMoveState = MONSTERMOVESTATE::LEFT;
+					_viMonster->atkleft = false;
+					_viMonster->atkright = false;
+					_viMonster->atkdown = false;
+					_viMonster->atkup = false;
 					_viMonster->movecount = 0;
-					_viMonster->posx = _viMonster->x / 48;
-					break;
-				case MONSTERMOVESTATE::RIGHT:
-					_viMonster->x += delta;
-					_viMonster->movecount = 0;
-					_viMonster->posx = _viMonster->x / 48;
-					_viMonster->posy = _viMonster->y / 48;
-					break;
-				case MONSTERMOVESTATE::UP:
-					_viMonster->y -= delta;
-					_viMonster->movecount = 0;
-					_viMonster->posx = _viMonster->x / 48;
-					_viMonster->posy = _viMonster->y / 48;
-					break;
-				case MONSTERMOVESTATE::DOWN:
-					_viMonster->y += delta;
-					_viMonster->movecount = 0;
-					_viMonster->posx = _viMonster->x / 48;
-					_viMonster->posy = _viMonster->y / 48;
-					break;
-				default:
-					break;
+					if (_viMonster->isGraceperiod == false) attack();
+					_viMonster->isGraceperiod = true;
 				}
+				else
+				{
+					_viMonster->atkleft = false;
+					_viMonster->atkright = false;
+					_viMonster->atkdown = false;
+					_viMonster->atkup = false;
+					_viMonster->movecount = 0;
+					_viMonster->posx -= 1;
+					_viMonster->x = _viMonster->posx * 48;
+					_viMonster->y = _viMonster->posy * 48;
+				}
+				break;
+			case MONSTERMOVESTATE::RIGHT:
+				if (_viMonster->atkright)
+				{
+					_viMonster->monsterMoveState = MONSTERMOVESTATE::RIGHT;
+					_viMonster->atkleft = false;
+					_viMonster->atkright = false;
+					_viMonster->atkdown = false;
+					_viMonster->atkup = false;
+					_viMonster->movecount = 0;
+					if (_viMonster->isGraceperiod == false) attack();
+					_viMonster->isGraceperiod = true;
+				}
+				else
+				{
+					_viMonster->atkleft = false;
+					_viMonster->atkright = false;
+					_viMonster->atkdown = false;
+					_viMonster->atkup = false;
+					_viMonster->movecount = 0;
+					_viMonster->posx += 1;
+					_viMonster->x = _viMonster->posx * 48;
+					_viMonster->y = _viMonster->posy * 48;
+				}
+				break;
+			case MONSTERMOVESTATE::UP:
+				if (_viMonster->atkup)
+				{
+					_viMonster->monsterMoveState = MONSTERMOVESTATE::UP;
+					_viMonster->atkleft = false;
+					_viMonster->atkright = false;
+					_viMonster->atkdown = false;
+					_viMonster->atkup = false;
+					_viMonster->movecount = 0;
+					if (_viMonster->isGraceperiod == false) attack();
+					_viMonster->isGraceperiod = true;
+				}
+				else
+				{
+					_viMonster->atkleft = false;
+					_viMonster->atkright = false;
+					_viMonster->atkdown = false;
+					_viMonster->atkup = false;
+					_viMonster->movecount = 0;
+					_viMonster->posy -= 1;
+					_viMonster->x = _viMonster->posx * 48;
+					_viMonster->y = _viMonster->posy * 48;
+				}
+				break;
+			case MONSTERMOVESTATE::DOWN:
+				if (_viMonster->atkdown)
+				{
+					_viMonster->monsterMoveState = MONSTERMOVESTATE::DOWN;
+					_viMonster->atkleft = false;
+					_viMonster->atkright = false;
+					_viMonster->atkdown = false;
+					_viMonster->atkup = false;
+					_viMonster->movecount = 0;
+					if (_viMonster->isGraceperiod == false) attack();
+					_viMonster->isGraceperiod = true;
+				}
+				else
+				{
+					_viMonster->atkleft = false;
+					_viMonster->atkright = false;
+					_viMonster->atkdown = false;
+					_viMonster->atkup = false;
+					_viMonster->movecount = 0;
+					_viMonster->posy += 1;
+					_viMonster->x = _viMonster->posx * 48;
+					_viMonster->y = _viMonster->posy * 48;
+				}
+				break;
+			default:
+				break;
 			}
+			setdirection();
+		}
+	}
+	}
 }
 
 void white_skeleton::updateRect(vector<tagMonster>::iterator iter)

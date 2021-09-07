@@ -160,7 +160,7 @@ void Player::inputCheck()
 	if (INPUT->isOnceKeyDown(VK_RIGHT))
 	{
 		_player.isInput = true;
-	//	if (_rtm->checkstep() == true)
+		if (_rtm->checkstep() == true)
 		{
 			_inputdirection.isRight = true;
 			_inputdirection.isLeft = false;
@@ -172,7 +172,7 @@ void Player::inputCheck()
 	if (INPUT->isOnceKeyDown(VK_LEFT))
 	{
 		_player.isInput = true;
-	//	if (_rtm->checkstep() == true)
+		if (_rtm->checkstep() == true)
 		{
 			_inputdirection.isLeft = true;
 			_inputdirection.isRight = false;
@@ -185,7 +185,7 @@ void Player::inputCheck()
 	if (INPUT->isOnceKeyDown(VK_UP))
 	{
 		_player.isInput = true;
-	//	if (_rtm->checkstep() == true)
+		if (_rtm->checkstep() == true)
 		{
 			_inputdirection.isUp = true;
 		}
@@ -196,7 +196,7 @@ void Player::inputCheck()
 	if (INPUT->isOnceKeyDown(VK_DOWN))
 	{
 		_player.isInput = true;
-	//	if (_rtm->checkstep() == true)
+		if (_rtm->checkstep() == true)
 		{
 			_inputdirection.isDown = true;
 		}
@@ -303,6 +303,17 @@ void Player::giveDamage(int x, int y)
 			}
 		}
 	}
+
+	if (findMonster(_mm->getWhiteskeleton(), x, y))
+	{
+		for (int i = 0; i < _mm->getWhiteskeleton()->getVMonster().size(); ++i)
+		{
+			if (_mm->getWhiteskeleton()->getVMonster()[i].posx == x && _mm->getWhiteskeleton()->getVMonster()[i].posy == y)
+			{
+				_mm->getWhiteskeleton()->getVMonster()[i].hp -= _player.atk;
+			}
+		}
+	}
 	
 }
 
@@ -310,7 +321,8 @@ bool Player::playerToMon(int x, int y)
 {
 	if (findMonster(_mm->getGreenSlime(), x, y) ||
 		findMonster(_mm->getBlueSlime(), x, y) ||
-		findMonster(_mm->getOrangeSlime(), x, y)
+		findMonster(_mm->getOrangeSlime(), x, y)||
+		findMonster(_mm->getWhiteskeleton(), x, y)
 		)
 	{
 		return true;

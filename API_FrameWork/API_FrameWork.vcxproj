@@ -168,7 +168,6 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="makeWall.h" />
-    <ClInclude Include="mapManager.h" />
     <ClInclude Include="mapTool.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="monsterManager.h" />
@@ -216,7 +215,6 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="makeWall.cpp" />
-    <ClCompile Include="mapManager.cpp" />
     <ClCompile Include="mapTool.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="monsterManager.cpp" />
