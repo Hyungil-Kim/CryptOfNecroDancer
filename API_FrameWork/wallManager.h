@@ -58,7 +58,7 @@ public:
 	void spawnMon();
 	void eraseSPoint(int arrNum);
 	void spawnNextStageDoor();
-	
+	void spawnHardWall();
 
 	float getcount() { return count; }
 	int getDungeon(int i , int k) { return Dungeon[i][k]; }

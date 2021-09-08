@@ -58,8 +58,6 @@ public:
 };
 class white_skeleton : public monster
 {
-
-
 public:
 	white_skeleton();
 	~white_skeleton();
@@ -72,5 +70,38 @@ public:
 	virtual void addMonster(float x, float y);
 	virtual void stateCheck();
 	virtual void moveMonster(rhythmUI* _rtm);
+	virtual void updateRect(vector<tagMonster>::iterator iter);
+};
+class green_dragon : public monster
+{
+public:
+	green_dragon();
+	~green_dragon();
+
+	HRESULT init();
+	void release();
+	void update(rhythmUI* _rtm);//플레이어 위치 참고하기위해 
+	void render();
+
+	virtual void addMonster(float x, float y);
+	virtual void stateCheck();
+	virtual void moveMonster(rhythmUI* _rtm,wallManager* _wm,realwallManager* _rwm);
+	virtual void updateRect(vector<tagMonster>::iterator iter);
+};
+class king_konga : public monster
+{
+public:
+	king_konga();
+	~king_konga();
+
+	HRESULT init();
+	void release();
+	void update(rhythmUI* _rtm);//플레이어 위치 참고하기위해 
+	void render();
+
+	virtual void teleport();
+	virtual void addMonster(float x, float y);
+	virtual void stateCheck();
+	virtual void moveMonster(rhythmUI* _rtm,bossMap* _boss, realwallManager* _rwm);
 	virtual void updateRect(vector<tagMonster>::iterator iter);
 };

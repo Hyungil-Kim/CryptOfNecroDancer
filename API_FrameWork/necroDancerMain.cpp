@@ -18,6 +18,8 @@ HRESULT necroDancerMain::init()
 	
 	_sceneState = SCENESTATE::START;
 	SCENE->changeScene("타이틀");
+	_rwm->setcurScene("타이틀");
+	if (_rwm->getcurScene() == "타이틀");
 		SOUND->play("오프닝", 0.5);
 
 	return S_OK;
@@ -28,6 +30,7 @@ void necroDancerMain::release()
 	switch (_sceneState)
 	{
 	case necroDancerMain::SCENESTATE::START:
+	
 		break;
 	case necroDancerMain::SCENESTATE::GAME:
 	_mm->release();
@@ -60,15 +63,13 @@ void necroDancerMain::update()
 	{
 	case necroDancerMain::SCENESTATE::START:
 	SCENE->update();
-	
 		break;
 	case necroDancerMain::SCENESTATE::GAME:
 	_mm->update();
 	_rUI->update();
 	_rwm->update();
-	_wm->update();
+	SCENE->update();
 	map->update();
-	_boss->update();
 	POINT lerp;
 	lerp.x = CAMERA->getPivotX() * (1 - 0.08) + PLAYER->getPlayerAddress().x *0.08;
 	lerp.y = CAMERA->getPivotY() * (1 - 0.08) + PLAYER->getPlayerAddress().y * 0.08;
@@ -98,15 +99,14 @@ void necroDancerMain::render()
 	_mm->render();
 	map->render();
 	_rwm->render();
-	_wm->render();
 	_rUI->render();
-	_boss->render();
+	SCENE->render();
 	PLAYERUI->render(getMemDC());
 	PLAYER->render(getMapDC());
-	_mon->render();
 	ZORDER->ZorderTotalRender(getMapDC());
-	this->getMapBuffer()->render(getMemDC(), 0, 0,CAMERA->getRect().left, CAMERA->getRect().top,
-		RecWidth(CAMERA->getRect()), RecHeight(CAMERA->getRect()));
+	this->getMapBuffer()->render(getMemDC(), 0, 0, CAMERA->getRect().left, CAMERA->getRect().top,
+		RecWidth(CAMERA->getRect()), RecHeight(CAMERA->getRect())); _mon->render();
+
 		break;
 	case necroDancerMain::SCENESTATE::ENDING:
 		break;
@@ -114,6 +114,7 @@ void necroDancerMain::render()
 		break;
 	}
 
+	
 	//_mapBuffer->render(IMAGE->findImage("SCORPDC")->getMemDC(), 0, 0, CAMERA->getRect().left, CAMERA->getRect().top,
 	//	RecWidth(CAMERA->getRect()), RecHeight(CAMERA->getRect()));
 	//IMAGE->findImage("SCORPDC")->stretchRenderXY(getMemDC(), 0, 0, GAMEDCRATIO);
@@ -132,7 +133,7 @@ void necroDancerMain::gameinit()
 	_boss = dynamic_cast<bossMap*>(SCENE->addScene("보스방", new bossMap));
 	//map = new CMap;
 	initForSound();
-
+	
 	PLAYER->init();
 	_rUI->init();
 	CAMERA->init(PLAYER->getPlayerAddress().x, PLAYER->getPlayerAddress().y, MAP_SIZE_X, MAP_SIZE_Y, 0, 0, WINSIZEX / 2, WINSIZEY / 2, CAMERASIZEX, CAMERASIZEY);
@@ -149,6 +150,7 @@ void necroDancerMain::gameinit()
 	PLAYER->setWallmanagerMemoryLink(_wm);
 	PLAYER->setbossMapMemoryLink(_boss);
 	PLAYER->setRealWallManagerMemoryLink(_rwm);
+	_mm->setrealwallManagerMemoryLink(_rwm);
 	_mm->init();
 	_wm->setMonsterManagerMemoryLink(_mm);
 	_boss->setMonsterManagerMemoryLink(_mm);

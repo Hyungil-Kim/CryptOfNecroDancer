@@ -13,6 +13,7 @@ class realwallManager : public gameNode
 	CWall* _cwall;
 	bossMap* _boss;
 
+	string curScene;
 public:
 
 	realwallManager();
@@ -28,7 +29,8 @@ public:
 	makeHardWall* getHardWall() { return _hwall; }
 	makeUnBrokeWall* getUnBrokeWall() { return _uwall; }
 
-
+	string getcurScene() { return curScene; }
+	void setcurScene(string curScene) { this->curScene = curScene; }
 	void setWallManagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
 	void setCWallMemoryLink(CWall* CWall) { _cwall = CWall; }
 	void setbossMapMemoryLink(bossMap* bossMap) { _boss = bossMap; }

@@ -5,6 +5,8 @@
 class Player;
 class wallManager;
 class rhythmUI;
+class realwallManager;
+class bossMap;
 enum class MONSTERSTATE {
 	MOVE,
 	STOP,
@@ -25,8 +27,11 @@ enum class MONSTERMOVESTATE {
 struct tagMonster
 {
 	image* img;
+	image* img2;
+	image* img3;
 	animation* ani;
 	animation* leftani;
+	animation* rightani;
 	animation* shadowani;
 	animation* leftshadowani;
 
@@ -58,6 +63,11 @@ struct tagMonster
 	bool canup = false;
 	bool candown = false;
 	
+	bool digleft = false;
+	bool digright = false;
+	bool digup = false;
+	bool digdown = false;
+
 	bool canBreakWall = false;
 	bool isDetecting = false;
 	bool isHit = false;
@@ -86,9 +96,10 @@ protected:
 	vector<tagMonster>::iterator _viMonster;
 	bool _isDebug;
 	wallManager* _wm;
+	realwallManager* _rwm;
 	monsterManager* _mm;
 	rhythmUI* _rtm;
-
+	bossMap* _boss;
 
 	int monstermaxhp;
 	int monsterhp;
@@ -116,11 +127,17 @@ public:
 	virtual void attack();
 	virtual void getDamage();
 	virtual void setdirection();
+	virtual void setbrokerdirection();
 	virtual void checkInvincibility();
 	virtual void deathcheck();
+	virtual void checkstate();
+	virtual void checkstatebroker();
+
 	virtual void setmonsterManagerMemoryLink(monsterManager* monsterManager) { _mm = monsterManager; }
 	virtual void setwallManagerMemoryLink(wallManager* wallManager) { _wm = wallManager; }
+	virtual void setbossMapMemoryLink(bossMap* bossMap) { _boss = bossMap; }
 	virtual void setrtmMemoryLink(rhythmUI* rhythmUI) { _rtm = rhythmUI; }
+	virtual void setrealwallManagerMemoryLink(realwallManager* realwallManager) { _rwm = realwallManager; }
 	virtual void showhp();
 	virtual void hpinit();
 	

@@ -46,15 +46,19 @@ HRESULT bossMap::init()
 
 void bossMap::release()
 {
+
 }
 
 void bossMap::update()
 {
 	if (soundOn == false)
 	{
-		SOUND->stop("1스테이지");
-		SOUND->play("보스전", 0.5);
-		soundOn = true;
+		if (_rwm->getcurScene() == "보스전")
+		{
+			SOUND->stop("1스테이지");
+			SOUND->play("보스전", 0.5);
+			soundOn = true;
+		}
 	}
 	_count += TIME->getElapsedTime();
 	timing += TIME->getElapsedTime();
@@ -104,7 +108,7 @@ void bossMap::makeDungeon()
 		{
 			if (k == 3)
 			{
-				Dungeon[i][k] = 0;
+				Dungeon[i][k] =5;
 			}
 			else
 			{
@@ -118,12 +122,12 @@ void bossMap::makeDungeon()
 		{
 			if (i == 0 || i == 19)
 			{
-				Dungeon[i][k] = 0;
+				Dungeon[i][k] = 5;
 
 			}
 			if (k == 0 || k == 19)
 			{
-				Dungeon[i][k] = 0;
+				Dungeon[i][k] = 5;
 			}
 		}
 	}
@@ -134,7 +138,7 @@ void bossMap::showDungeon()
 {
 	for (int i = 0; i < 20; i++) {
 		for (int k = 0; k < 20; k++) {
-			if (Dungeon[i][k] == 0 )
+			if (Dungeon[i][k] == 5 )
 			{
 				_rwm->getUnBrokeWall()->addWall(i * 48, k * 48);
 			}
@@ -146,7 +150,7 @@ void bossMap::spawnMon()
 {
 	int i = 7*48;
 	int k = 4*48;
-	_mm->getBlueSlime()->addMonster(i, k);
+	_mm->getKingKong()->addMonster(i, k);
 }
 
 void bossMap::spawnNextStageDoor()

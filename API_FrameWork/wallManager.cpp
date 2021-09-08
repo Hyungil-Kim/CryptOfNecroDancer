@@ -7,7 +7,7 @@
 #include "realwallManager.h"
 wallManager::wallManager()
 {
-	_nextDoorOn = IMAGE->addImage("열린문", "images/tile/stair.bmp", 48, 48,true);
+	_nextDoorOn = IMAGE->addImage("열린문", "images/tile/stairs.bmp", 48, 48,true);
 	_nextDoorOff = IMAGE->addImage("닫힌문", "images/tile/stairs_locked_miniboss.bmp", 48, 48,true);
 }
 
@@ -41,13 +41,19 @@ HRESULT wallManager::init()
 	srand(time(NULL));
 	makeDungeon();
 	showDungeon();
-
+	spawnHardWall();
 	
 	return S_OK;
 }
 
 void wallManager::release()
 {
+	_mm->getGreenSlime()->getVMonster().clear();
+	_mm->getBlueSlime()->getVMonster().clear();
+	_mm->getOrangeSlime()->getVMonster().clear();
+	_mm->getWhiteskeleton()->getVMonster().clear();
+	_rwm->getHardWall()->getVWall().clear();
+	_rwm->getSoftWall()->getVWall().clear();
 }
 
 void wallManager::update()
@@ -62,15 +68,15 @@ void wallManager::update()
 	timing += TIME->getElapsedTime();
 	if (spawnTime == true)
 	{
-		if (monsterNum > startNum)
-		{
-			spawnMon();
-			startNum++;
-		}
 		if (doorNum == 1)
 		{
 			spawnNextStageDoor();
 			--doorNum;
+		}
+		if (monsterNum > startNum)
+		{
+			spawnMon();
+			startNum++;
 		}
 	}
 	if (count > (1.9167f + 0.05f)/4)
@@ -78,7 +84,18 @@ void wallManager::update()
 		_rtm->spawnBeat(480, 0);
 		count = 0.0f;	
 	}
-	
+	if (_mm->getGreenDragon()->getVMonster().size() == 0)
+	{
+		doorOpen = true;
+	}
+	if (PLAYER->getPlayerAddress().x == doorX && PLAYER->getPlayerAddress().y == doorY && doorOpen == true)
+	{	
+		PLAYER->getPlayerAddress().x = 10 * 48;
+		PLAYER->getPlayerAddress().y = 15 * 48;
+		PLAYER->getPlayerAddress().posx = PLAYER->getPlayerAddress().x/48;
+		PLAYER->getPlayerAddress().posy = PLAYER->getPlayerAddress().y/48;
+		SCENE->changeScene("보스방");
+	}
 }
 
 void wallManager::render()
@@ -161,6 +178,28 @@ DLocation wallManager::divideDungeon(int depth, int r1, int c1, int r2, int c2)
 	return Location;
 }
 
+void wallManager::spawnHardWall()
+{
+	for (int i = 0; i < TILE_NUM_X; i++)
+	{
+		for (int k = 0; k < TILE_NUM_Y; k++)
+		{
+			if (i == 0 || i == TILE_NUM_X-1)
+			{
+				Dungeon[i][k] = 5;
+				_rwm->getUnBrokeWall()->addWall(i*48, k * 48);
+				_rwm->getSoftWall()->eraseWall(i*48,k*48);
+			}
+			if (k == 0 || k == TILE_NUM_Y-1)
+			{
+				Dungeon[i][k] = 5;
+				_rwm->getUnBrokeWall()->addWall(i * 48, k * 48);
+				_rwm->getSoftWall()->eraseWall(i*48,k*48);
+			}
+		}
+	}
+}
+
 
 
 void wallManager::makeDungeon()
@@ -222,16 +261,17 @@ void wallManager::eraseSPoint(int arrNum)
 {
 	_vSpawn.erase(_vSpawn.begin() + arrNum);
 }
-
 void wallManager::spawnNextStageDoor()
 {
 	for (int j = 0; j < _vSpawn.size(); j++)
 	{
 		int i = _vSpawn[_vSpawn.size() - 3].x;
 		int k = _vSpawn[_vSpawn.size() - 3].y;
-
+		_mm->getGreenDragon()->addMonster(i, k);
 		doorX = i;
 		doorY = k;
 		makeDoor = true;
+		eraseSPoint(_vSpawn.size() - 3);
+		break;
 	}
 }

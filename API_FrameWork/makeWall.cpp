@@ -38,10 +38,10 @@ void makeSoftWall::addWall(float x, float y)
 	newWall.img = IMAGE->findImage("일반벽");
 	newWall.x = x ;
 	newWall.y = y ;
+	newWall.hard = 1;
 	newWall._wallType = WALL_TYPE::SOFT_WALL;
 	newWall.rc = RectMake(x , y, newWall.img->getFrameWidth(), newWall.img->getFrameHeight());
 	
-	newWall.hard = 2;
 	_vWall.push_back(newWall);
 }
 
@@ -112,9 +112,10 @@ void makeHardWall::addWall(float x, float y)
 	newWall.img = IMAGE->findImage("단단한벽");
 	newWall.x = x;
 	newWall.y = y;
+	newWall.hard = 2;
 	newWall._wallType = WALL_TYPE::HARD_WALL;
 	newWall.rc = RectMake(x, y, newWall.img->getFrameWidth(), newWall.img->getFrameHeight());
-	newWall.hard = 3;
+
 	_vWall.push_back(newWall);
 }
 
@@ -124,7 +125,7 @@ void makeHardWall::updateRect(vector<tagWall>::iterator iter)
 
 makeUnBrokeWall::makeUnBrokeWall()
 {
-	unBrokeWall = IMAGE->addFrameImage("검은벽", "images/tile/TEMP_wall_unbreakable.bmp", 48, 48 + 30, 1, 1, true);
+	unBrokeWall = IMAGE->addFrameImage("검은벽", "images/tile/TEMP_wall_unbreakable.bmp", 48, 48 + 40, 1, 1, true);
 
 }
 
@@ -173,9 +174,10 @@ void makeUnBrokeWall::addWall(float x, float y)
 	newWall.img = IMAGE->findImage("검은벽");
 	newWall.x = x;
 	newWall.y = y;
+	newWall.hard = 3;
 	newWall._wallType = WALL_TYPE::BLACK_WALL;
 	newWall.rc = RectMake(x, y, newWall.img->getFrameWidth(), newWall.img->getFrameHeight());
-	newWall.hard = 100;
+
 	_vWall.push_back(newWall);
 }
 

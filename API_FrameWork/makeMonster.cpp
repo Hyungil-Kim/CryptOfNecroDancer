@@ -1,6 +1,9 @@
 #include "framework.h"
 #include "makeMonster.h"
 #include "rhythmUI.h"
+#include "wallManager.h"
+#include "realwallManager.h"
+#include "bossMap.h"
 /*
 ================================================ =
 Find monster class ctrl + F4("name!")
@@ -9,7 +12,7 @@ monstername					imagename
 1.	green_slime				그린슬라임
 2.	blue_slime				블루슬라임
 3.	orange_slime			오랜지슬라임
-4	skeleton				
+4	skeleton
 5.
 
 */
@@ -60,8 +63,8 @@ void green_slime::render()
 	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
 	{
 		if (_viMonster->hp != _viMonster->maxhp)
-		showhp();
-		
+			showhp();
+
 		switch (_viMonster->monsterState)
 		{
 		case MONSTERSTATE::MOVE:
@@ -135,7 +138,7 @@ void green_slime::updateRect(vector<tagMonster>::iterator iter)
 blue_slime::blue_slime()
 {
 	IMAGE->addFrameImage("블루슬라임", "images/monster/slime_blue.bmp", 48 * 8, 48 * 2, 8, 2, true);
-	
+
 }
 
 blue_slime::~blue_slime()
@@ -177,7 +180,7 @@ void blue_slime::render()
 	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
 	{
 		if (_viMonster->hp != _viMonster->maxhp)
-		showhp();
+			showhp();
 		switch (_viMonster->monsterState)
 		{
 		case MONSTERSTATE::ATTACK:
@@ -185,15 +188,15 @@ void blue_slime::render()
 			{
 				ZORDER->ZorderAniRender(_viMonster->_atkup, 6, 0, _viMonster->x, _viMonster->y + 24, _viMonster->A_atkdown);
 			}
-			if(_viMonster->atkup == true)
+			if (_viMonster->atkup == true)
 			{
 				ZORDER->ZorderAniRender(_viMonster->_atkup, 6, 0, _viMonster->x, _viMonster->y - 24, _viMonster->A_atkup);
 			}
-			if(_viMonster->atkright == true)
+			if (_viMonster->atkright == true)
 			{
 				ZORDER->ZorderAniRender(_viMonster->_atkleft, 6, 0, _viMonster->x - 24, _viMonster->y, _viMonster->A_atkright);
 			}
-			if(_viMonster->atkleft == true)
+			if (_viMonster->atkleft == true)
 			{
 				ZORDER->ZorderAniRender(_viMonster->_atkleft, 6, 0, _viMonster->x + 24, _viMonster->y, _viMonster->A_atkleft);
 			}
@@ -280,15 +283,15 @@ void blue_slime::moveMonster()
 
 				}
 			}
-			else if(_viMonster->atkup == true)
+			else if (_viMonster->atkup == true)
 			{
 				_viMonster->monsterState = MONSTERSTATE::ATTACK;
 				_viMonster->atkdown = false;
 				_viMonster->atkright = false;
 				_viMonster->atkleft = false;
-				if(_viMonster->isGraceperiod == false) attack();
+				if (_viMonster->isGraceperiod == false) attack();
 				_viMonster->isGraceperiod = true;
-				
+
 			}
 		}
 		_viMonster->posy = _viMonster->y / 48;
@@ -389,7 +392,7 @@ void orange_slime::render()
 	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
 	{
 		if (_viMonster->hp != _viMonster->maxhp)
-		showhp();
+			showhp();
 		switch (_viMonster->monsterState)
 		{
 		case MONSTERSTATE::ATTACK:
@@ -632,7 +635,7 @@ void white_skeleton::release()
 
 void white_skeleton::update(rhythmUI* _rtm)
 {
-	/*for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end();)
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end();)
 	{
 		deathcheck();
 		if (_viMonster->monsterState == MONSTERSTATE::DEAD)
@@ -643,22 +646,22 @@ void white_skeleton::update(rhythmUI* _rtm)
 		{
 			++_viMonster;
 		}
-	}*/
+	}
 	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
 	{
 		checkInvincibility();
 	}
-	
+
 	moveMonster(_rtm);
-	
+
 }
 
 void white_skeleton::render()
 {
 	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
 	{
-		if(_viMonster->hp != _viMonster->maxhp)
-		showhp();
+		if (_viMonster->hp != _viMonster->maxhp)
+			showhp();
 		switch (_viMonster->monsterState)
 		{
 		case MONSTERSTATE::ATTACK:
@@ -685,13 +688,18 @@ void white_skeleton::render()
 			if (_isDebug) {
 				ZORDER->ZorderRectangle(_viMonster->rc, 3);
 			}
-			if (_viMonster->AniLeft == true)
-			{
-				ZORDER->ZorderAniRender(_viMonster->img, 4, _viMonster->rc.bottom, _viMonster->x, _viMonster->y, _viMonster->ani);
-			}
-			else
+
+			if (_viMonster->monsterMoveState == MONSTERMOVESTATE::LEFT || _viMonster->monsterMoveState == MONSTERMOVESTATE::DOWN)
 			{
 				ZORDER->ZorderAniRender(_viMonster->img, 4, _viMonster->rc.bottom, _viMonster->x, _viMonster->y, _viMonster->leftani);
+			}
+			if (_viMonster->monsterMoveState == MONSTERMOVESTATE::RIGHT || _viMonster->monsterMoveState == MONSTERMOVESTATE::NONE)
+			{
+				ZORDER->ZorderAniRender(_viMonster->img, 4, _viMonster->rc.bottom, _viMonster->x, _viMonster->y, _viMonster->rightani);
+			}
+			if (_viMonster->monsterMoveState == MONSTERMOVESTATE::UP)
+			{
+				ZORDER->ZorderAniRender(_viMonster->img, 4, _viMonster->rc.bottom, _viMonster->x, _viMonster->y, _viMonster->ani);
 			}
 			break;
 		case MONSTERSTATE::DEAD:
@@ -712,8 +720,9 @@ void white_skeleton::addMonster(float x, float y)
 	newMonster.maxhp = 2;
 	newMonster.hp = 2;
 	newMonster.atk = 1;
-	newMonster.ani = ANIMATION->addNoneKeyAnimation("해골", 0, 15, 4, false, true);
-	newMonster.leftani = ANIMATION->addNoneKeyAnimation("해골", 32, 47, 4, false, true);
+	newMonster.ani = ANIMATION->addNoneKeyAnimation("해골", 8, 15, 4, false, true);
+	newMonster.leftani = ANIMATION->addNoneKeyAnimation("해골", 0, 7, 4, false, true);
+	newMonster.rightani = ANIMATION->addNoneKeyAnimation("해골", 40, 47, 4, false, true);
 	newMonster.shadowani = ANIMATION->addNoneKeyAnimation("해골", 16, 31, 4, false, true);
 	newMonster.shadowani = ANIMATION->addNoneKeyAnimation("해골", 48, 63, 4, false, true);
 	newMonster._atkup = IMAGE->findImage("상하공격");
@@ -732,8 +741,12 @@ void white_skeleton::addMonster(float x, float y)
 	newMonster.isCurrentRight = false;
 	newMonster.isMove = false;
 	newMonster.AniLeft = true;
+	newMonster.canleft = false;
+	newMonster.canright = false;
+	newMonster.canup = false;
+	newMonster.candown = false;
 	newMonster.limit = TILE_SIZE_Y;
-	newMonster.speed = 48*2;
+	newMonster.speed = 48 * 2;
 	newMonster.movecount = 0;
 	newMonster.isOnceMove = false;
 	newMonster.monsterState = MONSTERSTATE::STOP;
@@ -749,132 +762,688 @@ void white_skeleton::moveMonster(rhythmUI* _rtm)
 {
 	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
 	{
-	if (_rtm->checkstep() && _viMonster->rtmcount ==false)
-	{
-		_viMonster->movecount += 1;
-		_viMonster->rtmcount = true;
-	}
-	if (!(_rtm->checkstep()))
-	{
-		_viMonster->rtmcount = false;
-	}
-	if (_viMonster->movecount == 3)
-	{
-		int x = PLAYER->getPlayerAddress().posx;
-		int y = PLAYER->getPlayerAddress().posy;
-		if (abs(_viMonster->posx - x) < 4 && abs(_viMonster->posy - y) < 4)
+
+		if (_rtm->checkstep() && _viMonster->rtmcount == false)
 		{
-			setdirection();
-			float deltaTime = TIME->getElapsedTime();
-			float delta = 2;//_viMonster->speed * deltaTime;
-			switch (_viMonster->monsterMoveState)
-			{
-			case MONSTERMOVESTATE::LEFT:
-				if (_viMonster->atkleft)
-				{
-					_viMonster->monsterMoveState = MONSTERMOVESTATE::LEFT;
-					_viMonster->atkleft = false;
-					_viMonster->atkright = false;
-					_viMonster->atkdown = false;
-					_viMonster->atkup = false;
-					_viMonster->movecount = 0;
-					if (_viMonster->isGraceperiod == false) attack();
-					_viMonster->isGraceperiod = true;
-				}
-				else
-				{
-					_viMonster->atkleft = false;
-					_viMonster->atkright = false;
-					_viMonster->atkdown = false;
-					_viMonster->atkup = false;
-					_viMonster->movecount = 0;
-					_viMonster->posx -= 1;
-					_viMonster->x = _viMonster->posx * 48;
-					_viMonster->y = _viMonster->posy * 48;
-				}
-				break;
-			case MONSTERMOVESTATE::RIGHT:
-				if (_viMonster->atkright)
-				{
-					_viMonster->monsterMoveState = MONSTERMOVESTATE::RIGHT;
-					_viMonster->atkleft = false;
-					_viMonster->atkright = false;
-					_viMonster->atkdown = false;
-					_viMonster->atkup = false;
-					_viMonster->movecount = 0;
-					if (_viMonster->isGraceperiod == false) attack();
-					_viMonster->isGraceperiod = true;
-				}
-				else
-				{
-					_viMonster->atkleft = false;
-					_viMonster->atkright = false;
-					_viMonster->atkdown = false;
-					_viMonster->atkup = false;
-					_viMonster->movecount = 0;
-					_viMonster->posx += 1;
-					_viMonster->x = _viMonster->posx * 48;
-					_viMonster->y = _viMonster->posy * 48;
-				}
-				break;
-			case MONSTERMOVESTATE::UP:
-				if (_viMonster->atkup)
-				{
-					_viMonster->monsterMoveState = MONSTERMOVESTATE::UP;
-					_viMonster->atkleft = false;
-					_viMonster->atkright = false;
-					_viMonster->atkdown = false;
-					_viMonster->atkup = false;
-					_viMonster->movecount = 0;
-					if (_viMonster->isGraceperiod == false) attack();
-					_viMonster->isGraceperiod = true;
-				}
-				else
-				{
-					_viMonster->atkleft = false;
-					_viMonster->atkright = false;
-					_viMonster->atkdown = false;
-					_viMonster->atkup = false;
-					_viMonster->movecount = 0;
-					_viMonster->posy -= 1;
-					_viMonster->x = _viMonster->posx * 48;
-					_viMonster->y = _viMonster->posy * 48;
-				}
-				break;
-			case MONSTERMOVESTATE::DOWN:
-				if (_viMonster->atkdown)
-				{
-					_viMonster->monsterMoveState = MONSTERMOVESTATE::DOWN;
-					_viMonster->atkleft = false;
-					_viMonster->atkright = false;
-					_viMonster->atkdown = false;
-					_viMonster->atkup = false;
-					_viMonster->movecount = 0;
-					if (_viMonster->isGraceperiod == false) attack();
-					_viMonster->isGraceperiod = true;
-				}
-				else
-				{
-					_viMonster->atkleft = false;
-					_viMonster->atkright = false;
-					_viMonster->atkdown = false;
-					_viMonster->atkup = false;
-					_viMonster->movecount = 0;
-					_viMonster->posy += 1;
-					_viMonster->x = _viMonster->posx * 48;
-					_viMonster->y = _viMonster->posy * 48;
-				}
-				break;
-			default:
-				break;
-			}
-			setdirection();
+			_viMonster->movecount += 1;
+			_viMonster->rtmcount = true;
 		}
-	}
+		if (!(_rtm->checkstep()))
+		{
+			_viMonster->rtmcount = false;
+		}
+		if (_viMonster->movecount >= 3)
+		{
+			int x = PLAYER->getPlayerAddress().posx;
+			int y = PLAYER->getPlayerAddress().posy;
+			if (abs(_viMonster->posx - x) < 6 && abs(_viMonster->posy - y) < 6)
+			{
+				float deltaTime = TIME->getElapsedTime();
+				float delta = 2;//_viMonster->speed * deltaTime;
+				setdirection();
+				switch (_viMonster->monsterMoveState)
+				{
+				case MONSTERMOVESTATE::LEFT:
+					if (_viMonster->atkleft)
+					{
+						_viMonster->movecount = 0;
+						if (_viMonster->isGraceperiod == false) attack();
+						_viMonster->isGraceperiod = true;
+					}
+					else
+					{
+						_viMonster->movecount = 0;
+						_viMonster->posx -= 1;
+						_viMonster->x = _viMonster->posx * 48;
+						_viMonster->y = _viMonster->posy * 48;
+					}
+					break;
+				case MONSTERMOVESTATE::RIGHT:
+					if (_viMonster->atkright)
+					{
+						_viMonster->movecount = 0;
+						if (_viMonster->isGraceperiod == false) attack();
+						_viMonster->isGraceperiod = true;
+					}
+					else
+					{
+						_viMonster->movecount = 0;
+						_viMonster->posx += 1;
+						_viMonster->x = _viMonster->posx * 48;
+						_viMonster->y = _viMonster->posy * 48;
+					}
+					break;
+				case MONSTERMOVESTATE::UP:
+					if (_viMonster->atkup)
+					{
+						_viMonster->movecount = 0;
+						if (_viMonster->isGraceperiod == false) attack();
+						_viMonster->isGraceperiod = true;
+					}
+					else
+					{
+						_viMonster->movecount = 0;
+						_viMonster->posy -= 1;
+						_viMonster->x = _viMonster->posx * 48;
+						_viMonster->y = _viMonster->posy * 48;
+					}
+					break;
+				case MONSTERMOVESTATE::DOWN:
+					if (_viMonster->atkdown)
+					{
+						_viMonster->movecount = 0;
+						if (_viMonster->isGraceperiod == false) attack();
+						_viMonster->isGraceperiod = true;
+					}
+					else
+					{
+						_viMonster->movecount = 0;
+						_viMonster->posy += 1;
+						_viMonster->x = _viMonster->posx * 48;
+						_viMonster->y = _viMonster->posy * 48;
+					}
+					break;
+				case MONSTERMOVESTATE::NONE:
+					_viMonster->movecount = 0;
+					_viMonster->posy += 0;
+					_viMonster->posx += 0;
+					_viMonster->x = _viMonster->posx * 48;
+					_viMonster->y = _viMonster->posy * 48;
+					break;
+				}
+			}
+
+		}
 	}
 }
 
 void white_skeleton::updateRect(vector<tagMonster>::iterator iter)
 {
 	iter->rc = RectMake(iter->x, iter->y, iter->img->getFrameWidth(), iter->img->getFrameHeight());
+}
+
+green_dragon::green_dragon()
+{
+	IMAGE->addFrameImage("드래곤", "images/monster/green_dragon.bmp", 48 * 8*1.5, 48 * 2*2, 8, 2, true);
+}
+
+green_dragon::~green_dragon()
+{
+}
+
+HRESULT green_dragon::init()
+{
+	return S_OK;
+}
+
+void green_dragon::release()
+{
+}
+
+void green_dragon::update(rhythmUI* _rtm)
+{
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end();)
+	{
+		deathcheck();
+		if (_viMonster->monsterState == MONSTERSTATE::DEAD)
+		{
+			_viMonster = _vMonster.erase(_viMonster);
+		}
+		else
+		{
+			++_viMonster;
+		}
+	}
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
+	{
+		checkInvincibility();
+	}
+
+	moveMonster(_rtm,_wm,_rwm);
+}
+
+void green_dragon::render()
+{
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
+	{
+		if (_viMonster->hp != _viMonster->maxhp)
+			showhp();
+		switch (_viMonster->monsterState)
+		{
+		case MONSTERSTATE::ATTACK:
+			if (_viMonster->atkdown == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkup, 6, 0, _viMonster->x, _viMonster->y + 24, _viMonster->A_atkdown);
+			}
+			if (_viMonster->atkup == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkup, 6, 0, _viMonster->x, _viMonster->y - 24, _viMonster->A_atkup);
+			}
+			if (_viMonster->atkright == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkleft, 6, 0, _viMonster->x + 24, _viMonster->y, _viMonster->A_atkright);
+			}
+			if (_viMonster->atkleft == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkleft, 6, 0, _viMonster->x - 24, _viMonster->y, _viMonster->A_atkleft);
+			}
+		case MONSTERSTATE::MOVE:
+		case MONSTERSTATE::DIGGING:
+		case MONSTERSTATE::HIT:
+		case MONSTERSTATE::STOP:
+			if (_isDebug) {
+				ZORDER->ZorderRectangle(_viMonster->rc, 3);
+			}
+
+			if (_viMonster->monsterMoveState == MONSTERMOVESTATE::LEFT || _viMonster->monsterMoveState == MONSTERMOVESTATE::DOWN)
+			{
+				ZORDER->ZorderAniRender(_viMonster->img, 4, _viMonster->rc.bottom, _viMonster->x, _viMonster->y-48, _viMonster->leftani);
+			}
+			else
+			{
+				ZORDER->ZorderAniRender(_viMonster->img, 4, _viMonster->rc.bottom, _viMonster->x, _viMonster->y-48, _viMonster->rightani);
+			}
+
+			break;
+		case MONSTERSTATE::DEAD:
+			break;
+		}
+	}
+}
+
+void green_dragon::addMonster(float x, float y)
+{
+	tagMonster newMonster;
+	newMonster.img = IMAGE->findImage("드래곤");
+	newMonster.x = x;
+	newMonster.y = y;
+	newMonster.posx =x / 48;
+	newMonster.posy =y / 48;
+	newMonster.rc = RectMake(newMonster.x, newMonster.y, newMonster.img->getFrameWidth(), newMonster.img->getFrameHeight());
+	newMonster.maxhp = 8;
+	newMonster.hp = 8;
+	newMonster.atk =4;
+	newMonster.leftani = ANIMATION->addNoneKeyAnimation("드래곤", 0, 3, 4, false, true);
+	newMonster.rightani = ANIMATION->addNoneKeyAnimation("드래곤", 4, 7, 4, false, true);
+	newMonster.shadowani = ANIMATION->addNoneKeyAnimation("드래곤", 8, 11, 4, false, true);
+	newMonster.shadowani = ANIMATION->addNoneKeyAnimation("드래곤", 12, 15, 4, false, true);
+	newMonster._atkup = IMAGE->findImage("상하공격");
+	newMonster._atkleft = IMAGE->findImage("좌우공격");
+	newMonster.A_atkdown = ANIMATION->addNoneKeyAnimation("상하공격", 0, 4, 5, false, true);
+	newMonster.A_atkup = ANIMATION->addNoneKeyAnimation("상하공격", 9, 5, 5, false, true);
+	newMonster.A_atkright = ANIMATION->addNoneKeyAnimation("좌우공격", 0, 4, 5, false, true);
+	newMonster.A_atkleft = ANIMATION->addNoneKeyAnimation("좌우공격", 9, 5, 5, false, true);
+	newMonster.m_emptyheart = IMAGE->findImage("몬스터빈하트");
+	newMonster.m_heart = IMAGE->findImage("몬스터하트");
+	newMonster.m_halfheart = IMAGE->findImage("몬스터절반하트");
+	newMonster.canBreakWall = false;
+	newMonster.isDetecting = false;
+	newMonster.isDead = false;
+	newMonster.isHit = false;
+	newMonster.isCurrentRight = false;
+	newMonster.isMove = false;
+	newMonster.AniLeft = true;
+	newMonster.canleft = false;
+	newMonster.canright = false;
+	newMonster.canup = false;
+	newMonster.candown = false;
+	newMonster.digup = false;
+	newMonster.digleft = false;
+	newMonster.digright = false;
+	newMonster.digdown = false;
+	newMonster.limit = TILE_SIZE_Y;
+	newMonster.speed = 48 * 2;
+	newMonster.movecount = 0;
+	newMonster.isOnceMove = false;
+	newMonster.monsterState = MONSTERSTATE::STOP;
+	newMonster.monsterMoveState = MONSTERMOVESTATE::LEFT;
+	_vMonster.push_back(newMonster);
+}
+
+void green_dragon::stateCheck()
+{
+}
+
+void green_dragon::moveMonster(rhythmUI* _rtm,wallManager* _wm, realwallManager* _rwm)
+{
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
+	{
+
+		if (_rtm->checkstep() && _viMonster->rtmcount == false)
+		{
+			_viMonster->movecount += 1;
+			_viMonster->rtmcount = true;
+		}
+		if (!(_rtm->checkstep()))
+		{
+			_viMonster->rtmcount = false;
+		}
+		if (_viMonster->movecount >= 2)
+		{
+			int x = PLAYER->getPlayerAddress().posx;
+			int y = PLAYER->getPlayerAddress().posy;
+			if (abs(_viMonster->posx - x) < 5 && abs(_viMonster->posy - y) < 5)
+			{
+				float deltaTime = TIME->getElapsedTime();
+				float delta = 2;//_viMonster->speed * deltaTime;
+				setbrokerdirection();
+				switch (_viMonster->monsterMoveState)
+				{
+				case MONSTERMOVESTATE::LEFT:
+					if (_viMonster->digleft)
+					{
+						_viMonster->movecount = 0;
+						_viMonster->digleft = false;
+						_wm->setDungeon(_viMonster->posx -1, _viMonster->posy, 1);
+						_rwm->getSoftWall()->eraseWall(_viMonster->posx - 1, _viMonster->posy);
+					}
+					else 
+					{
+						if (_viMonster->atkleft)
+						{
+							_viMonster->movecount = 0;
+							if (_viMonster->isGraceperiod == false) attack();
+							_viMonster->isGraceperiod = true;
+						}
+						else
+						{
+							_viMonster->movecount = 0;
+							_viMonster->posx -= 1;
+							_viMonster->x = _viMonster->posx * 48;
+							_viMonster->y = _viMonster->posy * 48;
+						}
+					}
+					break;
+				case MONSTERMOVESTATE::RIGHT:
+					if (_viMonster->digright)
+					{
+						_viMonster->movecount = 0;
+						_viMonster->digright = false;
+						_wm->setDungeon(_viMonster->posx + 1, _viMonster->posy, 1);
+						_rwm->getSoftWall()->eraseWall(_viMonster->posx + 1, _viMonster->posy);
+					}
+					else
+					{
+						if (_viMonster->atkright)
+						{
+							_viMonster->movecount = 0;
+							if (_viMonster->isGraceperiod == false) attack();
+							_viMonster->isGraceperiod = true;
+						}
+						else
+						{
+							_viMonster->movecount = 0;
+							_viMonster->posx += 1;
+							_viMonster->x = _viMonster->posx * 48;
+							_viMonster->y = _viMonster->posy * 48;
+						}
+					}
+					break;
+				case MONSTERMOVESTATE::UP:
+					if (_viMonster->digup)
+					{
+						_viMonster->movecount = 0;
+						_viMonster->digup = false;
+						_wm->setDungeon(_viMonster->posx , _viMonster->posy-1, 1);
+						_rwm->getSoftWall()->eraseWall(_viMonster->posx, _viMonster->posy-1);
+					}
+					else
+					{
+						if (_viMonster->atkup)
+						{
+							_viMonster->movecount = 0;
+							if (_viMonster->isGraceperiod == false) attack();
+							_viMonster->isGraceperiod = true;
+						}
+						else
+						{
+							_viMonster->movecount = 0;
+							_viMonster->posy -= 1;
+							_viMonster->x = _viMonster->posx * 48;
+							_viMonster->y = _viMonster->posy * 48;
+						}
+					}
+					break;
+				case MONSTERMOVESTATE::DOWN:
+					if (_viMonster->digdown)
+					{
+						_viMonster->movecount = 0;
+						_viMonster->digdown = false;
+						_wm->setDungeon(_viMonster->posx, _viMonster->posy + 1, 1);
+						_rwm->getSoftWall()->eraseWall(_viMonster->posx, _viMonster->posy + 1);
+					}
+					else
+					{
+						if (_viMonster->atkdown)
+						{
+							_viMonster->movecount = 0;
+							if (_viMonster->isGraceperiod == false) attack();
+							_viMonster->isGraceperiod = true;
+						}
+						else
+						{
+							_viMonster->movecount = 0;
+							_viMonster->posy += 1;
+							_viMonster->x = _viMonster->posx * 48;
+							_viMonster->y = _viMonster->posy * 48;
+						}
+					}
+					break;
+				case MONSTERMOVESTATE::NONE:
+					_viMonster->movecount = 0;
+					_viMonster->posy += 0;
+					_viMonster->posx += 0;
+					_viMonster->x = _viMonster->posx * 48;
+					_viMonster->y = _viMonster->posy * 48;
+					break;
+				}
+			}
+
+		}
+	}
+}
+
+void green_dragon::updateRect(vector<tagMonster>::iterator iter)
+{
+	iter->rc = RectMake(iter->x, iter->y, iter->img->getFrameWidth(), iter->img->getFrameHeight());
+
+}
+
+king_konga::king_konga()
+{
+	IMAGE->addFrameImage("킹콩가", "images/monster/kong.bmp", 48 * 4 *1.5, 48 * 2, 4, 1, true);
+	/*IMAGE->addFrameImage("의자", "images/monster/king_conga_throne.bmp", 48 , 48 * 2, 1, 1, true);
+	IMAGE->addFrameImage("킹콩가의자", "images/monster/stop_kong.bmp", 48 * 5, 48 * 2, 5, 2, true);*/
+}
+
+king_konga::~king_konga()
+{
+}
+
+HRESULT king_konga::init()
+{
+	return S_OK;
+}
+
+void king_konga::release()
+{
+}
+
+void king_konga::update(rhythmUI* _rtm)
+{
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end();)
+	{
+		deathcheck();
+		if (_viMonster->monsterState == MONSTERSTATE::DEAD)
+		{
+			_viMonster = _vMonster.erase(_viMonster);
+		}
+		else
+		{
+			++_viMonster;
+		}
+	}
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
+	{
+		checkInvincibility();
+		if (_viMonster->monsterState == MONSTERSTATE::HIT)
+		{
+			teleport();
+		}
+	}
+	moveMonster(_rtm, _boss, _rwm);
+}
+
+void king_konga::render()
+{
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
+	{
+		if (_viMonster->hp != _viMonster->maxhp)
+			showhp();
+		switch (_viMonster->monsterState)
+		{
+		case MONSTERSTATE::ATTACK:
+			if (_viMonster->atkdown == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkup, 6, 0, _viMonster->x, _viMonster->y + 24, _viMonster->A_atkdown);
+			}
+			if (_viMonster->atkup == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkup, 6, 0, _viMonster->x, _viMonster->y - 24, _viMonster->A_atkup);
+			}
+			if (_viMonster->atkright == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkleft, 6, 0, _viMonster->x + 24, _viMonster->y, _viMonster->A_atkright);
+			}
+			if (_viMonster->atkleft == true)
+			{
+				ZORDER->ZorderAniRender(_viMonster->_atkleft, 6, 0, _viMonster->x - 24, _viMonster->y, _viMonster->A_atkleft);
+			}
+		case MONSTERSTATE::HIT:
+		case MONSTERSTATE::MOVE:
+		case MONSTERSTATE::DIGGING:
+		case MONSTERSTATE::STOP:
+			if (_isDebug) {
+				ZORDER->ZorderRectangle(_viMonster->rc, 3);
+			}
+			if (_viMonster->monsterMoveState == MONSTERMOVESTATE::LEFT || _viMonster->monsterMoveState == MONSTERMOVESTATE::DOWN)
+			{
+				ZORDER->ZorderAniRender(_viMonster->img, 4, _viMonster->rc.bottom, _viMonster->x, _viMonster->y - 48, _viMonster->leftani);
+			}
+			else
+			{
+				ZORDER->ZorderAniRender(_viMonster->img, 4, _viMonster->rc.bottom, _viMonster->x, _viMonster->y - 48, _viMonster->rightani);
+			}
+
+			break;
+		case MONSTERSTATE::DEAD:
+			break;
+		}
+	}
+}
+
+void king_konga::teleport()
+{
+	if (_viMonster->monsterState == MONSTERSTATE::HIT)
+	{
+		int tempX =RND->getFromInTo(0,18);
+		int tempY = RND->getFromInTo(4, 18);
+				_viMonster->posx = tempX;
+				_viMonster->posy = tempY;
+				_viMonster->monsterState = MONSTERSTATE::MOVE;
+	}
+}
+
+void king_konga::addMonster(float x, float y)
+{
+	tagMonster newMonster;
+	newMonster.img = IMAGE->findImage("킹콩가");
+	newMonster.x = x;
+	newMonster.y = y;
+	newMonster.posx = x / 48;
+	newMonster.posy = y / 48;
+	newMonster.rc = RectMake(newMonster.x, newMonster.y, newMonster.img->getFrameWidth(), newMonster.img->getFrameHeight());
+	newMonster.maxhp = 4;
+	newMonster.hp = 4;
+	newMonster.atk = 2;
+	newMonster.leftani = ANIMATION->addNoneKeyAnimation("킹콩가", 0, 1, 4, false, true);
+	newMonster.rightani = ANIMATION->addNoneKeyAnimation("킹콩가", 2, 3, 4, false, true);
+	newMonster._atkup = IMAGE->findImage("상하공격");
+	newMonster._atkleft = IMAGE->findImage("좌우공격");
+	newMonster.A_atkdown = ANIMATION->addNoneKeyAnimation("상하공격", 0, 4, 5, false, true);
+	newMonster.A_atkup = ANIMATION->addNoneKeyAnimation("상하공격", 9, 5, 5, false, true);
+	newMonster.A_atkright = ANIMATION->addNoneKeyAnimation("좌우공격", 0, 4, 5, false, true);
+	newMonster.A_atkleft = ANIMATION->addNoneKeyAnimation("좌우공격", 9, 5, 5, false, true);
+	newMonster.m_emptyheart = IMAGE->findImage("몬스터빈하트");
+	newMonster.m_heart = IMAGE->findImage("몬스터하트");
+	newMonster.m_halfheart = IMAGE->findImage("몬스터절반하트");
+	newMonster.canBreakWall = false;
+	newMonster.isDetecting = false;
+	newMonster.isDead = false;
+	newMonster.isHit = false;
+	newMonster.isCurrentRight = false;
+	newMonster.isMove = false;
+	newMonster.AniLeft = true;
+	newMonster.canleft = false;
+	newMonster.canright = false;
+	newMonster.canup = false;
+	newMonster.candown = false;
+	newMonster.digup = false;
+	newMonster.digleft = false;
+	newMonster.digright = false;
+	newMonster.digdown = false;
+	newMonster.limit = TILE_SIZE_Y;
+	newMonster.speed = 48 * 2;
+	newMonster.movecount = 0;
+	newMonster.isOnceMove = false;
+	newMonster.monsterState = MONSTERSTATE::STOP;
+	newMonster.monsterMoveState = MONSTERMOVESTATE::LEFT;
+	_vMonster.push_back(newMonster);
+}
+
+void king_konga::stateCheck()
+{
+}
+
+void king_konga::moveMonster(rhythmUI* _rtm, bossMap* _boss, realwallManager* _rwm)
+{
+	for (_viMonster = _vMonster.begin(); _viMonster != _vMonster.end(); ++_viMonster)
+	{
+
+		if (_rtm->checkstep() && _viMonster->rtmcount == false)
+		{
+			_viMonster->movecount += 1;
+			_viMonster->rtmcount = true;
+		}
+		if (!(_rtm->checkstep()))
+		{
+			_viMonster->rtmcount = false;
+		}
+		if (_viMonster->movecount >= 2)
+		{
+			int x = PLAYER->getPlayerAddress().posx;
+			int y = PLAYER->getPlayerAddress().posy;
+			if (abs(_viMonster->posx - x) < 5 && abs(_viMonster->posy - y) < 5)
+			{
+				float deltaTime = TIME->getElapsedTime();
+				float delta = 2;//_viMonster->speed * deltaTime;
+				setbrokerdirection();
+				switch (_viMonster->monsterMoveState)
+				{
+				case MONSTERMOVESTATE::LEFT:
+					if (_viMonster->digleft)
+					{
+						_viMonster->movecount = 0;
+						_viMonster->digleft = false;
+						_boss->setDungeon(_viMonster->posx - 1, _viMonster->posy, 1);
+						_rwm->getSoftWall()->eraseWall(_viMonster->posx - 1, _viMonster->posy);
+					}
+					else
+					{
+						if (_viMonster->atkleft)
+						{
+							_viMonster->movecount = 0;
+							if (_viMonster->isGraceperiod == false) attack();
+							_viMonster->isGraceperiod = true;
+						}
+						else
+						{
+							_viMonster->movecount = 0;
+							_viMonster->posx -= 1;
+							_viMonster->x = _viMonster->posx * 48;
+							_viMonster->y = _viMonster->posy * 48;
+						}
+					}
+					break;
+				case MONSTERMOVESTATE::RIGHT:
+					if (_viMonster->digright)
+					{
+						_viMonster->movecount = 0;
+						_viMonster->digright = false;
+						_boss->setDungeon(_viMonster->posx + 1, _viMonster->posy, 1);
+						_rwm->getSoftWall()->eraseWall(_viMonster->posx + 1, _viMonster->posy);
+					}
+					else
+					{
+						if (_viMonster->atkright)
+						{
+							_viMonster->movecount = 0;
+							if (_viMonster->isGraceperiod == false) attack();
+							_viMonster->isGraceperiod = true;
+						}
+						else
+						{
+							_viMonster->movecount = 0;
+							_viMonster->posx += 1;
+							_viMonster->x = _viMonster->posx * 48;
+							_viMonster->y = _viMonster->posy * 48;
+						}
+					}
+					break;
+				case MONSTERMOVESTATE::UP:
+					if (_viMonster->digup)
+					{
+						_viMonster->movecount = 0;
+						_viMonster->digup = false;
+						_boss->setDungeon(_viMonster->posx, _viMonster->posy - 1, 1);
+						_rwm->getSoftWall()->eraseWall(_viMonster->posx, _viMonster->posy - 1);
+					}
+					else
+					{
+						if (_viMonster->atkup)
+						{
+							_viMonster->movecount = 0;
+							if (_viMonster->isGraceperiod == false) attack();
+							_viMonster->isGraceperiod = true;
+						}
+						else
+						{
+							_viMonster->movecount = 0;
+							_viMonster->posy -= 1;
+							_viMonster->x = _viMonster->posx * 48;
+							_viMonster->y = _viMonster->posy * 48;
+						}
+					}
+					break;
+				case MONSTERMOVESTATE::DOWN:
+					if (_viMonster->digdown)
+					{
+						_viMonster->movecount = 0;
+						_viMonster->digdown = false;
+						_boss->setDungeon(_viMonster->posx, _viMonster->posy + 1, 1);
+						_rwm->getSoftWall()->eraseWall(_viMonster->posx, _viMonster->posy + 1);
+					}
+					else
+					{
+						if (_viMonster->atkdown)
+						{
+							_viMonster->movecount = 0;
+							if (_viMonster->isGraceperiod == false) attack();
+							_viMonster->isGraceperiod = true;
+						}
+						else
+						{
+							_viMonster->movecount = 0;
+							_viMonster->posy += 1;
+							_viMonster->x = _viMonster->posx * 48;
+							_viMonster->y = _viMonster->posy * 48;
+						}
+					}
+					break;
+				case MONSTERMOVESTATE::NONE:
+					_viMonster->movecount = 0;
+					_viMonster->posy += 0;
+					_viMonster->posx += 0;
+					_viMonster->x = _viMonster->posx * 48;
+					_viMonster->y = _viMonster->posy * 48;
+					break;
+				}
+			}
+
+		}
+	}
+}
+
+void king_konga::updateRect(vector<tagMonster>::iterator iter)
+{
 }

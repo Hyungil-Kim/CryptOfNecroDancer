@@ -160,7 +160,7 @@ void Player::inputCheck()
 	if (INPUT->isOnceKeyDown(VK_RIGHT))
 	{
 		_player.isInput = true;
-		if (_rtm->checkstep() == true)
+		//if (_rtm->checkstep() == true)
 		{
 			_inputdirection.isRight = true;
 			_inputdirection.isLeft = false;
@@ -172,7 +172,7 @@ void Player::inputCheck()
 	if (INPUT->isOnceKeyDown(VK_LEFT))
 	{
 		_player.isInput = true;
-		if (_rtm->checkstep() == true)
+		//if (_rtm->checkstep() == true)
 		{
 			_inputdirection.isLeft = true;
 			_inputdirection.isRight = false;
@@ -185,7 +185,7 @@ void Player::inputCheck()
 	if (INPUT->isOnceKeyDown(VK_UP))
 	{
 		_player.isInput = true;
-		if (_rtm->checkstep() == true)
+		//if (_rtm->checkstep() == true)
 		{
 			_inputdirection.isUp = true;
 		}
@@ -196,7 +196,7 @@ void Player::inputCheck()
 	if (INPUT->isOnceKeyDown(VK_DOWN))
 	{
 		_player.isInput = true;
-		if (_rtm->checkstep() == true)
+		//if (_rtm->checkstep() == true)
 		{
 			_inputdirection.isDown = true;
 		}
@@ -314,7 +314,27 @@ void Player::giveDamage(int x, int y)
 			}
 		}
 	}
-	
+	if (findMonster(_mm->getGreenDragon(), x, y))
+	{
+		for (int i = 0; i < _mm->getGreenDragon()->getVMonster().size(); ++i)
+		{
+			if (_mm->getGreenDragon()->getVMonster()[i].posx == x && _mm->getGreenDragon()->getVMonster()[i].posy == y)
+			{
+				_mm->getGreenDragon()->getVMonster()[i].hp -= _player.atk;
+			}
+		}
+	}
+	if (findMonster(_mm->getKingKong(), x, y))
+	{
+		for (int i = 0; i < _mm->getKingKong()->getVMonster().size(); ++i)
+		{
+			if (_mm->getKingKong()->getVMonster()[i].posx == x && _mm->getKingKong()->getVMonster()[i].posy == y)
+			{
+				_mm->getKingKong()->getVMonster()[i].hp -= _player.atk;
+				_mm->getKingKong()->getVMonster()[i].monsterState = MONSTERSTATE::HIT;
+			}
+		}
+	}
 }
 
 bool Player::playerToMon(int x, int y)
@@ -322,7 +342,9 @@ bool Player::playerToMon(int x, int y)
 	if (findMonster(_mm->getGreenSlime(), x, y) ||
 		findMonster(_mm->getBlueSlime(), x, y) ||
 		findMonster(_mm->getOrangeSlime(), x, y)||
-		findMonster(_mm->getWhiteskeleton(), x, y)
+		findMonster(_mm->getWhiteskeleton(), x, y)||
+		findMonster(_mm->getGreenDragon(),x,y)||
+		findMonster(_mm->getKingKong(),x,y)
 		)
 	{
 		return true;
@@ -370,7 +392,7 @@ void Player::playerMove()
 		break;
 	}
 
-	if (_wm->getDungeon(tempX, tempY) != 0)
+	if ((_wm->getDungeon(tempX, tempY) != 0 && _wm->getDungeon(tempX, tempY) != 5) && (_boss->getDungeon(tempX,tempY) != 5))
 	{
 		
 		if (playerToMon(tempX,tempY)==true)
