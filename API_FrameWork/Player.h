@@ -118,6 +118,7 @@ private:
 	animation* Aplayer_bodyR;
 
 	image* player_dagAtk;
+	image* _revive;
 	animation* Aplayer_dagAtkL;
 	animation* Aplayer_dagAtkU;
 	animation* Aplayer_dagAtkD;
@@ -150,6 +151,7 @@ public:
 	 void playerMove();
 	 void spawn();
 	 void Attack();
+	 void revive();
 	 void giveDamage(int x, int y);
 	 bool findMonster(monster* monster,int x, int y);
 	 bool playerToMon(int x, int y);

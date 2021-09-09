@@ -67,6 +67,7 @@ public:
 	void update(rhythmUI* _rtm);//플레이어 위치 참고하기위해 
 	void render();
 
+	virtual void atkSound();
 	virtual void addMonster(float x, float y);
 	virtual void stateCheck();
 	virtual void moveMonster(rhythmUI* _rtm);
@@ -83,6 +84,9 @@ public:
 	void update(rhythmUI* _rtm);//플레이어 위치 참고하기위해 
 	void render();
 
+	virtual void digsound();
+	virtual void movesound();
+	virtual void atksound();
 	virtual void addMonster(float x, float y);
 	virtual void stateCheck();
 	virtual void moveMonster(rhythmUI* _rtm,wallManager* _wm,realwallManager* _rwm);
@@ -99,6 +103,8 @@ public:
 	void update(rhythmUI* _rtm);//플레이어 위치 참고하기위해 
 	void render();
 
+
+	virtual void atksound();
 	virtual void teleport();
 	virtual void addMonster(float x, float y);
 	virtual void stateCheck();

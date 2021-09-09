@@ -51,6 +51,8 @@ HRESULT Player::init()
 	Aplayer_dagAtkU = ANIMATION->addNoneKeyAnimation("플레이어단검공격", 6, 8, 10, false, true);
 	Aplayer_dagAtkD = ANIMATION->addNoneKeyAnimation("플레이어단검공격", 9, 11, 10, false, true);
 
+	_revive = IMAGE->addImage("사망", "images/title/restart.bmp", 598, 129, true);
+
 	_player.player_rc = RectMake(_player.x, _player.y, player_bodyL->getFrameWidth(), player_bodyL->getFrameHeight());
 
 	return S_OK;
@@ -62,66 +64,80 @@ void Player::release()
 
 void Player::update()
 {
-	if (_player.isSpawn == true) {
-		this->spawn();
-
+	if (!(_player.hp <= 0))
+	{
+		if (_player.isSpawn == true) {
+			this->spawn();
+		}
+		this->inputCheck();
+		this->inputDirectionCheck();
+		this->stateCheck();
+		this->moveCharater();
+		_player.player_rc = RectMake(_player.x, _player.y, player_headL->getFrameWidth(), player_bodyL->getFrameHeight());
 	}
-	this->inputCheck();
-	this->inputDirectionCheck();
-	this->stateCheck();
-	this->moveCharater();
-	_player.player_rc = RectMake(_player.x, _player.y, player_headL->getFrameWidth(), player_bodyL->getFrameHeight());
-
 }
 
 void Player::render(HDC hdc)
 {
-
-	if (_state == STATE::STOP)
+	if (_player.hp < 1)
 	{
-		if ((_player.isCurrentRight == false && _movestate == MOVESTATE::UP) || (_player.isCurrentRight == false && _movestate == MOVESTATE::DOWN) || (_player.isCurrentRight == false && _movestate == MOVESTATE::LEFT))
+		if (!(SOUND->isPlaySound("playerdeath")))
 		{
-			ZORDER->ZorderAniRender(player_headL, 5, 3000, _player.x, _player.y, Aplayer_headL);
-			ZORDER->ZorderAniRender(player_bodyL, 5, player_body_rc.bottom, _player.x, _player.y, Aplayer_bodyL);
+			SOUND->play("playerdeath");
 		}
-		else if ((_player.isCurrentRight == true && _movestate == MOVESTATE::UP) || (_player.isCurrentRight == true && _movestate == MOVESTATE::DOWN) || (_player.isCurrentRight == true && _movestate == MOVESTATE::RIGHT))
+		ZORDER->UIRender(_revive, 10, 0, WINSIZEX/2 - 249, WINSIZEY/2 - 129);
+		revive();
+	}
+	else
+	{
+		if (_state == STATE::STOP)
 		{
-			ZORDER->ZorderAniRender(player_headR, 5, 3000, _player.x, _player.y, Aplayer_headR);
-			ZORDER->ZorderAniRender(player_bodyR, 5, player_body_rc.bottom, _player.x, _player.y, Aplayer_bodyR);
+			if ((_player.isCurrentRight == false && _movestate == MOVESTATE::UP) || (_player.isCurrentRight == false && _movestate == MOVESTATE::DOWN) || (_player.isCurrentRight == false && _movestate == MOVESTATE::LEFT))
+			{
+				ZORDER->ZorderAniRender(player_headL, 5, 3000, _player.x, _player.y, Aplayer_headL);
+				ZORDER->ZorderAniRender(player_bodyL, 5, player_body_rc.bottom, _player.x, _player.y, Aplayer_bodyL);
+			}
+			else if ((_player.isCurrentRight == true && _movestate == MOVESTATE::UP) || (_player.isCurrentRight == true && _movestate == MOVESTATE::DOWN) || (_player.isCurrentRight == true && _movestate == MOVESTATE::RIGHT))
+			{
+				ZORDER->ZorderAniRender(player_headR, 5, 3000, _player.x, _player.y, Aplayer_headR);
+				ZORDER->ZorderAniRender(player_bodyR, 5, player_body_rc.bottom, _player.x, _player.y, Aplayer_bodyR);
+			}
 		}
-	}
-	if (_state == STATE::MOVE)
-	{
-		if ((_player.isCurrentRight == false && _movestate == MOVESTATE::UP) || (_player.isCurrentRight == false && _movestate == MOVESTATE::DOWN) || (_player.isCurrentRight == false && _movestate == MOVESTATE::LEFT))
+		if (_state == STATE::MOVE)
 		{
-			ZORDER->ZorderAniRender(player_headL, 5, player_body_rc.bottom, _player.x, _player.y, Aplayer_headL);
-			ZORDER->ZorderAniRender(player_bodyL, 5, player_body_rc.bottom, _player.x, _player.y, Aplayer_bodyL);
+			if ((_player.isCurrentRight == false && _movestate == MOVESTATE::UP) || (_player.isCurrentRight == false && _movestate == MOVESTATE::DOWN) || (_player.isCurrentRight == false && _movestate == MOVESTATE::LEFT))
+			{
+				ZORDER->ZorderAniRender(player_headL, 5, player_body_rc.bottom, _player.x, _player.y, Aplayer_headL);
+				ZORDER->ZorderAniRender(player_bodyL, 5, player_body_rc.bottom, _player.x, _player.y, Aplayer_bodyL);
+			}
+			else if ((_player.isCurrentRight == true && _movestate == MOVESTATE::UP) || (_player.isCurrentRight == true && _movestate == MOVESTATE::DOWN) || (_player.isCurrentRight == true && _movestate == MOVESTATE::RIGHT))
+			{
+				ZORDER->ZorderAniRender(player_headR, 5, player_body_rc.bottom, _player.x, _player.y, Aplayer_headR);
+				ZORDER->ZorderAniRender(player_bodyR, 5, player_body_rc.bottom, _player.x, _player.y, Aplayer_bodyR);
+			}
 		}
-		else if ((_player.isCurrentRight == true && _movestate == MOVESTATE::UP) || (_player.isCurrentRight == true && _movestate == MOVESTATE::DOWN) || (_player.isCurrentRight == true && _movestate == MOVESTATE::RIGHT))
+		if (_player.atkright == true)
 		{
-			ZORDER->ZorderAniRender(player_headR, 5, player_body_rc.bottom, _player.x, _player.y, Aplayer_headR);
-			ZORDER->ZorderAniRender(player_bodyR, 5, player_body_rc.bottom, _player.x, _player.y, Aplayer_bodyR);
+			ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x + 36, _player.y, Aplayer_dagAtkR);
+
+		}
+		if (_player.atktop == true)
+		{
+			ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x, _player.y - 36, Aplayer_dagAtkU);
+		}
+		if (_player.atkleft == true)
+		{
+			ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x - 36, _player.y, Aplayer_dagAtkL);
+
+		}
+		if (_player.atkbottom == true)
+		{
+			ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x, _player.y + 36, Aplayer_dagAtkD);
+
 		}
 	}
-	if (_player.atkright == true)
-	{
-		ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x + 36, _player.y, Aplayer_dagAtkR);
+	
 
-	}
-	if (_player.atktop == true)
-	{
-		ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x, _player.y - 36, Aplayer_dagAtkU);
-	}
-	if (_player.atkleft == true)
-	{
-		ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x - 36, _player.y, Aplayer_dagAtkL);
-
-	}
-	if (_player.atkbottom == true)
-	{
-		ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x, _player.y + 36, Aplayer_dagAtkD);
-
-	}
 
 	//ZORDER->ZorderAniRender(player_headR, 3, player_body_rc.bottom,x,y, Aplayer_headR);
 	//ZORDER->ZorderAniRender(player_bodyR, 3, player_body_rc.bottom,x,y, Aplayer_bodyR);
@@ -131,6 +147,7 @@ void Player::render(HDC hdc)
 		//ZORDER->ZorderRectangle(player_head_rc, 4);
 		//ZORDER->ZorderRectangle(player_body_rc, 4);
 	}
+
 }
 
 
@@ -204,7 +221,13 @@ void Player::inputCheck()
 	else _inputdirection.isDown = false;
 
 }
-
+void Player::revive()
+{
+	if (InputManager->isOnceKeyDown('R'))
+	{
+		_player.hp = _player.maxhp;
+	}
+}
 void Player::stateCheck()
 {
 	if (_inputdirection.isRight || _inputdirection.isLeft || _inputdirection.isDown || _inputdirection.isUp)
@@ -320,6 +343,10 @@ void Player::giveDamage(int x, int y)
 		{
 			if (_mm->getGreenDragon()->getVMonster()[i].posx == x && _mm->getGreenDragon()->getVMonster()[i].posy == y)
 			{
+				if (!(SOUND->isPlaySound("dragonhurt")))
+				{
+					SOUND->play("dragonhurt", 0.3);
+				}
 				_mm->getGreenDragon()->getVMonster()[i].hp -= _player.atk;
 			}
 		}
@@ -397,6 +424,11 @@ void Player::playerMove()
 		
 		if (playerToMon(tempX,tempY)==true)
 		{
+			if (!(SOUND->isPlaySound("playeratk")))
+			{
+				SOUND->play("playeratk", 0.4);
+			}
+			CAMERA->setShake(10, 5, 1);
 			Attack();
 			giveDamage(tempX, tempY);
 		}
@@ -429,7 +461,15 @@ void Player::playerMove()
 	}
 	if (_wm->getDungeon(tempX, tempY) == 0)
 	{
-
+		CAMERA->setShake(10,5,1);
+		if (!(SOUND->isPlaySound("digsound")))
+		{
+			SOUND->play("digsound",0.3);
+		}
+		if (!(SOUND->isPlaySound("dirtdig")))
+		{
+			SOUND->play("dirtdig", 0.5);
+		}
 		switch (_movestate)
 		{
 		case LEFT:

@@ -13,6 +13,9 @@ private:
 	realwallManager* _rwm;
 	image* _nextDoorOn;
 	image* _nextDoorOff;
+	image* _chair;
+	image* _chairkonga;
+	animation* _chairKong;
 	monster* _mon;
 	rhythmUI* _rtm;
 	CMap* _cmap;
@@ -28,6 +31,7 @@ private:
 	bool doorOpen = false;
 	float timing;
 	float _count;
+	int elsecount;
 	bool soundOn = false;
 public:
 	bossMap();
@@ -40,10 +44,10 @@ public:
 	void makeDungeon();
 	void showDungeon();
 	void spawnMon();
+	void spawnBoss();
 	void spawnNextStageDoor();
 	int getDungeon(int i, int k) { return Dungeon[i][k]; }
 	void setDungeon(int i, int k, int t) { Dungeon[i][k] = t; }
-	
 	void setrtmMemoryLink(rhythmUI* rhythmUI) { _rtm = rhythmUI; }
 	void setMonsterManagerMemoryLink(monsterManager* monsterManager) { _mm = monsterManager; }
 	void setMonsterMemoryLink(monster* monster) { _mon = monster; }

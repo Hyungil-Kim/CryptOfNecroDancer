@@ -18,7 +18,7 @@ HRESULT rhythmUI::init()
 	IMAGE->addImage("적색바", "images/UI/TEMP_beat_marker_red.bmp", 12, 64, true);
 	_heartImage = IMAGE->addFrameImage("심장", "images/UI/TEMP_beat_heart.bmp", 82 * 2, 52 * 2, 2, 1, true);
 	_heartAni = ANIMATION->addNoneKeyAnimation("심장",1,0,4, false, true);
-	_check = 1.2;//1.2;
+	_check = 1.79;//1.2;
 	return S_OK;
 }
 
@@ -89,9 +89,9 @@ void rhythmUI::spawnBeat(int x, int y)
 	newbeat._bluebeatImg = IMAGE->findImage("청색바");
 	newbeat._greenbeatImg = IMAGE->findImage("녹색바");
 	newbeat._redbeatImg = IMAGE->findImage("적색바");
-	newbeat.speed = (WINSIZEX * 0.5f) / 1.9167f;
+	newbeat.speed = (WINSIZEX * 0.5f+25) / 1.9167f;
 	newbeat.iscol = false;
-	newbeat.count = 0.15;
+	newbeat.count = 0;
 	newbeat.x = WINSIZEX/2 - x;
 	newbeat.y = WINSIZEY - 74;
 	newbeat.rc = RectMake(newbeat.x, newbeat.y, newbeat._bluebeatImg->getWidth(), newbeat._bluebeatImg->getHeight());
@@ -104,9 +104,9 @@ void rhythmUI::spawnBeat(int x, int y)
 	newbeat._bluebeatImg = IMAGE->findImage("청색바");
 	newbeat._greenbeatImg = IMAGE->findImage("녹색바");
 	newbeat._redbeatImg = IMAGE->findImage("적색바");
-	newbeat.speed = -(WINSIZEX * 0.5f) / 1.9167f;
+	newbeat.speed = -(WINSIZEX * 0.5f+25) / 1.9167f;
 	newbeat.iscol = false;
-	newbeat.count = 0.15;
+	newbeat.count = 0;
 	newbeat.x = WINSIZEX / 2 + x;
 	newbeat.y = WINSIZEY - 74;
 	newbeat.rc = RectMake(newbeat.x, newbeat.y, newbeat._bluebeatImg->getWidth(), newbeat._bluebeatImg->getHeight());
@@ -144,9 +144,9 @@ void rhythmUI::step()
 	for (_vibeat = _vbeat.begin(); _vibeat != _vbeat.end();)
 	{
 		_vibeat->count +=  TIME->getElapsedTime();
-		_vibeat->iscol = (_check < _vibeat->count) && (_check + 0.25f > _vibeat->count);
+		_vibeat->iscol = (_check-0.20f < _vibeat->count) && (_check + 0.20f > _vibeat->count);
 
-		if ((1.9167f +0.05f  < _vibeat->count))
+		if ((_check < _vibeat->count))
 		{
 			_vibeat = _vbeat.erase(_vibeat);
 		}

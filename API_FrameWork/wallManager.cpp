@@ -54,6 +54,15 @@ void wallManager::release()
 	_mm->getWhiteskeleton()->getVMonster().clear();
 	_rwm->getHardWall()->getVWall().clear();
 	_rwm->getSoftWall()->getVWall().clear();
+	_rwm->getUnBrokeWall()->getVWall().clear();
+	for (int i = 0; i < 30; i++)
+	{
+		for (int k = 0; k < 30; k++)
+		{
+			setDungeon(i, k, 1);
+
+		}
+	}
 }
 
 void wallManager::update()
@@ -61,7 +70,7 @@ void wallManager::update()
 	if (soundOn == false)
 	{
 		SOUND->stop("오프닝");
-		SOUND->play("1스테이지", 0.5);
+		SOUND->play("1스테이지", 0.3);
 		soundOn = true;
 	}
 	count += TIME->getElapsedTime();
@@ -79,7 +88,7 @@ void wallManager::update()
 			startNum++;
 		}
 	}
-	if (count > (1.9167f + 0.05f)/4)
+	if (count > (1.9167f)/4)
 	{
 		_rtm->spawnBeat(480, 0);
 		count = 0.0f;	
@@ -90,11 +99,12 @@ void wallManager::update()
 	}
 	if (PLAYER->getPlayerAddress().x == doorX && PLAYER->getPlayerAddress().y == doorY && doorOpen == true)
 	{	
-		PLAYER->getPlayerAddress().x = 10 * 48;
+		PLAYER->getPlayerAddress().x = 9 * 48;
 		PLAYER->getPlayerAddress().y = 15 * 48;
 		PLAYER->getPlayerAddress().posx = PLAYER->getPlayerAddress().x/48;
 		PLAYER->getPlayerAddress().posy = PLAYER->getPlayerAddress().y/48;
-		SCENE->changeScene("보스방");
+		_rwm->setcurScene("로딩");
+		SCENE->changeScene("로딩");
 	}
 }
 

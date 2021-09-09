@@ -7,6 +7,8 @@
 #include "realwallManager.h"
 #include "Title.h"
 #include "bossMap.h"
+#include "ending.h"
+#include "loading.h"
 class necroDancerMain : public gameNode
 {
 private:
@@ -20,15 +22,19 @@ private:
 	monster* _mon;
 	realwallManager* _rwm;
 	bossMap* _boss;
+	Title* _title;
+	ending* _ending;
+	loading* _loading;
+	
 private:
 	enum class SCENESTATE
 	{
 		START,
 		GAME,
+		LOADING,
 		ENDING
 	};
 private:
-	Title* _title;
 	bool _isDebug;
 	SCENESTATE _sceneState;
 public:

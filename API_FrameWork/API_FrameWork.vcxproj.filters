@@ -88,6 +88,9 @@
     <Filter Include="CryptOfNecroDancer\map\Title">
       <UniqueIdentifier>{09d1fbc9-9818-4750-86bb-ab4ff99eb7ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CryptOfNecroDancer\map\Tile">
+      <UniqueIdentifier>{8ba8abaf-41ba-4f01-9dca-5f28d7dc8a2e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -183,15 +186,6 @@
     <ClInclude Include="mainGame.h">
       <Filter>mainGame</Filter>
     </ClInclude>
-    <ClInclude Include="CMap.h">
-      <Filter>CryptOfNecroDancer\map</Filter>
-    </ClInclude>
-    <ClInclude Include="CObject.h">
-      <Filter>CryptOfNecroDancer\map</Filter>
-    </ClInclude>
-    <ClInclude Include="CTile.h">
-      <Filter>CryptOfNecroDancer\map</Filter>
-    </ClInclude>
     <ClInclude Include="tileSize.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -233,6 +227,21 @@
     </ClInclude>
     <ClInclude Include="realwallManager.h">
       <Filter>CryptOfNecroDancer\gameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ending.h">
+      <Filter>CryptOfNecroDancer\map\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="CTile.h">
+      <Filter>CryptOfNecroDancer\map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="CMap.h">
+      <Filter>CryptOfNecroDancer\map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="CObject.h">
+      <Filter>CryptOfNecroDancer\map\object</Filter>
+    </ClInclude>
+    <ClInclude Include="loading.h">
+      <Filter>CryptOfNecroDancer\map\Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -314,15 +323,6 @@
     <ClCompile Include="mainGame.cpp">
       <Filter>mainGame</Filter>
     </ClCompile>
-    <ClCompile Include="CMap.cpp">
-      <Filter>CryptOfNecroDancer\map</Filter>
-    </ClCompile>
-    <ClCompile Include="CObject.cpp">
-      <Filter>CryptOfNecroDancer\map</Filter>
-    </ClCompile>
-    <ClCompile Include="CTile.cpp">
-      <Filter>CryptOfNecroDancer\map</Filter>
-    </ClCompile>
     <ClCompile Include="addImage.cpp">
       <Filter>gameNode</Filter>
     </ClCompile>
@@ -355,6 +355,21 @@
     </ClCompile>
     <ClCompile Include="realwallManager.cpp">
       <Filter>CryptOfNecroDancer\gameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ending.cpp">
+      <Filter>CryptOfNecroDancer\map\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="CTile.cpp">
+      <Filter>CryptOfNecroDancer\map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CMap.cpp">
+      <Filter>CryptOfNecroDancer\map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CObject.cpp">
+      <Filter>CryptOfNecroDancer\map\object</Filter>
+    </ClCompile>
+    <ClCompile Include="loading.cpp">
+      <Filter>CryptOfNecroDancer\map\Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

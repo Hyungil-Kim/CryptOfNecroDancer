@@ -191,6 +191,10 @@ bool monster::monTomon(int x, int y)
 }
 void monster::attack()
 {
+	if (!(SOUND->isPlaySound("playerhurt")))
+	{
+		SOUND->play("playerhurt", 0.5);
+	}
 	PLAYER->getPlayerAddress().hp -= _viMonster->atk;
 }
 void monster::getDamage()
@@ -225,22 +229,43 @@ void monster::checkstate()
 	int tempX = _viMonster->posx;
 	int tempY = _viMonster->posy;
 	
-		if (!(_wm->getDungeon(tempX + 1, tempY) == 0 || monTomon(tempX + 1, tempY) || !(_boss->getDungeon(tempX + 1, tempY) == 0)))
+		if (!(_wm->getDungeon(tempX + 1, tempY) == 0 || monTomon(tempX + 1, tempY)))
 		{
 			_viMonster->canright = true;;		
 		}
-		if (!(_wm->getDungeon(tempX-1, tempY) == 0 || monTomon(tempX -1, tempY) || !(_boss->getDungeon(tempX - 1, tempY) == 0)))
+		if (!(_wm->getDungeon(tempX-1, tempY) == 0 || monTomon(tempX -1, tempY)))
 		{
 			_viMonster->canleft = true;;
 		}
-		if (!(_wm->getDungeon(tempX, tempY - 1) == 0 || monTomon(tempX, tempY - 1) || !(_boss->getDungeon(tempX, tempY -1) == 0)))
+		if (!(_wm->getDungeon(tempX, tempY - 1) == 0 || monTomon(tempX, tempY - 1)))
 		{
 			_viMonster->canup = true;;
 		}
-		if (!(_wm->getDungeon(tempX, tempY + 1) == 0 || monTomon(tempX, tempY + 1) || !(_boss->getDungeon(tempX , tempY+1) == 0)))
+		if (!(_wm->getDungeon(tempX, tempY + 1) == 0 || monTomon(tempX, tempY + 1)))
 		{
 			_viMonster->candown = true;;
 		}
+
+		if (!(_boss->getDungeon(tempX + 1, tempY) == 0 || monTomon(tempX + 1, tempY)))
+		{
+			_viMonster->canright = true;;
+		}
+		if (!(_boss->getDungeon(tempX - 1, tempY) == 0 || monTomon(tempX - 1, tempY)))
+		{
+			_viMonster->canleft = true;;
+		}
+		if (!(_boss->getDungeon(tempX, tempY - 1) == 0 || monTomon(tempX, tempY - 1)))
+		{
+			_viMonster->canup = true;;
+		}
+		if (!(_boss->getDungeon(tempX, tempY + 1) == 0 || monTomon(tempX, tempY + 1)))
+		{
+			_viMonster->candown = true;;
+		}
+
+
+
+			
 }
 
 void monster::checkstatebroker()

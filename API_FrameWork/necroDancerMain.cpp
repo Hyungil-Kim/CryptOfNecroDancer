@@ -15,12 +15,13 @@ HRESULT necroDancerMain::init()
 {
 	gameinit();
 	_title = dynamic_cast<Title*>(SCENE->addScene("타이틀", new Title, false));
-	
+	_ending = dynamic_cast<ending*>(SCENE->addScene("엔딩", new ending, false));
+	_loading = dynamic_cast<loading*>(SCENE->addScene("로딩", new loading, false));
 	_sceneState = SCENESTATE::START;
 	SCENE->changeScene("타이틀");
 	_rwm->setcurScene("타이틀");
 	if (_rwm->getcurScene() == "타이틀");
-		SOUND->play("오프닝", 0.5);
+		SOUND->play("오프닝", 0.3);
 
 	return S_OK;
 }
@@ -58,35 +59,73 @@ void necroDancerMain::update()
 {
 	if (_sceneState == SCENESTATE::START && _title->getIsDone()) {
 		_sceneState = SCENESTATE::GAME;
+
 	}
 	switch (_sceneState)
 	{
 	case necroDancerMain::SCENESTATE::START:
-	SCENE->update();
+		SCENE->update();
 		break;
 	case necroDancerMain::SCENESTATE::GAME:
-	_mm->update();
-	_rUI->update();
-	_rwm->update();
-	SCENE->update();
-	map->update();
-	POINT lerp;
-	lerp.x = CAMERA->getPivotX() * (1 - 0.08) + PLAYER->getPlayerAddress().x *0.08;
-	lerp.y = CAMERA->getPivotY() * (1 - 0.08) + PLAYER->getPlayerAddress().y * 0.08;
-	CAMERA->movePivot(lerp.x, lerp.y);
-	CAMERA->update();
-	//CAMERA->movePivot(PLAYER->getPlayerAddress().x,PLAYER->getPlayerAddress().y);
-	PLAYER->update();
-	PLAYERUI->update();
-	_mon->update(PLAYER);
+		_mm->update();
+		_rUI->update();
+		_rwm->update();
+		map->update();
+		_mon->update(PLAYER);
+		SCENE->update();
+		SOUND->update();
+		POINT lerp;
+		lerp.x = CAMERA->getPivotX() * (1 - 0.08) + PLAYER->getPlayerAddress().x * 0.08;
+		lerp.y = CAMERA->getPivotY() * (1 - 0.08) + PLAYER->getPlayerAddress().y * 0.08;
+		CAMERA->movePivot(lerp.x, lerp.y);
+		CAMERA->update();
+		//CAMERA->movePivot(PLAYER->getPlayerAddress().x,PLAYER->getPlayerAddress().y);
+		PLAYER->update();
+		PLAYERUI->update();
+
+		if (_sceneState == SCENESTATE::GAME && _loading->getIsStart() == true) {
+			_sceneState = SCENESTATE::LOADING;
+		}
+		if (_sceneState == SCENESTATE::GAME && _ending->getIsDone() == true) {
+			_sceneState = SCENESTATE::ENDING;
+		}
+		break;
+	case necroDancerMain::SCENESTATE::LOADING:
+	{
+		SCENE->update();
+		if (_rwm->getcurScene() == "로딩")
+		{
+			if (!(SOUND->isPlaySound("로딩")))
+			{
+			SOUND->stop("1스테이지");
+			SOUND->play("로딩", 0.4);
+			}
+
+			if ((_rwm->getcurScene() == "로딩") && _loading->getIsDone() == true)
+			{
+				_loading->setIsStart(false);
+				_sceneState = SCENESTATE::GAME;
+				_rwm->setcurScene("보스전");
+				SCENE->changeScene("보스방");
+			}
+		}
 		break;
 	case necroDancerMain::SCENESTATE::ENDING:
+		SCENE->update();
+		if (_rwm->getcurScene() == "엔딩")
+		{
+			if (!(SOUND->isPlaySound("엔딩")))
+			{
+				SOUND->stop("보스전");
+				SOUND->play("엔딩", 0.3);
+			}
+		}
 		break;
 	default:
 		break;
 	}
-}
-
+	}
+} 
 void necroDancerMain::render()
 {
 	
@@ -108,7 +147,11 @@ void necroDancerMain::render()
 		RecWidth(CAMERA->getRect()), RecHeight(CAMERA->getRect())); _mon->render();
 
 		break;
+	case necroDancerMain::SCENESTATE::LOADING:
+		SCENE->render();
+		break;
 	case necroDancerMain::SCENESTATE::ENDING:
+		SCENE->render();
 		break;
 	default:
 		break;
@@ -131,6 +174,7 @@ void necroDancerMain::gameinit()
 	_rUI = new rhythmUI;
 	_wm = dynamic_cast<wallManager*>(SCENE->addScene("1층", new wallManager));
 	_boss = dynamic_cast<bossMap*>(SCENE->addScene("보스방", new bossMap));
+	
 	//map = new CMap;
 	initForSound();
 	
@@ -173,5 +217,20 @@ void necroDancerMain::initForSound()
 	SOUND->addSound("오프닝", "sound/lobby.ogg", true, true);
 	SOUND->addSound("보스전", "sound/boss_1.ogg", true, true);
 	SOUND->addSound("엔딩", "sound/ending.ogg", true, false);
+	SOUND->addSound("로딩", "sound/vo_announcer_kingconga.ogg", false ,false);
+	SOUND->addSound("kongAtk", "sound/en_kingconga_attack_01.ogg", false ,false);
+	SOUND->addSound("kongdeath", "sound/en_kingconga_death.ogg", false ,false);
+	SOUND->addSound("skelAtk", "sound/en_skel_attack_melee.ogg", false ,false);
+	SOUND->addSound("skeldeath", "sound/en_skel_death.ogg", false ,false);
+	SOUND->addSound("digsound", "sound/vo_cad_dig_01.ogg", false ,false);
+	SOUND->addSound("playerdeath", "sound/vo_cad_death_01.ogg", false ,false);
+	SOUND->addSound("dirtdig", "sound/mov_dig_dirt.ogg", false ,false);
+	SOUND->addSound("playeratk", "sound/vo_cad_melee_1_01.ogg", false ,false);
+	SOUND->addSound("playerhurt", "sound/vo_cad_hurt_01.ogg", false ,false);
+	SOUND->addSound("slimedeath", "sound/en_slime_death.ogg", false ,false);
+	SOUND->addSound("dragondeath", "sound/en_dragon_attack_melee.ogg", false ,false);
+	SOUND->addSound("dragonatk", "sound/en_dragon_death.ogg", false ,false);
+	SOUND->addSound("dragonhurt", "sound/en_dragon_hit_01.ogg", false ,false);
+	SOUND->addSound("dragonmove", "sound/en_dragon_walk_01.ogg", false ,false);
 
 }

@@ -41,7 +41,7 @@ void mainGame::update()
 
 void mainGame::render(/*HDC hdc*/)	//그림그리는곳
 {
-	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
+	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, BLACKNESS);
 	PatBlt(_finalBuffer->getMemDC(), 0, 0, _finalBuffer->getWidth(), _finalBuffer->getHeight(), BLACKNESS);
 	//========================================================
 						/*렌더링 공간*/

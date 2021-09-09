@@ -43,6 +43,7 @@ HRESULT monsterManager::init()
 	_green_dragon->setmonsterManagerMemoryLink(this);
 	_king_konga->setmonsterManagerMemoryLink(this);
 	_white_skeleton->setrtmMemoryLink(_rtm);
+	_white_skeleton->setrealwallManagerMemoryLink(_rwm);
 	_green_dragon->setrtmMemoryLink(_rtm);
 	_king_konga->setrtmMemoryLink(_rtm);
 	_green_dragon->setrealwallManagerMemoryLink(_rwm);

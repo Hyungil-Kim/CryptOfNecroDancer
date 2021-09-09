@@ -45,21 +45,22 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	RegisterClass(&wndClass);
 
-
+	RECT rc = { 0,0,WINSIZEX,WINSIZEY };
+	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 	m_hWnd = CreateWindow(
 		WINNAME,
 		WINNAME,
 		WS_OVERLAPPEDWINDOW,
 		WINSTARTX,
 		WINSTARTY,
-		WINSIZEX,
-		WINSIZEY,
+		rc.right - rc.left,
+		rc.bottom- rc.top,
 		NULL,
 		(HMENU)NULL,
 		hInstance,
 		NULL);
 
-	setWindowSize(WINSTARTX, WINSTARTY, WINSIZEX, WINSIZEY);
+	//setWindowSize(WINSTARTX, WINSTARTY, WINSIZEX, WINSIZEY);
 	ShowWindow(m_hWnd, nCmdShow);
 
 	if (FAILED(mg.init())) //메인게임초기화실패시 종료.

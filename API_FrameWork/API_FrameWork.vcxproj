@@ -154,7 +154,9 @@
     <ClInclude Include="CObstacle.h" />
     <ClInclude Include="CTile.h" />
     <ClInclude Include="CWall.h" />
+    <ClInclude Include="ending.h" />
     <ClInclude Include="enum.h" />
+    <ClInclude Include="loading.h" />
     <ClInclude Include="makeMonster.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
@@ -204,6 +206,8 @@
     <ClCompile Include="CObstacle.cpp" />
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="CWall.cpp" />
+    <ClCompile Include="ending.cpp" />
+    <ClCompile Include="loading.cpp" />
     <ClCompile Include="makeMonster.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />

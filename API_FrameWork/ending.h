@@ -1,6 +1,6 @@
 #pragma once
 #include "gameNode.h"
-class Title :public gameNode
+class ending : public gameNode
 {
 private:
 	image* _title;
@@ -8,8 +8,8 @@ private:
 	bool _isStart;
 	bool _isDone;
 public:
-	Title();
-	~Title();
+	ending();
+	~ending();
 
 	HRESULT init();
 	void release();
@@ -18,6 +18,5 @@ public:
 
 	bool getIsStart() { return _isStart; }
 	bool getIsDone() { return _isDone; }
-
 };
 
