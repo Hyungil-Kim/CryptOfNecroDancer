@@ -27,7 +27,7 @@ HRESULT wallManager::init()
 	count = 0.0f;
 	timing = 0.0f;
 	monsterNum = 12 + level * 2.5;
-	count = 0;
+	count = 0.0;
 	soundOn = false;
 
 
@@ -88,7 +88,7 @@ void wallManager::update()
 			startNum++;
 		}
 	}
-	if (count > (1.9167f)/4)
+	if (count > (2.08667/4))
 	{
 		_rtm->spawnBeat(480, 0);
 		count = 0.0f;	

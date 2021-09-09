@@ -119,7 +119,6 @@ void Player::render(HDC hdc)
 		if (_player.atkright == true)
 		{
 			ZORDER->ZorderAniRender(player_dagAtk, 5, player_body_rc.bottom + 1, _player.x + 36, _player.y, Aplayer_dagAtkR);
-
 		}
 		if (_player.atktop == true)
 		{
@@ -177,7 +176,7 @@ void Player::inputCheck()
 	if (INPUT->isOnceKeyDown(VK_RIGHT))
 	{
 		_player.isInput = true;
-		//if (_rtm->checkstep() == true)
+		if (_rtm->checkstep() == true)
 		{
 			_inputdirection.isRight = true;
 			_inputdirection.isLeft = false;
@@ -189,7 +188,7 @@ void Player::inputCheck()
 	if (INPUT->isOnceKeyDown(VK_LEFT))
 	{
 		_player.isInput = true;
-		//if (_rtm->checkstep() == true)
+		if (_rtm->checkstep() == true)
 		{
 			_inputdirection.isLeft = true;
 			_inputdirection.isRight = false;
@@ -202,7 +201,7 @@ void Player::inputCheck()
 	if (INPUT->isOnceKeyDown(VK_UP))
 	{
 		_player.isInput = true;
-		//if (_rtm->checkstep() == true)
+		if (_rtm->checkstep() == true)
 		{
 			_inputdirection.isUp = true;
 		}
@@ -213,7 +212,7 @@ void Player::inputCheck()
 	if (INPUT->isOnceKeyDown(VK_DOWN))
 	{
 		_player.isInput = true;
-		//if (_rtm->checkstep() == true)
+		if (_rtm->checkstep() == true)
 		{
 			_inputdirection.isDown = true;
 		}

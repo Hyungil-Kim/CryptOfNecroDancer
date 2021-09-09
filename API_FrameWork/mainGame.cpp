@@ -37,6 +37,9 @@ void mainGame::update()
 
 	setIsDebug();
 	setFPSprint();
+	//======================================================================//
+	INPUT->setAnyKeyDown(false);
+	//======================================================================//
 }
 
 void mainGame::render(/*HDC hdc*/)	//그림그리는곳
@@ -97,6 +100,7 @@ RECT mainGame::checkGameSize()
 	}
 	//MoveWindow(gethwnd(), left, top, right, bottom, TRUE);    // listbox의 size를 change
 	return { left, top, right, bottom };
+
 
 }
 

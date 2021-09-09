@@ -25,10 +25,11 @@ void Title::release()
 
 void Title::update()
 {
-	if (InputManager->isOnceKeyDown(VK_SPACE))
+	if (InputManager->getAnyKeyDown() == true)
 	{
 		SCENE->changeScene("1Ãþ");
 		_isDone = true;
+		InputManager->getAnyKeyDown() == false;
 	}
 }
 
