@@ -17,7 +17,7 @@ PlayerUI::~PlayerUI()
 HRESULT PlayerUI::init()
 {
     Maxhp = PLAYER->getPlayerAddress().maxhp;
-    curhp = 12;//PLAYER->getPlayerAddress().hp;
+    curhp = PLAYER->getPlayerAddress().hp;
     return S_OK;
 }
 
@@ -77,6 +77,10 @@ void PlayerUI::playerhpUI()
                 ZORDER->UIRender(halfheart, 9, 0, WINSIZEX - (t % 5 + 1) * 50, 50 + k * 50);
             }
         }
+    }
+    if (curhp == 1)
+    {
+        ZORDER->UIRender(halfheart, 9, 0, WINSIZEX - 1 * 50, 50 );
     }
 }
 
